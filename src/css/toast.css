@@ -1,0 +1,4 @@
+/* styles.css */
+.react-toast-notifications__toast-container {
+  z-index: 9999; /* Adjust this value to be higher than your modal's z-index */
+}

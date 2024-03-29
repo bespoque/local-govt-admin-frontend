@@ -1,0 +1,21 @@
+@media print {
+ 
+  html,
+    body {
+      height: 99%;
+    };
+
+  #print-content,
+  #print-content {
+    display: block !important;
+  }
+   /* body * {
+    display: none;
+  } */
+
+    .navbar-button {
+      visibility: hidden;
+      height: 0;
+    }
+
+}
