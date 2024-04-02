@@ -24,7 +24,9 @@ const Index: React.FC = () => {
   const methods = useForm<FormProps>({
     defaultValues: {
       email: "prince.u@bespoque.ng",
-      password: "prinxard",
+      password: "12345678",
+      // "email": "super.user5@gmail.com",
+      // "password": "Test1234$"
     },
   });
   const {
@@ -37,10 +39,246 @@ const Index: React.FC = () => {
       setErrorMessage(null);
       setLoading(true);
       const response = await authenticate(data);
-      // if (response.data.accessToken) {
-      //   localStorage.setItem("access_token", response.data.accessToken);
-      // }
-      // dispatch(loginUser(response.data.user));
+      if (response.data.accessToken) {
+        localStorage.setItem("access_token", response.data.accessToken);
+        
+      }
+      const userData = {
+        "id": 44,
+        "userSlug": "48474514_kennedy_user",
+        "email": "super.user5@gmail.com",
+        "firstName": "kennedy",
+        "middleName": "benson",
+        "lastName": "user",
+        "phone": "08000000005",
+        "last_login": "2024-04-02T16:50:23.000Z",
+        "onboarding_complete": true,
+        "account_status": "ACTIVE",
+        "createdBy": null,
+        "createdAt": "2023-08-23T15:40:27.608Z",
+        "roles": [
+          {
+            "role": "SUPER_ADMIN",
+            "permissions": [
+              "all"
+            ],
+            "active": true
+          },
+          {
+            "role": "ADMIN",
+            "permissions": [
+              "all"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_PROCUREMENT_INITIATOR",
+            "permissions": [
+              "create",
+              "edit",
+              "view",
+              "delete",
+              "print"
+            ],
+            "active": true
+          },
+          {
+            "role": "INVENTORY_PROCUREMENT_VERIFIER",
+            "permissions": [
+              "write",
+              "view",
+              "edit"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_PROCUREMENT_APPROVER",
+            "permissions": [
+              "write",
+              "view",
+              "edit"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_PROCUREMENT_EC",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_RECEIVE_INITIATOR",
+            "permissions": [
+              "create",
+              "edit",
+              "view",
+              "print",
+              "download"
+            ],
+            "active": true
+          },
+          {
+            "role": "INVENTORY_RECEIVE_VERIFIER",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_RECEIVE_AUDITOR",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_RECEIVE_APPROVER",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_TRANSFER_INITIATOR",
+            "permissions": [
+              "create",
+              "edit",
+              "view",
+              "delete"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_TRANSFER_VERIFIER",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_TRANSFER_APPROVER",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_REPORT_INITIATOR",
+            "permissions": [
+              "create",
+              "view",
+              "print",
+              "download"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_REPORT_VERIFIER",
+            "permissions": [
+              "create",
+              "view",
+              "print",
+              "download"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_REPORT_APPROVER",
+            "permissions": [
+              "create",
+              "view",
+              "print",
+              "download"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_REPORT_AUDITOR",
+            "permissions": [
+              "create",
+              "view",
+              "print",
+              "download"
+            ],
+            "active": false
+          },
+          {
+            "role": "VEHICLE_LICENCE_CAPTURE_INITIATOR",
+            "permissions": [
+              "create",
+              "edit",
+              "view",
+              "delete",
+              "print",
+              "download"
+            ],
+            "active": false
+          },
+          {
+            "role": "VEHICLE_LICENCE_CAPTURE_VERIFIER",
+            "permissions": [
+              "edit",
+              "view",
+              "delete",
+              "print",
+              "download",
+              "write"
+            ],
+            "active": false
+          },
+          {
+            "role": "VEHICLE_LICENCE_CAPTURE_APPROVER",
+            "permissions": [
+              "write",
+              "view",
+              "delete",
+              "print",
+              "download",
+              "write"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_PROCUREMENT_AUDITOR",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_PROCUREMENT_FINANCE_APPROVER",
+            "permissions": [
+              "write",
+              "view",
+              "print",
+              "download"
+            ],
+            "active": false
+          },
+          {
+            "role": "INVENTORY_TRANSFER_AUDITOR",
+            "permissions": [
+              "write",
+              "view"
+            ],
+            "active": false
+          }
+        ],
+        "taxOffice": {
+          "id": 12,
+          "name": "STORE",
+          "value": "Store"
+        }
+      }
+      dispatch(loginUser(userData));
       setLoading(false);
       // if (!response.data.user.onboarding_complete) {
       //   router.push("/user-profile");
