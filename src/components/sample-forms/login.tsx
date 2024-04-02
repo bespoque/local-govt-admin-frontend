@@ -23,8 +23,8 @@ const Index: React.FC = () => {
 
   const methods = useForm<FormProps>({
     defaultValues: {
-      email: "super.user5@gmail.com",
-      password: "Test1234$",
+      email: "prince.u@bespoque.ng",
+      password: "prinxard",
     },
   });
   const {
@@ -37,16 +37,17 @@ const Index: React.FC = () => {
       setErrorMessage(null);
       setLoading(true);
       const response = await authenticate(data);
-      if (response.data.accessToken) {
-        localStorage.setItem("access_token", response.data.accessToken);
-      }
-      dispatch(loginUser(response.data.user));
+      // if (response.data.accessToken) {
+      //   localStorage.setItem("access_token", response.data.accessToken);
+      // }
+      // dispatch(loginUser(response.data.user));
       setLoading(false);
-      if (!response.data.user.onboarding_complete) {
-        router.push("/user-profile");
-      } else {
-        router.push("/dashboard");
-      }
+      // if (!response.data.user.onboarding_complete) {
+      //   router.push("/user-profile");
+      // } else {
+      //   router.push("/dashboard");
+      // }
+      router.push("/dashboard");
     } catch (error: any) {
       setLoading(false);
       if (error.response) {
