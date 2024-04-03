@@ -153,7 +153,7 @@ const Index: React.FC = () => {
             }`}>
               {loading ? (
               <ThreeDots 
-                height="30"
+                height="20"
                 width="30"
                 radius="5"
                 color="white"
