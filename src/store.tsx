@@ -4,7 +4,7 @@ import {
   getDefaultMiddleware,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import {TypedUseSelectorHook, useSelector, useDispatch} from "react-redux";
+import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 import colors from "slices/colors";
 import config from "slices/config";
 import leftSidebar from "slices/left-sidebar";
@@ -20,9 +20,9 @@ import vendor from "slices/vendor";
 import taxOffice from "slices/tax-offices";
 import storage from "redux-persist/lib/storage";
 import thunkMiddleware from "redux-thunk";
-import {persistReducer, persistStore} from "redux-persist";
-import {Action} from "redux";
-import {createLogger} from "redux-logger";
+import { persistReducer, persistStore } from "redux-persist";
+import { Action } from "redux";
+import { createLogger } from "redux-logger";
 
 // Combine reducers
 const rootReducer = combineReducers({

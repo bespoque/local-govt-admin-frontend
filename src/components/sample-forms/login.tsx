@@ -41,7 +41,6 @@ const Index: React.FC = () => {
       const response = await authenticate(data);
       if (response.data.accessToken) {
         localStorage.setItem("access_token", response.data.accessToken);
-        
       }
       const userData = {
         "id": 44,
@@ -64,13 +63,63 @@ const Index: React.FC = () => {
             ],
             "active": true
           },
+          // {
+          //   "role": "ADMIN",
+          //   "permissions": [
+          //     "all"
+          //   ],
+          //   "active": false
+          // },
           {
-            "role": "ADMIN",
+            "role": "ASSESSMENT",
+            "roleId": "7",
             "permissions": [
-              "all"
+              "create",
+              "edit",
+              "view",
+              "delete",
+              "print"
             ],
-            "active": false
+            "active": true
           },
+          {
+            "role": "IDENTITY_MANAGEMENT",
+            "roleId": "11",
+            "permissions": [
+              "create",
+              "view",
+              "edit",
+              "print"
+            ],
+            "active": true
+          },
+          {
+            "role": "REVENUE_CHART",
+            "roleId": "12",
+            "permissions": [
+              "view",
+              "print"
+            ],
+            "active": true
+          },
+          {
+            "role": "COLLECTIONS",
+            "roleId": "14",
+            "permissions": [
+              "view",
+              "print"
+            ],
+            "active": true
+          },
+          {
+            "role": "REPORTS",
+            "roleId": "17",
+            "permissions": [
+              "view",
+              "print"
+            ],
+            "active": true
+          }
         ],
         "taxOffice": {
           "id": 12,
@@ -79,6 +128,7 @@ const Index: React.FC = () => {
         }
       }
       dispatch(loginUser(userData));
+      // dispatch(loginUser(response.data.user));
       setLoading(false);
       // if (!response.data.user.onboarding_complete) {
       //   router.push("/user-profile");

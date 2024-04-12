@@ -1,6 +1,6 @@
 export type SectionTitleProps = {
   title: React.ReactNode;
-  subtitle: React.ReactNode;
+  subtitle?: React.ReactNode;
   right?: React.ReactNode;
 };
 

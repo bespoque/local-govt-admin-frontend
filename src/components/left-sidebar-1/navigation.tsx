@@ -7,6 +7,11 @@ import {
   GROUP_INVENTORY_RECEIVE,
   GROUP_INVENTORY_TRANSFER,
   GROUP_VEHICLE_LICENCE_CAPTURE,
+  GROUP_REPORTS,
+  GROUP_REVENUE_CHART,
+  GROUP_ASSESSMENT,
+  GROUP_IDENTITY_MANAGEMENT,
+  GROUP_COLLECTIONS
 } from "./constants";
 import { Collection, DashAssessmentIcon, DashIcon, IdManagement, Reports, RevChart, UserMgt } from "components/images";
 
@@ -25,8 +30,7 @@ export type NavigationState = {
   };
 };
 
-const dashboardNav = () => 
-
+const dashboardNav = () =>
   [
     {
       url: "/dashboard",
@@ -35,62 +39,66 @@ const dashboardNav = () =>
       items: [],
     },
   ];
-const assessmentsNav = () => 
 
+const assessmentsNav = () =>
   [
     {
       url: "#",
       icon: <DashAssessmentIcon />,
       title: "Assessments",
+      allowedRoles: GROUP_ASSESSMENT,
       items: [],
     },
   ];
-const identityNav = () => 
+const identityNav = () =>
 
   [
     {
       url: "#",
       icon: <IdManagement />,
       title: "Identity Mgt",
+      allowedRoles: GROUP_IDENTITY_MANAGEMENT,
       items: [],
     },
   ];
 
-const revenueChartNav = () => 
-
+const revenueChartNav = () =>
   [
     {
       url: "#",
       icon: <RevChart />,
       title: "Revenue Charts",
+      allowedRoles: GROUP_REVENUE_CHART,
       items: [],
     },
   ];
 
-const collectionNav = () => 
+const collectionNav = () =>
   [
     {
       url: "#",
       icon: <Collection />,
       title: "Collection",
+      allowedRoles: GROUP_COLLECTIONS,
       items: [],
     },
   ];
 
-const reportingNav = () => 
+const reportingNav = () =>
   [
     {
       url: "#",
       icon: <Reports />,
       title: "Reports",
+      allowedRoles: GROUP_REPORTS,
       items: [],
     },
   ];
 
-const userMgtNav = () => 
+const userMgtNav = () =>
   [
     {
-      url: "#",
+      url: "/user-mgt",
       icon: <UserMgt />,
       title: "User Mgt",
       items: [],
@@ -358,7 +366,7 @@ const userMgtNav = () =>
 
 export const navigationData = (isProduction): NavigationState[] => [
   {
-    title: "Applications",
+    title: "Menus",
     items: [
       ...dashboardNav(),
       ...assessmentsNav(),

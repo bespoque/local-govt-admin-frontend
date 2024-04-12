@@ -15,6 +15,23 @@ export const GROUP_INVENTORY: Role[] = [
   Role.INVENTORY_TRANSFER_VERIFIER,
   Role.INVENTORY_TRANSFER_AUDITOR,
   Role.INVENTORY_TRANSFER_APPROVER,
+  
+];
+
+export const GROUP_ASSESSMENT: Role[] = [
+  Role.ASSESSMENT,
+];
+export const GROUP_IDENTITY_MANAGEMENT: Role[] = [
+  Role.IDENTITY_MANAGEMENT,
+];
+export const GROUP_REVENUE_CHART: Role[] = [
+  Role.REVENUE_CHART,
+];
+export const GROUP_COLLECTIONS: Role[] = [
+  Role.COLLECTIONS,
+];
+export const GROUP_REPORTS: Role[] = [
+  Role.REPORTS,
 ];
 
 export const GROUP_INVENTORY_PROCUREMENT: Role[] = [

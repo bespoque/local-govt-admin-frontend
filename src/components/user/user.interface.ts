@@ -3,6 +3,11 @@ import {ITaxOffice} from "components/tax-office/tax-office.interface";
 export enum Role {
   SUPER_ADMIN = "SUPER_ADMIN",
   ADMIN = "ADMIN",
+  ASSESSMENT = "ASSESSMENT",
+  REVENUE_CHART = "REVENUE_CHART",
+  IDENTITY_MANAGEMENT = "IDENTITY_MANAGEMENT",
+  COLLECTIONS = "COLLECTIONS",
+  REPORTS = "REPORTS",
   INVENTORY_PROCUREMENT_INITIATOR = "INVENTORY_PROCUREMENT_INITIATOR",
   INVENTORY_PROCUREMENT_APPROVER = "INVENTORY_PROCUREMENT_APPROVER",
   INVENTORY_PROCUREMENT_VERIFIER = "INVENTORY_PROCUREMENT_VERIFIER",
@@ -41,6 +46,7 @@ export interface IRole {
   permissions: string[];
   active: boolean;
 }
+
 export interface IUser {
   id: number;
   userSlug: string;

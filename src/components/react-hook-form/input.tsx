@@ -57,7 +57,8 @@ export const Input: React.FC<InputProps> = ({
       id={id}
       disabled={disabled}
       onChange={onChange} // Attach the onChange event handler
-      className={`form-input block ${width} border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 flex-grow-1 focus:border-blue-500 focus:ring-0 sm:text-sm rounded-md h-8`}
+      // className={`form-input block ${width} border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 flex-grow-1 focus:border-blue-500 focus:ring-0 sm:text-sm rounded-md h-8`}
+      className="appearance-none border rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
     />
   );
 };
