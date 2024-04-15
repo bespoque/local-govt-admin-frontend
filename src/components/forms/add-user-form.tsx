@@ -1,21 +1,10 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { InputWrapper } from "components/react-hook-form/input-wrapper";
 import { Label } from "components/react-hook-form/label";
-import { ErrorMessage } from "components/react-hook-form/error-message";
 import { Input } from "components/react-hook-form/input";
 import { Select } from "antd";
-import { useState } from "react";
-import { createUser } from "slices/actions/userActions";
-import { useDispatch } from "react-redux";
-import { addUser } from "slices/users";
-import { toast } from "react-toastify";
-import { useTaxOffices } from "hooks/useTaxOffices";
-import { useRoles } from "hooks/useRoles";
 import { ITaxOffice } from "components/tax-office/tax-office.interface";
 import { IRole } from "components/user/user.interface";
-import { ThreeDots } from "react-loader-spinner";
-import { handleApiError } from "helpers/errors";
-import { RootState, useAppSelector } from "store";
 
 const { Option } = Select;
 
@@ -43,108 +32,118 @@ const Index: React.FC<IAddUserFormProps> = ({ closeModal }) => {
         <div className="space-y-2">
           <div className="grid grid-cols-1 gap-y-2 gap-x-2 sm:grid-cols-12">
             <InputWrapper outerClassName="sm:col-span-6">
-              <Label id="first-name">First name</Label>
-              <Input
-                id="first-name"
-                name="firstName"
-                type="text"
-                rules={{ required: "First name is required" }}
-              />
-            </InputWrapper>
-            <InputWrapper outerClassName="sm:col-span-6">
-              <Label id="middle-name">Middle name</Label>
-              <Input id="middle-name" name="middleName" type="text" />
-            </InputWrapper>
-
-            <InputWrapper outerClassName="sm:col-span-6">
-              <Label id="last-name">Last name</Label>
-              <Input
-                id="last-name"
-                name="lastName"
-                type="text"
-                rules={{ required: "Last name is required" }}
-              />
+              <Label id="first-name">full name</Label>
+              <div className="relative">
+                <img src="/images/icons/user.png" alt="First Name" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+                <input
+                  type="text"
+                  name="lastName"
+                  className="appearance-none border rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
             </InputWrapper>
 
             <InputWrapper outerClassName="sm:col-span-6">
               <Label id="email">Email</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                rules={{ required: "Please enter a valid email" }}
-              />
+              <div className="relative">
+                <img src="/images/icons/mail.png" alt="First Name" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+                <input
+                  type="text"
+                  name="firstName"
+                  className="appearance-none border rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
             </InputWrapper>
 
             <InputWrapper outerClassName="sm:col-span-6">
               <Label id="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="text"
-                rules={{ required: "Phone is required" }}
-              />
+              <div className="relative">
+                <img src="/images/icons/mobile.png" alt="First Name" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+                <input
+                  type="text"
+                  name="firstName"
+                  className="appearance-none border rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
             </InputWrapper>
-            <InputWrapper outerClassName="sm:col-span-6">
-              <Label id="phone">Select Tax office</Label>
-              <Select
-              dropdownClassName="appearance-none border rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
-                style={{ width: "350px" }}>
-                <Option>
-                  Kogi
-                </Option>
-                <Option>
-                  Kogi
-                </Option>
-                <Option>
-                  Kogi
-                </Option>
 
-              </Select>
+            <InputWrapper outerClassName="sm:col-span-6">
+              <Label id="phone">Local Government</Label>
+              <div className="relative">
+                <img src="/images/icons/location.png" alt="First Name" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+
+                <select name="" className="appearance-none border text-center rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">
+                    Kogi
+                  </option>
+                  <option value="">
+                    Kogi
+                  </option>
+                  <option value="">
+                    Kogi
+                  </option>
+                </select>
+              </div>
             </InputWrapper>
 
             <InputWrapper outerClassName="sm:col-span-6">
               <Label id="language">Select User Roles</Label>
-              <Select
-                mode="multiple"
-                style={{ width: "100%" }}
-                placeholder="Select options"
-                dropdownStyle={{ maxHeight: "150px", overflowY: "auto" }}>
+              <div className="relative">
+                <img src="/images/icons/users.png" alt="First Name" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
 
-                <Option>
-                  SUPER_ADMIN
-                </Option>
-                <Option>
-                  ADMIN
-                </Option>
-                <Option>
-                  ASSESSMENT
-                </Option>
-                <Option>
-                  IDENTITY_MANAGEMENT
-                </Option>
-                <Option>
-                  REVENUE_CHART
-                </Option>
-                <Option>
-                  COLLECTIONS
-                </Option>
-                <Option>
-                  REPORTS
-                </Option>
-              </Select>
+                <select className="appearance-none border text-center  rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">
+                    SUPER_ADMIN
+                  </option>
+                  <option value="">
+                    ADMIN
+                  </option>
+                  <option value="">
+                    ASSESSMENT
+                  </option>
+                  <option value="">
+                    IDENTITY_MANAGEMENT
+                  </option>
+                  <option value="">
+                    IDENTITY_MANAGEMENT_AGENT
+                  </option>
+                  <option value="">
+                    REVENUE_CHART
+                  </option>
+                  <option value="">
+                    COLLECTIONS
+                  </option>
+                  <option value="">
+                    REPORTS
+                  </option>
+                </select>
+
+              </div>
             </InputWrapper>
 
             <InputWrapper outerClassName="sm:col-span-6">
               <Label id="phone">Status</Label>
-              <Select
+              <div className="relative">
+                <img src="/images/icons/mail.png" alt="First Name" className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
+                <select className="appearance-none border text-center rounded w-full py-3 px-3 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">
+                    ACTIVE
+                  </option>
+                </select>
+              </div>
+              {/* <Select
                 style={{ width: "350px" }}>
 
                 <Option>
                   ACTIVE
                 </Option>
-        
-              </Select>
+
+              </Select> */}
             </InputWrapper>
           </div>
         </div>

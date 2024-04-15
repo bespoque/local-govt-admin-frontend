@@ -9,11 +9,22 @@ import {authenticate} from "slices/actions/authActions";
 import {useState} from "react";
 import {loginUser} from "slices/auth";
 import { ThreeDots } from "react-loader-spinner";
+import { IRole } from "components/user/user.interface";
 
 export type FormProps = {
-  email: string;
+  username: string;
   password: string;
 };
+
+interface Data {
+  user: { [key: string]: any }[];
+  taxOffice: { [key: string]: any }[];
+  roles: IRole[];
+  status: string;
+  message: string;
+  token: string;
+  redirect: string;
+}
 
 const Index: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -23,8 +34,8 @@ const Index: React.FC = () => {
 
   const methods = useForm<FormProps>({
     defaultValues: {
-      email: "prince.u@bespoque.ng",
-      password: "12345678",
+      username: "johnmary@lga.com",
+      password: "123456",
       // "email": "super.user5@gmail.com",
       // "password": "Test1234$"
     },
@@ -39,9 +50,44 @@ const Index: React.FC = () => {
       setErrorMessage(null);
       setLoading(true);
       const response = await authenticate(data);
-      if (response.data.accessToken) {
-        localStorage.setItem("access_token", response.data.accessToken);
+      if (response.data.token) {
+        localStorage.setItem("access_token", response.data.token);
+        // localStorage.setItem("access_token", response.data.accessToken);
       }
+      console.log("response data", response.data);
+
+      
+      const addActiveProperty = (jsonData: Data): string => {
+        // Loop through roles array and add "active" property with value true to each role object
+        jsonData.roles.forEach(role => role.active = true);
+
+        // Convert back to JSON and return
+        return JSON.stringify(jsonData);
+        
+      }
+      const tesd = addActiveProperty(response.data)
+      const parsedData: Data = JSON.parse(tesd);
+      console.log("parsedData", parsedData);
+      
+    
+      let userDataAPI = parsedData.user[0];
+      const taxOfficeDataAPI = parsedData.taxOffice[0];
+      const rolesDataAPI = parsedData.roles;
+
+      // Deleting the user key from the originalJson
+      delete parsedData.user;
+      delete parsedData.taxOffice;
+      delete parsedData.roles;
+
+      userDataAPI.taxOffice = taxOfficeDataAPI
+      userDataAPI.roles = rolesDataAPI
+
+      // Creating a new object with user data at the top level
+      const rearrangedJson = Object.assign({ user: userDataAPI }, parsedData);
+
+      console.log("rearrangedJson", rearrangedJson);
+      console.log("userOnly", rearrangedJson.user);
+      
       const userData = {
         "id": 44,
         "userSlug": "48474514_kennedy_user",
@@ -127,7 +173,11 @@ const Index: React.FC = () => {
           "value": "Store"
         }
       }
-      dispatch(loginUser(userData));
+
+      
+
+      dispatch(loginUser(rearrangedJson.user));
+      
       // dispatch(loginUser(response.data.user));
       setLoading(false);
       // if (!response.data.user.onboarding_complete) {
@@ -136,6 +186,7 @@ const Index: React.FC = () => {
       //   router.push("/dashboard");
       // }
       router.push("/dashboard");
+      
     } catch (error: any) {
       setLoading(false);
       if (error.response) {
@@ -168,12 +219,12 @@ const Index: React.FC = () => {
               <Label id="email">Email</Label>
               <Input
                 id="email"
-                name="email"
+                name="username"
                 type="email"
                 rules={{required: "Please enter a valid email"}}
               />
-              {errors?.email?.message && (
-                <ErrorMessage>{errors.email.message}</ErrorMessage>
+              {errors?.username?.message && (
+                <ErrorMessage>{errors.username.message}</ErrorMessage>
               )}
             </InputWrapper>
 

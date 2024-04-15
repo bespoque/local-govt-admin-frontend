@@ -18,3 +18,13 @@ export interface ITaxOffice {
   name: TaxOfficeEnum;
   value: string;
 }
+
+export interface ITaxOfficeUser {
+  id: string;
+  taxOffice: string;
+  add1: string;
+  add2: string;
+  phone: string;
+  email: string
+}
+

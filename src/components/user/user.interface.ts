@@ -1,4 +1,4 @@
-import {ITaxOffice} from "components/tax-office/tax-office.interface";
+import { ITaxOffice, ITaxOfficeUser } from "components/tax-office/tax-office.interface";
 
 export enum Role {
   SUPER_ADMIN = "SUPER_ADMIN",
@@ -62,6 +62,28 @@ export interface IUser {
   taxOffice: ITaxOffice;
   roles: IRole[];
 }
+
+export interface IRoleUser {
+  roleId: string;
+  role: Role;
+  permissions: string[];
+  active: boolean;
+}
+
+export interface IUserDet {
+  id: string;
+  name: string;
+  email: string;
+  usergroup: string;
+  phone: string;
+  dept: string
+  designation: string,
+  taxOffice: ITaxOfficeUser;
+  roles: IRoleUser[];
+}
+
+
+
 
 export interface ITaxPayer {
   KGTIN: string;
