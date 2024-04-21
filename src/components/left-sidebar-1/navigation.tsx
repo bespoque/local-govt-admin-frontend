@@ -1,20 +1,19 @@
-import { Role } from "components/user/user.interface";
-import { FiActivity, FiCompass, FiShoppingCart, FiUsers } from "react-icons/fi";
-import { TaxOfficeEnum } from "components/tax-office/tax-office.interface";
+import {Role} from "components/user/user.interface";
+import {TaxOfficeEnum} from "components/tax-office/tax-office.interface";
 import {
-  GROUP_INVENTORY,
-  GROUP_INVENTORY_PROCUREMENT,
-  GROUP_INVENTORY_RECEIVE,
-  GROUP_INVENTORY_TRANSFER,
-  GROUP_VEHICLE_LICENCE_CAPTURE,
-  GROUP_REPORTS,
-  GROUP_REVENUE_CHART,
-  GROUP_ASSESSMENT,
   GROUP_IDENTITY_MANAGEMENT,
-  GROUP_COLLECTIONS
+  GROUP_COLLECTION,
+  GROUP_USER_MANAGEMENT,
 } from "./constants";
-import { Collection, DashAssessmentIcon, DashIcon, IdManagement, Reports, RevChart, UserMgt } from "components/images";
-
+import {
+  Collection,
+  DashAssessmentIcon,
+  DashIcon,
+  IdManagement,
+  Reports,
+  RevChart,
+  UserMgt,
+} from "components/images";
 
 export type NavigationState = {
   title: string;
@@ -30,80 +29,70 @@ export type NavigationState = {
   };
 };
 
-const dashboardNav = () =>
-  [
-    {
-      url: "/dashboard",
-      icon: <DashIcon />,
-      title: "Dashboard",
-      items: [],
-    },
-  ];
+const dashboardNav = () => [
+  {
+    url: "/dashboard",
+    icon: <DashIcon />,
+    title: "Dashboard",
+    items: [],
+  },
+];
 
-const assessmentsNav = () =>
-  [
-    {
-      url: "#",
-      icon: <DashAssessmentIcon />,
-      title: "Assessments",
-      allowedRoles: GROUP_ASSESSMENT,
-      items: [],
-    },
-  ];
-const identityNav = () =>
+const assessmentsNav = () => [
+  {
+    url: "#",
+    icon: <DashAssessmentIcon />,
+    title: "Assessments",
+    items: [],
+  },
+];
+const identityNav = () => [
+  {
+    url: "#",
+    icon: <IdManagement />,
+    title: "Identity Mgt",
+    allowedRoles: GROUP_IDENTITY_MANAGEMENT,
+    items: [],
+  },
+];
 
-  [
-    {
-      url: "#",
-      icon: <IdManagement />,
-      title: "Identity Mgt",
-      allowedRoles: GROUP_IDENTITY_MANAGEMENT,
-      items: [],
-    },
-  ];
+const revenueChartNav = () => [
+  {
+    url: "#",
+    icon: <RevChart />,
+    title: "Revenue Charts",
+    items: [],
+  },
+];
 
-const revenueChartNav = () =>
-  [
-    {
-      url: "#",
-      icon: <RevChart />,
-      title: "Revenue Charts",
-      allowedRoles: GROUP_REVENUE_CHART,
-      items: [],
-    },
-  ];
+const collectionNav = () => [
+  {
+    url: "#",
+    icon: <Collection />,
+    title: "Collection",
+    allowedRoles: GROUP_COLLECTION,
+    items: [],
+  },
+];
 
-const collectionNav = () =>
-  [
-    {
-      url: "#",
-      icon: <Collection />,
-      title: "Collection",
-      allowedRoles: GROUP_COLLECTIONS,
-      items: [],
-    },
-  ];
+const reportingNav = () => [
+  {
+    url: "#",
+    icon: <Reports />,
+    title: "Reports",
+    items: [],
+  },
+];
 
-const reportingNav = () =>
-  [
-    {
-      url: "#",
-      icon: <Reports />,
-      title: "Reports",
-      allowedRoles: GROUP_REPORTS,
-      items: [],
-    },
-  ];
-
-const userMgtNav = () =>
-  [
-    {
-      url: "/user-mgt",
-      icon: <UserMgt />,
-      title: "User Mgt",
-      items: [],
-    },
-  ];
+const userMgtNav = () => [
+  {
+    url: "/user-mgt",
+    icon: <UserMgt />,
+    allowedRoles: GROUP_USER_MANAGEMENT,
+    title: "User Mgt",
+    items: [],
+  },
+];
 
 // const dashboardNav = (isProduction) =>
 //   isProduction

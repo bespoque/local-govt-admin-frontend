@@ -1,13 +1,13 @@
-import {useForm, FormProvider} from "react-hook-form";
-import {InputWrapper} from "components/react-hook-form/input-wrapper";
-import {Label} from "components/react-hook-form/label";
-import {ErrorMessage} from "components/react-hook-form/error-message";
-import {Input} from "components/react-hook-form/input";
-import {useRouter} from "next/router";
-import {useDispatch} from "react-redux";
-import {authenticate} from "slices/actions/authActions";
-import {useState} from "react";
-import {loginUser} from "slices/auth";
+import { useForm, FormProvider } from "react-hook-form";
+import { InputWrapper } from "components/react-hook-form/input-wrapper";
+import { Label } from "components/react-hook-form/label";
+import { ErrorMessage } from "components/react-hook-form/error-message";
+import { Input } from "components/react-hook-form/input";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { authenticate } from "slices/actions/authActions";
+import { useState } from "react";
+import { loginUser } from "slices/auth";
 import { ThreeDots } from "react-loader-spinner";
 import { IRole } from "components/user/user.interface";
 
@@ -36,13 +36,11 @@ const Index: React.FC = () => {
     defaultValues: {
       username: "johnmary@lga.com",
       password: "123456",
-      // "email": "super.user5@gmail.com",
-      // "password": "Test1234$"
     },
   });
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = methods;
 
   const onSubmit = async (data: FormProps) => {
@@ -56,38 +54,8 @@ const Index: React.FC = () => {
       }
       console.log("response data", response.data);
 
-      
-      const addActiveProperty = (jsonData: Data): string => {
-        // Loop through roles array and add "active" property with value true to each role object
-        jsonData.roles.forEach(role => role.active = true);
 
-        // Convert back to JSON and return
-        return JSON.stringify(jsonData);
-        
-      }
-      const tesd = addActiveProperty(response.data)
-      const parsedData: Data = JSON.parse(tesd);
-      console.log("parsedData", parsedData);
-      
-    
-      let userDataAPI = parsedData.user[0];
-      const taxOfficeDataAPI = parsedData.taxOffice[0];
-      const rolesDataAPI = parsedData.roles;
 
-      // Deleting the user key from the originalJson
-      delete parsedData.user;
-      delete parsedData.taxOffice;
-      delete parsedData.roles;
-
-      userDataAPI.taxOffice = taxOfficeDataAPI
-      userDataAPI.roles = rolesDataAPI
-
-      // Creating a new object with user data at the top level
-      const rearrangedJson = Object.assign({ user: userDataAPI }, parsedData);
-
-      console.log("rearrangedJson", rearrangedJson);
-      console.log("userOnly", rearrangedJson.user);
-      
       const userData = {
         "id": 44,
         "userSlug": "48474514_kennedy_user",
@@ -109,13 +77,6 @@ const Index: React.FC = () => {
             ],
             "active": true
           },
-          // {
-          //   "role": "ADMIN",
-          //   "permissions": [
-          //     "all"
-          //   ],
-          //   "active": false
-          // },
           {
             "role": "ASSESSMENT",
             "roleId": "7",
@@ -174,19 +135,90 @@ const Index: React.FC = () => {
         }
       }
 
-      
+      const origJson = {
+        "user": [
+          {
+            "id": "1",
+            "name": "John Mary",
+            "email": "johnmary@lga.com",
+            "usergroup": "1",
+            "phone": "08037379863",
+            "dept": "IT",
+            "designation": "Developer"
+          }
+        ],
+        "taxOffice": [
+          {
+            "id": "1",
+            "taxOffice": "DEFAULT",
+            "adminuser": "johnmary@lga.com",
+            "add1": "Lokoja",
+            "add2": null,
+            "phone": "090999934",
+            "email": "info@bespoque.ng",
+            "primarycolor": "#000000",
+            "logourl": "https://irs.kg.gov.ng/wp-content/uploads/2018/05/KGIRS-logo-txt-2.png"
+          }
+        ],
+        "permissions": [
+          "user_login",
+          "user_password",
+          "group_create",
+          "group_permission_add",
+          "group_permission_remove",
+          "group_permission_list",
+          "user_new",
+          "user_list",
+          "user_view",
+          "user_update",
+          "collection_view",
+          "identity_indv_list",
+          "identity_corp_list",
+          "identity_agent_list"
+        ],
+        "status": "200",
+        "message": "OKAY",
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTM2OTkwMTksIm5iZiI6MTcxMzY5OTAxOSwiZXhwIjoxNzEzNzAyNjE5LCJkYXRhIjp7InVzZXJfaWQiOiIxIiwiY2xpZW50aWQiOiIxIiwidXNlcl9lbWFpbCI6ImpvaG5tYXJ5QGxnYS5jb20ifX0.FQWVGuQPpXG_EAlxZCgTWuRdEGwAOR_QPlo0CcGk2-I",
+        "redirect": "false"
+      };
 
-      dispatch(loginUser(rearrangedJson.user));
-      
+      // Transforming permissions array to roles array
+      const updatedUser = origJson.user[0];
+      const updatedJson = {
+        "user": {
+          ...updatedUser,
+          "roles": origJson.permissions.map((permission, index) => ({
+            "roleId": index + 1,
+            "role": permission,
+            "permissions": ["all"],
+            "active": true
+          })),
+          "taxOffice": origJson.taxOffice[0]
+        },
+        "status": origJson.status,
+        "message": origJson.message,
+        "token": origJson.token,
+        "redirect": origJson.redirect
+      };
+
+      // Conditionally add SUPER_ADMIN role
+      if (updatedUser.usergroup === "1") {
+        updatedJson.user.roles.push({
+          "roleId": updatedJson.user.roles.length + 1,
+          "role": "SUPER_ADMIN",
+          "permissions": ["all"],
+          "active": true
+        });
+      }
+
+
+
+
+      dispatch(loginUser(updatedJson?.user));
       // dispatch(loginUser(response.data.user));
       setLoading(false);
-      // if (!response.data.user.onboarding_complete) {
-      //   router.push("/user-profile");
-      // } else {
-      //   router.push("/dashboard");
-      // }
       router.push("/dashboard");
-      
+
     } catch (error: any) {
       setLoading(false);
       if (error.response) {
@@ -221,7 +253,7 @@ const Index: React.FC = () => {
                 id="email"
                 name="username"
                 type="email"
-                rules={{required: "Please enter a valid email"}}
+                rules={{ required: "Please enter a valid email" }}
               />
               {errors?.username?.message && (
                 <ErrorMessage>{errors.username.message}</ErrorMessage>
@@ -249,11 +281,10 @@ const Index: React.FC = () => {
           <button
             disabled={loading}
             type="submit"
-            className={`py-3.5 bg-cyan-950 rounded shadow justify-center items-center gap-2.5 inline-flex text-sm font-medium text-white border border-transparent shadow-sm rounded-md w-full ${
-              loading ? "opacity-60 cursor-not-allowed" : "opacity-100"
-            }`}>
-              {loading ? (
-              <ThreeDots 
+            className={`py-3.5 bg-cyan-950 rounded shadow justify-center items-center gap-2.5 inline-flex text-sm font-medium text-white border border-transparent shadow-sm rounded-md w-full ${loading ? "opacity-60 cursor-not-allowed" : "opacity-100"
+              }`}>
+            {loading ? (
+              <ThreeDots
                 height="20"
                 width="30"
                 radius="5"
