@@ -24,7 +24,7 @@ const Index: React.FC = () => {
   const methods = useForm<FormProps>({
     defaultValues: {
       username: "johnmary@lga.com",
-      password: "123456",
+      password: "test123",
     },
   });
   const {
