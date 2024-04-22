@@ -40,9 +40,6 @@ const Index: React.FC = () => {
       if (response.data.token) {
         localStorage.setItem("access_token", response.data.token);
       }
-      console.log("response data", response.data);
-
-
 
       const userData = {
         "id": 44,
