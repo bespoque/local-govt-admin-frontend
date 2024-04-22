@@ -27,6 +27,7 @@ export interface ITaxOfficeUser {
   add2: string;
   phone: string;
   email: string
+  name: string;
   primarycolor: string
   logourl: string
 }
