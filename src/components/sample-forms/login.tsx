@@ -9,22 +9,11 @@ import { authenticate } from "slices/actions/authActions";
 import { useState } from "react";
 import { loginUser } from "slices/auth";
 import { ThreeDots } from "react-loader-spinner";
-import { IRole } from "components/user/user.interface";
 
 export type FormProps = {
   username: string;
   password: string;
 };
-
-interface Data {
-  user: { [key: string]: any }[];
-  taxOffice: { [key: string]: any }[];
-  roles: IRole[];
-  status: string;
-  message: string;
-  token: string;
-  redirect: string;
-}
 
 const Index: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -50,7 +39,6 @@ const Index: React.FC = () => {
       const response = await authenticate(data);
       if (response.data.token) {
         localStorage.setItem("access_token", response.data.token);
-        // localStorage.setItem("access_token", response.data.accessToken);
       }
       console.log("response data", response.data);
 

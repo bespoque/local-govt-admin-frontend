@@ -91,9 +91,6 @@ export interface IUserDet {
   roles: IRoleUser[];
 }
 
-
-
-
 export interface ITaxPayer {
   KGTIN: string;
   birth_date: string;

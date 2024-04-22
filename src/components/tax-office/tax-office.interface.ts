@@ -22,9 +22,12 @@ export interface ITaxOffice {
 export interface ITaxOfficeUser {
   id: string;
   taxOffice: string;
+  adminuser: string;
   add1: string;
   add2: string;
   phone: string;
   email: string
+  primarycolor: string
+  logourl: string
 }
 

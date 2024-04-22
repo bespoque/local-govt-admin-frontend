@@ -73,7 +73,7 @@ const Index: React.FC = () => {
 
       <div className="flex justify-end p-2">
         <button
-          onClick={openModal}
+          // onClick={openModal}
           className="px-4 py-2 text-xs  text-white rounded bg-cyan-900 ">
           Add New Records
         </button>

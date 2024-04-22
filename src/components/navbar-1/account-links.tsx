@@ -14,30 +14,9 @@ export type ItemProps = {
 
 const AccountLinks: React.FC = () => {
   const items: ItemProps[] = [
-
-    // {
-    //   url: "/",
-    //   icon: <FiMail size={18} className="stroke-current" />,
-    //   name: "Inbox",
-    //   badge: {
-    //     number: 2,
-    //     color: "bg-red-500 text-white",
-    //   },
-    // },
-    // {
-    //   url: "/",
-    //   icon: <FiStar size={18} className="stroke-current" />,
-    //   iconColor: "default",
-    //   name: "Messages",
-    //   badge: {
-    //     number: 3,
-    //     color: "bg-blue-500 text-white",
-    //   },
-    // },
-
     {
-      url: "/dashboard",
-      // url: "/user-profile",
+      // url: "/dashboard",
+      url: "/user-profile",
       icon: <FiUser size={18} className="stroke-current" />,
       name: "Profile",
     },
