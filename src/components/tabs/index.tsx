@@ -121,7 +121,6 @@ export const IconTabs: React.FC<TabsProps> = ({tabs}) => {
 
 export const UnderlinedTabs: React.FC<TabsProps> = ({tabs}) => {
   const [openTab, setOpenTab] = useState<number>(0);
-
   return (
     <div className="flex flex-wrap w-full space-y-2">
       <div className="flex flex-row overflow-x-auto lg:flex-wrap lg:space-x-1">
@@ -159,7 +158,7 @@ export const DefaultTabs: React.FC<TabsProps> = ({tabs}) => {
 
   return (
     <div className="flex flex-wrap w-full space-y-2">
-      <div className="flex flex-row overflow-x-auto lg:flex-wrap lg:space-x-1">
+      <div className="flex flex-row overflow-x-auto rounded-lg lg:flex-wrap lg:space-x-1">
         {tabs.map((tab, key) => (
           <div key={key} className="flex-none">
             <button
@@ -168,7 +167,7 @@ export const DefaultTabs: React.FC<TabsProps> = ({tabs}) => {
               }}
               className={`font-bold uppercase text-xs p-4 ${
                 openTab === tab.index
-                  ? "bg-blue-500 text-white hover:bg-blue-600"
+                ? " bg-cyan-900 text-white hover:bg-cyan-900"
                   : "bg-white dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-blue-50"
               }`}
               type="button">

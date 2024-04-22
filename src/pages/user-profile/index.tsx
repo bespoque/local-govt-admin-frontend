@@ -1,5 +1,5 @@
 import SectionTitle from "components/section-title";
-import {UnderlinedTabs} from "components/tabs";
+import {DefaultTabs, UnderlinedTabs} from "components/tabs";
 import AccountSettings from "components/sample-forms/account-settings";
 import EmailPreferences from "components/sample-forms/email-preferences";
 import SecuritySettings from "components/sample-forms/security-settings";
@@ -54,10 +54,10 @@ const Index: React.FC = () => {
 
   return (
     <>
-      <SectionTitle title="Pages" subtitle="User profile" />
-
+      {/* <SectionTitle title="Pages" subtitle="User profile" /> */}
+      <h3 className="font-mono text-cyan-800 text-xl my-3">User profile</h3>
       <Widget>
-        <div className="flex flex-row items-center justify-start p-4">
+        <div className="flex flex-row items-center justify-center text-white rounded-md bg-cyan-900 p-4">
           <div className="shrink-0 w-24">
             <img
               src="/images/faces/profile.png"
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
 
         <div className="flex flex-wrap">
           <div className="w-full p-4">
-            <UnderlinedTabs tabs={tabs} />
+            <DefaultTabs tabs={tabs} />
           </div>
         </div>
       </Widget>
