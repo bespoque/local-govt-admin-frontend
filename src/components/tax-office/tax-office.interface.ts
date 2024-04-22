@@ -11,6 +11,7 @@ export enum TaxOfficeEnum {
   KABBA = "KABBA",
   OKENE_ADAVI = "OKENE_ADAVI",
   STORE = "STORE",
+  DEFAULT = "DEFAULT",
 }
 
 export interface ITaxOffice {
@@ -21,13 +22,14 @@ export interface ITaxOffice {
 
 export interface ITaxOfficeUser {
   id: string;
-  taxOffice: string;
+  taxOffice: TaxOfficeEnum;
   adminuser: string;
   add1: string;
   add2: string;
   phone: string;
   email: string
-  name: string;
+  name: TaxOfficeEnum;
+  value: string;
   primarycolor: string
   logourl: string
 }
