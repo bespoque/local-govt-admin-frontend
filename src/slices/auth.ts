@@ -18,17 +18,7 @@ import {IUser, IUserDet} from "components/user/user.interface";
 //   taxOffice: null,
 //   roles: [],
 // };
-// const initialState: IUser = {
-  //   id: string;
-  // name: string;
-  // email: string;
-  // usergroup: string;
-  // phone: string;
-  // dept: string
-  // designation: string,
-  // taxOffice: ITaxOfficeUser;
-  // roles: IRoleUser[];
-  // };
+
   const initialState: IUserDet = {
     id: null,
     name: null,

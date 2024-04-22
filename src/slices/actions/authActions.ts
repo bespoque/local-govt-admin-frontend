@@ -7,5 +7,6 @@ export const authenticate = async (data) => {
 };
 
 export const updatePassword = async (data) => {
-  return api.post("/users/updatePassword", data);
+  return api.post("/basic/user_password.php", data);
+  // return api.post("/users/updatePassword", data);
 };
