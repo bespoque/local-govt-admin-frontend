@@ -69,7 +69,7 @@ const Index: React.FC<{userSlug: string}> = ({userSlug}) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded overflow-hidden shadow-lg p-2 mt-5 ">
         <div className="space-y-6">
           <div className="grid grid-cols-1 gap-y-1 gap-x-2 sm:grid-cols-12">
             <InputWrapper outerClassName="sm:col-span-12">

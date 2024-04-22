@@ -69,6 +69,26 @@ const Index: React.FC = () => {
             <p className="text-base font-bold whitespace-nowrap">{`${user?.name}`}</p>
           </div>
         </div>
+        {/* <div className="max-w-xs rounded overflow-hidden shadow-lg">
+          <img className="w-full" src="https://via.placeholder.com/150" alt="Placeholder" />
+          <div className="px-6 py-4">
+            <div className="font-bold text-xl mb-2">Card Title</div>
+            <p className="text-gray-700 text-base">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed purus justo.
+            </p>
+          </div>
+          <div className="px-6 py-4">
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              #Tag1
+            </span>
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              #Tag2
+            </span>
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              #Tag3
+            </span>
+          </div>
+        </div> */}
 
         <div className="flex flex-wrap">
           <div className="w-full p-4">
