@@ -43,19 +43,19 @@ const Index: React.FC<{ userSlug: string }> = ({ userSlug }) => {
       newpassword: payload.confirmPassword
     }
     
-    // try {
-    //   setReqLoading(true);
-    //   // await updatePassword(payload);
-    //   await updatePassword(passResetPayload);
-    //   toast.success("Password updated successfully");
-    //   reset();
-    //   // const { data } = await fetchUser({ userSlug });
-    //   // dispatch(updateLoggedInUser(data));
-    // } catch (error) {
-    //   handleApiError(error, userData, "There was an error Updating password");
-    // } finally {
-    //   setReqLoading(false);
-    // }
+    try {
+      setReqLoading(true);
+      // await updatePassword(payload);
+      await updatePassword(passResetPayload);
+      toast.success("Password updated successfully");
+      reset();
+      // const { data } = await fetchUser({ userSlug });
+      // dispatch(updateLoggedInUser(data));
+    } catch (error) {
+      handleApiError(error, userData, "There was an error Updating password");
+    } finally {
+      setReqLoading(false);
+    }
   };
 
   const passwordValidation = (value: string) => {

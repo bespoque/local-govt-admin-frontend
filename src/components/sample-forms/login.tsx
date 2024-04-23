@@ -24,7 +24,7 @@ const Index: React.FC = () => {
   const methods = useForm<FormProps>({
     defaultValues: {
       username: "johnmary@lga.com",
-      password: "test123",
+      password: "Windows@1p",
     },
   });
   const {
@@ -41,149 +41,26 @@ const Index: React.FC = () => {
         localStorage.setItem("access_token", response.data.token);
       }
 
-      const userData = {
-        "id": 44,
-        "userSlug": "48474514_kennedy_user",
-        "email": "super.user5@gmail.com",
-        "firstName": "kennedy",
-        "middleName": "benson",
-        "lastName": "user",
-        "phone": "08000000005",
-        "last_login": "2024-04-02T16:50:23.000Z",
-        "onboarding_complete": true,
-        "account_status": "ACTIVE",
-        "createdBy": null,
-        "createdAt": "2023-08-23T15:40:27.608Z",
-        "roles": [
-          {
-            "role": "SUPER_ADMIN",
-            "permissions": [
-              "all"
-            ],
-            "active": true
-          },
-          {
-            "role": "ASSESSMENT",
-            "roleId": "7",
-            "permissions": [
-              "create",
-              "edit",
-              "view",
-              "delete",
-              "print"
-            ],
-            "active": true
-          },
-          {
-            "role": "IDENTITY_MANAGEMENT",
-            "roleId": "11",
-            "permissions": [
-              "create",
-              "view",
-              "edit",
-              "print"
-            ],
-            "active": true
-          },
-          {
-            "role": "REVENUE_CHART",
-            "roleId": "12",
-            "permissions": [
-              "view",
-              "print"
-            ],
-            "active": true
-          },
-          {
-            "role": "COLLECTIONS",
-            "roleId": "14",
-            "permissions": [
-              "view",
-              "print"
-            ],
-            "active": true
-          },
-          {
-            "role": "REPORTS",
-            "roleId": "17",
-            "permissions": [
-              "view",
-              "print"
-            ],
-            "active": true
-          }
-        ],
-        "taxOffice": {
-          "id": 12,
-          "name": "STORE",
-          "value": "Store"
-        }
-      }
-
-      const origJson = {
-        "user": [
-          {
-            "id": "1",
-            "name": "John Mary",
-            "email": "johnmary@lga.com",
-            "usergroup": "1",
-            "phone": "08037379863",
-            "dept": "IT",
-            "designation": "Developer"
-          }
-        ],
-        "taxOffice": [
-          {
-            "id": "1",
-            "taxOffice": "DEFAULT",
-            "adminuser": "johnmary@lga.com",
-            "add1": "Lokoja",
-            "add2": null,
-            "phone": "090999934",
-            "email": "info@bespoque.ng",
-            "primarycolor": "#000000",
-            "logourl": "https://irs.kg.gov.ng/wp-content/uploads/2018/05/KGIRS-logo-txt-2.png"
-          }
-        ],
-        "permissions": [
-          "user_login",
-          "user_password",
-          "group_create",
-          "group_permission_add",
-          "group_permission_remove",
-          "group_permission_list",
-          "user_new",
-          "user_list",
-          "user_view",
-          "user_update",
-          "collection_view",
-          "identity_indv_list",
-          "identity_corp_list",
-          "identity_agent_list"
-        ],
-        "status": "200",
-        "message": "OKAY",
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTM2OTkwMTksIm5iZiI6MTcxMzY5OTAxOSwiZXhwIjoxNzEzNzAyNjE5LCJkYXRhIjp7InVzZXJfaWQiOiIxIiwiY2xpZW50aWQiOiIxIiwidXNlcl9lbWFpbCI6ImpvaG5tYXJ5QGxnYS5jb20ifX0.FQWVGuQPpXG_EAlxZCgTWuRdEGwAOR_QPlo0CcGk2-I",
-        "redirect": "false"
-      };
+      console.log("response", response);
+      
 
       // Transforming permissions array to roles array
-      const updatedUser = origJson.user[0];
+      const updatedUser = response.data.user[0];
       const updatedJson = {
         "user": {
           ...updatedUser,
-          "roles": origJson.permissions.map((permission, index) => ({
+          "roles": response.data.permissions.map((permission, index) => ({
             "roleId": index + 1,
             "role": permission,
             "permissions": ["all"],
             "active": true
           })),
-          "taxOffice": origJson.taxOffice[0]
+          "taxOffice": response.data.taxOffice[0]
         },
-        "status": origJson.status,
-        "message": origJson.message,
-        "token": origJson.token,
-        "redirect": origJson.redirect
+        "status": response.data.status,
+        "message": response.data.message,
+        "token": response.data.token,
+        "redirect": response.data.redirect
       };
 
       // Conditionally add SUPER_ADMIN role
