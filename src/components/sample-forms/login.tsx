@@ -39,10 +39,7 @@ const Index: React.FC = () => {
       const response = await authenticate(data);
       if (response.data.token) {
         localStorage.setItem("access_token", response.data.token);
-      }
-
-      console.log("response", response);
-      
+      }      
 
       // Transforming permissions array to roles array
       const updatedUser = response.data.user[0];
