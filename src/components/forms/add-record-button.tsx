@@ -30,10 +30,10 @@ const AddRecordButton: React.FC<AddRecordButtonProps> = ({ onAddRecord }) => {
   const handleAddRecord = async () => {
     if (selectedType === "group" && formData) {
       try {
-        await createGroup(formData);
-        handleToggleDropdown()
+      const response =  await createGroup(formData);
+        handleToggleDropdown()    
         setIsOpen(false)
-        toast.success("Password updated successfully");;
+        toast.success(response?.data?.message);;
       } catch (error) {
         handleToggleDropdown()
         setIsOpen(false)

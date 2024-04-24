@@ -59,7 +59,6 @@ const Index: React.FC = () => {
 
   const handleAddRecord = (type: 'user' | 'group', formData: any) => {
     // Implement logic to add record here
-    console.log(`Adding ${type}`, formData);
   };
 
 
