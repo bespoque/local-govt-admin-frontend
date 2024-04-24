@@ -6,12 +6,14 @@ import { Input } from "components/react-hook-form/input";
 import { updatePassword } from "slices/actions/authActions";
 import { fetchUser } from "slices/actions/userActions";
 import { useDispatch } from "react-redux";
-import { updateLoggedInUser } from "slices/auth";
+import { logoutLoggedInUser, updateLoggedInUser } from "slices/auth";
 import { handleApiError } from "helpers/errors";
 import { useAppSelector } from "store";
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+
 
 export type FormProps = {
   oldPassword: string;
@@ -21,6 +23,7 @@ export type FormProps = {
 
 const Index: React.FC<{ userSlug: string }> = ({ userSlug }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const userData = useAppSelector((state) => state.auth);
   const [reqLoading, setReqLoading] = useState<boolean>(false);
   const methods = useForm<FormProps>({
@@ -45,10 +48,11 @@ const Index: React.FC<{ userSlug: string }> = ({ userSlug }) => {
     
     try {
       setReqLoading(true);
-      // await updatePassword(payload);
       await updatePassword(passResetPayload);
       toast.success("Password updated successfully");
       reset();
+      dispatch(logoutLoggedInUser());
+      router.push("/");
       // const { data } = await fetchUser({ userSlug });
       // dispatch(updateLoggedInUser(data));
     } catch (error) {

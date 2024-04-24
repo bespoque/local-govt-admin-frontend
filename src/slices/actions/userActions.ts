@@ -11,6 +11,9 @@ export const fetchUser = async ({userSlug}) => {
 export const createUser = async (data) => {
   return api.post("/users/create", data);
 };
+export const createGroup = async (data) => {
+  return api.post("/administrator/GroupCreate.php", data);
+};
 export const updateUser = async (userSlug, data) => {
   return api.patch(`/users/${userSlug}`, data);
 };

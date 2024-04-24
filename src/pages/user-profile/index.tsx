@@ -1,22 +1,22 @@
 import SectionTitle from "components/section-title";
-import {DefaultTabs, UnderlinedTabs} from "components/tabs";
+import { DefaultTabs, UnderlinedTabs } from "components/tabs";
 import AccountSettings from "components/sample-forms/account-settings";
 import EmailPreferences from "components/sample-forms/email-preferences";
 import SecuritySettings from "components/sample-forms/security-settings";
 import Widget from "components/social-feed/widget";
 import UserProfile from "components/user-profile";
 import Table from "../../components/tables/custom-table";
-import {useSelector} from "react-redux";
-import {RootState} from "store";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 import moment from "moment";
 
 const Index: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth);
   const userInfoPairs = [
     { label: "First Name", value: user?.name },
-    {label: "Email Address", value: user?.email},
-    {label: "Phone Number", value: user?.phone},
-    {label: "Area Tax Office", value: user?.taxOffice?.taxOffice},
+    { label: "Email Address", value: user?.email },
+    { label: "Phone Number", value: user?.phone },
+    { label: "Area Tax Office", value: user?.taxOffice?.taxOffice },
   ];
 
   const tabs = [
@@ -69,27 +69,6 @@ const Index: React.FC = () => {
             <p className="text-base font-bold whitespace-nowrap">{`${user?.name}`}</p>
           </div>
         </div>
-        {/* <div className="max-w-xs rounded overflow-hidden shadow-lg">
-          <img className="w-full" src="https://via.placeholder.com/150" alt="Placeholder" />
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">Card Title</div>
-            <p className="text-gray-700 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed purus justo.
-            </p>
-          </div>
-          <div className="px-6 py-4">
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-              #Tag1
-            </span>
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-              #Tag2
-            </span>
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
-              #Tag3
-            </span>
-          </div>
-        </div> */}
-
         <div className="flex flex-wrap">
           <div className="w-full p-4">
             <DefaultTabs tabs={tabs} />

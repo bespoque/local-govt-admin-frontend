@@ -18,11 +18,11 @@ export type FormProps = {
   taxOffice?: ITaxOffice;
 };
 
-interface IAddUserFormProps {
+interface IAddGroupFormProps {
   closeModal: () => void;
 }
 
-const Index: React.FC<IAddUserFormProps> = ({ closeModal }) => {
+const Index: React.FC<IAddGroupFormProps> = ({ closeModal }) => {
   const methods = useForm<FormProps>({});
 
 
