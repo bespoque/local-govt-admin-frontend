@@ -114,11 +114,11 @@ const Index: React.FC = () => {
           Add New Records
         </button> */}
       </div>
-      <div className="flex flex-wrap">
+      {/* <div className="flex flex-wrap">
         <div className="w-full p-4">
           <DefaultTabs tabs={tabs} />
         </div>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 };

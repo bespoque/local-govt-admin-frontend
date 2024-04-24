@@ -31,12 +31,12 @@ const AddRecordButton: React.FC<AddRecordButtonProps> = ({ onAddRecord }) => {
     if (selectedType === "group" && formData) {
       try {
         await createGroup(formData);
-        setIsOpen(false);
-        setFormData(null);
+        handleToggleDropdown()
+        setIsOpen(false)
         toast.success("Password updated successfully");;
       } catch (error) {
-        setIsOpen(false);
-        setFormData(null);
+        handleToggleDropdown()
+        setIsOpen(false)
         handleApiError(error, "There was an error Updating password");
       } finally {
         setReqLoading(false);
@@ -49,7 +49,7 @@ const AddRecordButton: React.FC<AddRecordButtonProps> = ({ onAddRecord }) => {
   };
 
   const UserModal = (
-    <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-start" style={{ height: '100vh', width: '30vw' }}>
+    <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-2/6">
       <div className="bg-white p-6 rounded-lg h-full flex flex-col justify-center">
         <div>
           <h2 className="text-lg font-semibold mb-4">Add User</h2>
@@ -102,39 +102,8 @@ const AddRecordButton: React.FC<AddRecordButtonProps> = ({ onAddRecord }) => {
   );
 
 
-
-  // const UserModal = (
-  //   <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-  //     <div className="bg-white p-6 rounded-lg">
-  //       <h2 className="text-lg font-semibold mb-4">Add User</h2>
-  //       <input
-  //         type="text"
-  //         name="username"
-  //         placeholder="Username"
-  //         className="border rounded-md px-2 py-1 mb-2 w-full"
-  //         onChange={handleModalInputChange}
-  //       />
-  //       <input
-  //         type="email"
-  //         name="email"
-  //         placeholder="Email"
-  //         className="border rounded-md px-2 py-1 mb-2 w-full"
-  //         onChange={handleModalInputChange}
-  //       />
-  //       <button
-  //         onClick={handleAddRecord}
-  //         className="bg-blue-500 text-white px-4 py-2 rounded-md">
-  //         Add User
-  //       </button>
-  //       <button onClick={handleToggleDropdown} className="ml-2 text-gray-600">
-  //         Cancel
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
-
   const GroupModal = (
-    <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end  justify-end" style={{ height: '100vh', width: '30vw' }}>
+    <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-end" >
       <div className="bg-white p-6 h-full rounded-md flex flex-col justify-center">
         <div>
           <h2 className="text-lg font-semibold mb-4">Add Group</h2>
@@ -166,29 +135,7 @@ const AddRecordButton: React.FC<AddRecordButtonProps> = ({ onAddRecord }) => {
       </div>
     </div>
   );
-  // const GroupModal = (
-  //   <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-  //     <div className="bg-white p-6 rounded-lg">
-  //       <h2 className="text-lg font-semibold mb-4">Add Group</h2>
-  //       <input
-  //         type="text"
-  //         name="groupName"
-  //         placeholder="Group Name"
-  //         className="border rounded-md px-2 py-1 mb-2 w-full"
-  //         onChange={handleModalInputChange}
-  //       />
-  //       <button
-  //         onClick={handleAddRecord}
-  //         className="bg-blue-500 text-white px-4 py-2 rounded-md">
-  //         Add Group
-  //       </button>
-  //       <button onClick={handleToggleDropdown} className="ml-2 text-gray-600">
-  //         Cancel
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
-
+  
   return (
     <div className="relative inline-block text-left">
       <div>
@@ -211,16 +158,16 @@ const AddRecordButton: React.FC<AddRecordButtonProps> = ({ onAddRecord }) => {
           aria-labelledby="options-menu">
           <div className="py-1" role="none">
             <button
-              onClick={() => handleSelectType("user")}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem">
-              Add User
-            </button>
-            <button
               onClick={() => handleSelectType("group")}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
               role="menuitem">
               Add Group
+            </button>
+            <button
+              onClick={() => handleSelectType("user")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+              role="menuitem">
+              Add User
             </button>
           </div>
         </div>
