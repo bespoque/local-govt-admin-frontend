@@ -46,7 +46,6 @@ const Index: React.FC = () => {
       content: (
         <div className="w-full py-4 lg:w-1/2">
           <SecuritySettings userSlug={user?.id} />
-          {/* <SecuritySettings userSlug={user?.userSlug} /> */}
         </div>
       ),
     },
@@ -54,7 +53,6 @@ const Index: React.FC = () => {
 
   return (
     <>
-      {/* <SectionTitle title="Pages" subtitle="User profile" /> */}
       <h3 className="font-mono text-cyan-800 text-xl my-3">User profile</h3>
       <Widget>
         <div className="flex flex-row items-center justify-center text-white rounded-md bg-cyan-900 p-4">

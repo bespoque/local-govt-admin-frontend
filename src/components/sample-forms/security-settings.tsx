@@ -4,7 +4,6 @@ import { Label } from "components/react-hook-form/label";
 import { ErrorMessage } from "components/react-hook-form/error-message";
 import { Input } from "components/react-hook-form/input";
 import { updatePassword } from "slices/actions/authActions";
-import { fetchUser } from "slices/actions/userActions";
 import { useDispatch } from "react-redux";
 import { logoutLoggedInUser, updateLoggedInUser } from "slices/auth";
 import { handleApiError } from "helpers/errors";
@@ -53,8 +52,6 @@ const Index: React.FC<{ userSlug: string }> = ({ userSlug }) => {
       reset();
       dispatch(logoutLoggedInUser());
       router.push("/");
-      // const { data } = await fetchUser({ userSlug });
-      // dispatch(updateLoggedInUser(data));
     } catch (error) {
       handleApiError(error, userData, "There was an error Updating password");
     } finally {

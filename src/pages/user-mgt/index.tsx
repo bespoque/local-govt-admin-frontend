@@ -16,6 +16,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { DefaultTabs } from "components/tabs";
 import AddRecordButton from "components/forms/add-record-button";
+import GroupList from "pages/group-mgt";
 
 type AddRecordType = 'user' | 'group' | '';
 
@@ -86,7 +87,7 @@ const Index: React.FC = () => {
       title: "Groups",
       content: (
         <div className="w-full py-4">
-          
+          <GroupList />
         </div>
       ),
     },
@@ -94,9 +95,6 @@ const Index: React.FC = () => {
 
   return (
     <React.Fragment>
-
-        
-      
       <div className="flex justify-between">
         <h3 className="font-mono text-cyan-800 text-xl">User Management</h3>
         <Modal title="Add New User" isOpen={isModalOpen} closeModal={closeModal}>
@@ -113,11 +111,11 @@ const Index: React.FC = () => {
           Add New Records
         </button> */}
       </div>
-      {/* <div className="flex flex-wrap">
+      <div className="flex flex-wrap">
         <div className="w-full p-4">
           <DefaultTabs tabs={tabs} />
         </div>
-      </div> */}
+      </div>
     </React.Fragment>
   );
 };
