@@ -9,3 +9,6 @@ export const listGroups = async (data) => {
 export const fetchGroup = async (data) => {
   return api.post("/administrator/GroupSingle.php", data);
 };
+export const updateGroup = async (data) => {
+  return api.post("/administrator/GroupUpdate.php", data);
+};

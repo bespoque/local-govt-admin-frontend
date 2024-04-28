@@ -3,27 +3,26 @@ import Widget from "components/social-feed/widget";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "react-loading-skeleton/dist/skeleton.css";
-import { fetchGroup, listGroups } from "slices/actions/rolesActions";
+import { fetchGroup, listGroups, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
+import { toast } from "react-toastify";
+
 
 const fields: Record<string, string>[] = [
   {
     name: "group name",
     key: "group name",
   },
-  {
-    name: "create by",
-    key: "create by",
-  },
 
 ];
 
 const GroupList: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [groupData, setGroupData] = useState([]);
-  const [singleGrp, setSingleGrpData] = useState<any>(null);;
-  const [groupPerm, setGroupPermissions] = useState<any>(null);;
-  const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [groupData, setGroupData] = useState<any>([]);
+  const [singleGrp, setSingleGrpData] = useState<any>(null);
+  const [groupPerm, setGroupPermissions] = useState<any>(null);
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,6 +49,7 @@ const GroupList: React.FC = () => {
         const { data } = await fetchGroup({ groupid: groupId });
         setSingleGrpData(data?.group[0]);
         setGroupPermissions(data?.permissions);
+        setSelectedPermissions(data?.permissions);
         setIsModalOpen(true);
 
       } catch (error) {
@@ -63,38 +63,38 @@ const GroupList: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    const formData = new FormData(event.currentTarget);
+    const groupname = formData.get("role") as string;
+    const formD = {
+      // groupid: singleGrp.id,
+      groupname: groupname,
+      permissions: String(selectedPermissions)
+    }
     try {
       setLoading(true);
-      const response = await fetch("/LOCALGOVT/administrator/GroupUpdate.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          groupid: singleGrp.id,
-          groupname: event.currentTarget.role.value, // Assuming the input field has name="role"
-          permissions: groupPerm // Assuming groupPerm contains the selected permissions
-        })
-      });
-
-      if (response.ok) {
-        console.log("Group updated successfully");
-      } else {
-        console.error("Failed to update group");
-      }
+      await updateGroup(formD);
+      toast.success("Group updated successfully");
+      setIsModalOpen(false);
     } catch (error) {
-      console.error("Error:", error);
+      handleApiError(error, "There was an error Updating group");
     } finally {
       setLoading(false);
       setIsModalOpen(false);
     }
   };
 
+  const handlePermissionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedPermissions((prevPermissions) => [...prevPermissions, value]);
+    } else {
+      setSelectedPermissions((prevPermissions) => prevPermissions.filter((perm) => perm !== value));
+    }
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
 
   return (
     <React.Fragment>
@@ -123,12 +123,11 @@ const GroupList: React.FC = () => {
                   <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
                     <span>{group["role"]}</span>
                   </td>
-                  <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-                    <span>{group["createdby"]}</span>
-                  </td>
                   <button
+                    className="cursor-pointer font-bold hover:underline text-cyan-800"
+                    // className="px-4 py-1 rounded-md bg-cyan-800 text-white hover:bg-cyan-600 transition-colors duration-300"
                     onClick={() => handleButtonClick(group["id"])}
-                  >Click</button>
+                  >View</button>
                 </tr>
 
               ))}
@@ -140,13 +139,14 @@ const GroupList: React.FC = () => {
         <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-end" >
           <div className="bg-white border-red-200 p-6 h-full opacity-100 rounded-md flex flex-col justify-center">
             <h2 className="text-lg font-semibold mb-4">Update Group</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 name="role"
                 placeholder="Group Name"
                 className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
                 defaultValue={singleGrp?.role || ""}
+
               />
 
               <div className="mb-4 rounded border p-2">
@@ -160,8 +160,10 @@ const GroupList: React.FC = () => {
                           name={`permission-${index}`}
                           type="checkbox"
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                          defaultChecked={true} // You may want to change this based on the permissions fetched
-                          readOnly
+                          value={permission}
+                          checked={selectedPermissions.includes(permission)} // Check if the permission is selected
+                          onChange={handlePermissionChange}
+
                         />
                         <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
                           {permission}
@@ -175,9 +177,9 @@ const GroupList: React.FC = () => {
                 <button
                   type="submit"
                   className="bg-cyan-900 text-white px-4 py-2 rounded-md">
-                  Add Group
+                  Update Group
                 </button>
-                <button onClick={closeModal} className="ml-2 text-gray-600">
+                <button onClick={closeModal} className="ml-2 text-gray-600 hover:bg-blue-100 px-2 rounded-md">
                   Cancel
                 </button>
               </div>
