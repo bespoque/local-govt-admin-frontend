@@ -66,7 +66,7 @@ const GroupList: React.FC = () => {
     const formData = new FormData(event.currentTarget);
     const groupname = formData.get("role") as string;
     const formD = {
-      // groupid: singleGrp.id,
+      groupid: singleGrp.id,
       groupname: groupname,
       permissions: String(selectedPermissions)
     }
@@ -115,7 +115,6 @@ const GroupList: React.FC = () => {
             </thead>
             <tbody>
               {groupData.map((group, i) => (
-
                 <tr
                   key={i}
                   className="odd:bg-gray-100 dark:odd:bg-gray-800 cursor-pointer"
@@ -123,11 +122,12 @@ const GroupList: React.FC = () => {
                   <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
                     <span>{group["role"]}</span>
                   </td>
-                  <button
-                    className="cursor-pointer font-bold hover:underline text-cyan-800"
-                    // className="px-4 py-1 rounded-md bg-cyan-800 text-white hover:bg-cyan-600 transition-colors duration-300"
-                    onClick={() => handleButtonClick(group["id"])}
-                  >View</button>
+                  <td>
+                    <button
+                      className="cursor-pointer font-bold hover:underline text-cyan-800"
+                      onClick={() => handleButtonClick(group["id"])}
+                    >View</button>
+                  </td>
                 </tr>
 
               ))}
@@ -135,9 +135,10 @@ const GroupList: React.FC = () => {
           </table>
         </div>
       </Widget>
+      
       {isModalOpen && (
-        <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-end" >
-          <div className="bg-white border-red-200 p-6 h-full opacity-100 rounded-md flex flex-col justify-center">
+        <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-end " >
+          <div className="bg-white p-6 h-full rounded-md flex flex-col justify-center w-96">
             <h2 className="text-lg font-semibold mb-4">Update Group</h2>
             <form onSubmit={handleSubmit}>
               <input
@@ -146,12 +147,11 @@ const GroupList: React.FC = () => {
                 placeholder="Group Name"
                 className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
                 defaultValue={singleGrp?.role || ""}
-
               />
 
               <div className="mb-4 rounded border p-2">
                 <legend className="block text-sm font-bold my-4 bg-gray-100 rounded py-3 text-center">Permissions</legend>
-                <div className="mt-1 h-60 overflow-y-auto  p-3">
+                <div className="mt-1 h-60 overflow-y-auto p-3">
                   {groupPerm &&
                     groupPerm.map((permission: string, index: number) => (
                       <div key={index} className="flex items-center hover:bg-blue-100 rounded-md p-1">
