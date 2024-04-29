@@ -37,7 +37,7 @@ const GroupList: React.FC = () => {
         setGroupData(res.data.groups);
       })
       .catch((err: any) => {
-        //log error
+        handleApiError(err, "Could not group details");
       });
   }, [dispatch]);
 
@@ -51,7 +51,6 @@ const GroupList: React.FC = () => {
         setGroupPermissions(data?.permissions);
         setSelectedPermissions(data?.permissions);
         setIsModalOpen(true);
-
       } catch (error) {
         handleApiError(error, "Could not retrieve group details");
       } finally {
@@ -96,6 +95,10 @@ const GroupList: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const filteredGrpData = groupData.filter(obj => obj.role !== "");
+
+  console.log(filteredGrpData);
+
   return (
     <React.Fragment>
 
@@ -114,7 +117,7 @@ const GroupList: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {groupData.map((group, i) => (
+              {filteredGrpData.map((group, i) => (
                 <tr
                   key={i}
                   className="odd:bg-gray-100 dark:odd:bg-gray-800 cursor-pointer"
@@ -163,7 +166,6 @@ const GroupList: React.FC = () => {
                           value={permission}
                           checked={selectedPermissions.includes(permission)} // Check if the permission is selected
                           onChange={handlePermissionChange}
-
                         />
                         <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
                           {permission}
