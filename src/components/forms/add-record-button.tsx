@@ -68,6 +68,8 @@ const AddRecordButton: React.FC<any> = () => {
   }, []);
 
 
+
+
   const handlePermissionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
     if (checked) {

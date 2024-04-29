@@ -92,18 +92,20 @@ const GroupList: React.FC = () => {
 
   const handlePermissionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
-    if (checked) {
-      setSelectedPermissions((prevPermissions) => [...prevPermissions, value]);
-    } else {
-      setSelectedPermissions((prevPermissions) => prevPermissions.filter((perm) => perm !== value));
-    }
+    setSelectedPermissions((prevPermissions) => {
+      if (checked) {
+        return [...prevPermissions, value];
+      } else {
+        return prevPermissions.filter((perm) => perm !== value);
+      }
+    });
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const filteredGrpData = groupData.filter(obj => obj.role !== "");
+    
+const filteredGrpData = groupData.filter(obj => obj.role !== "");
 
   return (
     <React.Fragment>
@@ -169,8 +171,8 @@ const GroupList: React.FC = () => {
                         type="checkbox"
                         className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         value={permission}
-                        checked={selectedPermissions.includes(permission) || (groupPerm && groupPerm.includes(permission))}
-
+                        // checked={selectedPermissions.includes(permission) || (groupPerm && groupPerm.includes(permission))}
+                        checked={selectedPermissions.includes(permission)}
                         onChange={handlePermissionChange}
                       />
                       <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
