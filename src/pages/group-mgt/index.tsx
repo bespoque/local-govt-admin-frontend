@@ -3,22 +3,21 @@ import Widget from "components/social-feed/widget";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "react-loading-skeleton/dist/skeleton.css";
-import { fetchGroup, listGroups, updateGroup } from "slices/actions/rolesActions";
+import { fetchGroup, listGroups, listPermissions, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
-
 
 const fields: Record<string, string>[] = [
   {
     name: "group name",
     key: "group name",
   },
-
 ];
 
 const GroupList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [groupData, setGroupData] = useState<any>([]);
+  const [allPermissions, setAllPermissions] = useState<any>([]);
   const [singleGrp, setSingleGrpData] = useState<any>(null);
   const [groupPerm, setGroupPermissions] = useState<any>(null);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
@@ -32,9 +31,16 @@ const GroupList: React.FC = () => {
     const fetchData = async () => {
       return listGroups(groupPayload);
     };
+    const fetchPermissionsData = async () => {
+      return listPermissions(groupPayload);
+    };
     fetchData()
       .then((res) => {
         setGroupData(res.data.groups);
+      })
+    fetchPermissionsData()
+      .then((res) => {
+        setAllPermissions(res.data.permissions);
       })
       .catch((err: any) => {
         handleApiError(err, "Could not group details");
@@ -42,6 +48,8 @@ const GroupList: React.FC = () => {
   }, [dispatch]);
 
 
+  const permissionsArray = allPermissions.map(obj => obj.entity);
+    
   const handleButtonClick = (groupId: string) => {
     const fetchData = async () => {
       try {
@@ -97,8 +105,6 @@ const GroupList: React.FC = () => {
 
   const filteredGrpData = groupData.filter(obj => obj.role !== "");
 
-  console.log(filteredGrpData);
-
   return (
     <React.Fragment>
 
@@ -120,7 +126,7 @@ const GroupList: React.FC = () => {
               {filteredGrpData.map((group, i) => (
                 <tr
                   key={i}
-                  className="odd:bg-gray-100 dark:odd:bg-gray-800 cursor-pointer"
+                  className="odd:bg-gray-100 dark:odd:bg-gray-100"
                 >
                   <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
                     <span>{group["role"]}</span>
@@ -155,24 +161,25 @@ const GroupList: React.FC = () => {
               <div className="mb-4 rounded border p-2">
                 <legend className="block text-sm font-bold my-4 bg-gray-100 rounded py-3 text-center">Permissions</legend>
                 <div className="mt-1 h-60 overflow-y-auto p-3">
-                  {groupPerm &&
-                    groupPerm.map((permission: string, index: number) => (
-                      <div key={index} className="flex items-center hover:bg-blue-100 rounded-md p-1">
-                        <input
-                          id={`permission-${index}`}
-                          name={`permission-${index}`}
-                          type="checkbox"
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                          value={permission}
-                          checked={selectedPermissions.includes(permission)} // Check if the permission is selected
-                          onChange={handlePermissionChange}
-                        />
-                        <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
-                          {permission}
-                        </label>
-                      </div>
-                    ))}
+                  {permissionsArray.map((permission: string, index: number) => (
+                    <div key={index} className="flex items-center hover:bg-blue-100 rounded-md p-1">
+                      <input
+                        id={`permission-${index}`}
+                        name={`permission-${index}`}
+                        type="checkbox"
+                        className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                        value={permission}
+                        checked={selectedPermissions.includes(permission) || (groupPerm && groupPerm.includes(permission))}
+
+                        onChange={handlePermissionChange}
+                      />
+                      <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
+                        {permission}
+                      </label>
+                    </div>
+                  ))}
                 </div>
+
 
               </div>
               <div className="flex justify-evenly mt-4">

@@ -67,9 +67,6 @@ const AddRecordButton: React.FC<any> = () => {
     fetchPermissions();
   }, []);
 
-  console.log("permissions", permissions);
-  console.log("selectedPermissions", selectedPermissions);
-
 
   const handlePermissionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
@@ -147,26 +144,25 @@ const AddRecordButton: React.FC<any> = () => {
             onChange={handleModalInputChange}
           />
           <div className="mb-4 rounded border p-2">
+            <legend className="block text-sm font-bold my-4 bg-gray-100 rounded py-3 text-center">Set Permissions</legend>
 
-            <div>
-              <div className="mt-1 h-60 overflow-y-auto p-3">
-                {permissions.map((permission: Permission, index: number) => (
-                  <div key={index} className="flex items-center hover:bg-blue-100 rounded-md p-1">
-                    <input
-                      id={`permission-${index}`}
-                      name={`permission-${index}`}
-                      type="checkbox"
-                      value={permission.entity}
-                      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                      checked={selectedPermissions.includes(permission.entity)} // Check if the permission is selected
-                      onChange={handlePermissionChange}
-                    />
-                    <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
-                      {permission.entity}
-                    </label>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-1 h-60 overflow-y-auto p-3">
+              {permissions.map((permission: Permission, index: number) => (
+                <div key={index} className="flex items-center hover:bg-blue-100 rounded-md p-1">
+                  <input
+                    id={`permission-${index}`}
+                    name={`permission-${index}`}
+                    type="checkbox"
+                    value={permission.entity}
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    checked={selectedPermissions.includes(permission.entity)}
+                    onChange={handlePermissionChange}
+                  />
+                  <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
+                    {permission.entity}
+                  </label>
+                </div>
+              ))}
             </div>
 
           </div>
@@ -178,7 +174,7 @@ const AddRecordButton: React.FC<any> = () => {
             className="bg-cyan-900 text-white px-4 py-2 rounded-md">
             Add Group
           </button>
-          <button onClick={handleToggleDropdown} className="ml-2 text-gray-600">
+          <button onClick={handleToggleDropdown} className="ml-2 text-gray-600 hover:bg-blue-100 px-2 rounded-md">
             Cancel
           </button>
         </div>
