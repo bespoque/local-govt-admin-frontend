@@ -1,4 +1,3 @@
-// GroupList.tsx
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchGroup, listGroups, listPermissions, updateGroup } from "slices/actions/rolesActions";
@@ -6,16 +5,23 @@ import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
 import GroupTable from "components/tables/group-table";
 import GroupModal from "components/modals/update-group-modal";
+import { listUsers } from "slices/actions/userActions";
+import UsersTable from "components/tables/users-table";
 
 
-interface Group {
+interface Users {
   id: string;
-  role: string;
+  name: string;
+  email: string;
+  phone: string;
+  status: string;
+  usergroup: string;
+  created: string;
 }
 
-const GroupList: React.FC = () => {
+const UserList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [groupData, setGroupData] = useState<Group[]>([]);
+  const [UsersData, setUsersData] = useState<Users[]>([]);
   const [allPermissions, setAllPermissions] = useState<string[]>([]);
   const [singleGrp, setSingleGrpData] = useState<any>(null);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
@@ -23,20 +29,20 @@ const GroupList: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const groupPayload: { sort: string } = {
+    const userPayload: { sort: string } = {
       sort: "ALL"
     };
     const fetchData = async () => {
       try {
-        const res = await listGroups(groupPayload);
-        setGroupData(res.data.groups);
+        const res = await listUsers(userPayload);
+        setUsersData(res.data.users);
       } catch (error) {
-        handleApiError(error, "Could not group details");
+        handleApiError(error, "Could not fetch users");
       }
     };
     const fetchPermissionsData = async () => {
       try {
-        const res = await listPermissions(groupPayload);
+        const res = await listPermissions(userPayload);
         setAllPermissions(res.data.permissions.map((obj: any) => obj.entity));
       } catch (error) {
         handleApiError(error, "Could not retrieve permission details");
@@ -100,7 +106,7 @@ const GroupList: React.FC = () => {
 
   return (
     <React.Fragment>
-      <GroupTable groupData={groupData} handleButtonClick={handleButtonClick} />
+      <UsersTable usersData={UsersData} handleButtonClick={handleButtonClick} />
       <GroupModal
         isModalOpen={isModalOpen}
         singleGrp={singleGrp}
@@ -114,4 +120,4 @@ const GroupList: React.FC = () => {
   );
 };
 
-export default GroupList;
+export default UserList;

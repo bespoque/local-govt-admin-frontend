@@ -9,6 +9,9 @@ export const listGroups = async (data) => {
 export const listPermissions = async (data) => {
   return api.post("/administrator/SystemPermissionsList.php", data);
 };
+export const createGroup = async (data) => {
+  return api.post("/administrator/GroupCreate.php", data);
+};
 export const fetchGroup = async (data) => {
   return api.post("/administrator/GroupSingle.php", data);
 };
