@@ -20,6 +20,9 @@ export const fetchSingleUser = async (data) => {
 export const usersCreate = async (data) => {
   return api.post("/administrator/UserCreate.php", data);
 };
+export const userUpdate = async (data) => {
+  return api.post("/administrator/UserUpdate.php", data);
+};
 
 
 export const updateUser = async (userSlug, data) => {

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { listGroups, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
-import { fetchSingleUser, listUsers } from "slices/actions/userActions";
+import { fetchSingleUser, listUsers, userUpdate } from "slices/actions/userActions";
 import UsersTable from "components/tables/users-table";
 import UpdateUserModal from "components/modals/update-user-modal";
 
@@ -68,22 +68,30 @@ const UserList: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const groupname = formData.get("fullname") as string;
+    const fullname = formData.get("fullname") as string;
     const phone = formData.get("phone") as string;
     const email = formData.get("email") as string;
     const status = formData.get("status") as string;
     const groupid = formData.get("groupid") as string;
     const profileid = singleUsr?.id;
     const updateUser = {
-      groupname,
+      fullname,
       phone,
       email,
       status,
       profileid,
       groupid
     }    
-    console.log("updateUser", updateUser);
-    
+
+    try {
+      await userUpdate(updateUser);
+      toast.success("User updated successfully");
+      setIsModalOpen(false);
+    } catch (error) {
+      handleApiError(error, "There was an error updating User");
+    } finally {
+      setIsModalOpen(false);
+    }   
   };
 
 
