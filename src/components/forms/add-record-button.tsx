@@ -58,7 +58,7 @@ const AddRecordButton: React.FC<any> = () => {
     fetchGroups();
   }, []);
 
-  
+
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
     setSelectedType(null);
@@ -85,12 +85,7 @@ const AddRecordButton: React.FC<any> = () => {
   };
 
   const handleAddRecord = async () => {
-    if (selectedType === "group" &&  formData) {
-      const formDataWithStatus = { ...formData, status: "Active" };
-
-      // Use formDataWithStatus for further processing
-      console.log("formData", formDataWithStatus);
-      
+    if (selectedType === "group" && formData) {
       const groupData = {
         groupname: formData.role,
         permissions: selectedPermissions.join(",")
@@ -104,9 +99,9 @@ const AddRecordButton: React.FC<any> = () => {
         handleToggleDropdown();
         setIsOpen(false);
         handleApiError(error, "There was an error updating password");
-      } 
+      }
     }
-    if (selectedType === "user" &&  formData) {
+    if (selectedType === "user" && formData) {
       const formDataWithStatus = { ...formData, status: "Active" };
       try {
         const response = await usersCreate(formDataWithStatus);
@@ -117,7 +112,7 @@ const AddRecordButton: React.FC<any> = () => {
         handleToggleDropdown();
         setIsOpen(false);
         handleApiError(error, "There was an error updating password");
-      } 
+      }
     }
   };
 
