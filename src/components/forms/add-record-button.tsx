@@ -98,7 +98,7 @@ const AddRecordButton: React.FC<any> = () => {
       } catch (error) {
         handleToggleDropdown();
         setIsOpen(false);
-        handleApiError(error, "There was an error updating password");
+        handleApiError(error, "There was an error creating group");
       }
     }
     if (selectedType === "user" && formData) {
@@ -111,7 +111,7 @@ const AddRecordButton: React.FC<any> = () => {
       } catch (error) {
         handleToggleDropdown();
         setIsOpen(false);
-        handleApiError(error, "There was an error updating password");
+        handleApiError(error, "There was an error creating user");
       }
     }
   };

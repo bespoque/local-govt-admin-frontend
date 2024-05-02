@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchGroup, listPermissions, updateGroup } from "slices/actions/rolesActions";
+import { listGroups, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
-import GroupModal from "components/modals/update-group-modal";
-import { listUsers } from "slices/actions/userActions";
+import { fetchSingleUser, listUsers } from "slices/actions/userActions";
 import UsersTable from "components/tables/users-table";
-
+import UpdateUserModal from "components/modals/update-user-modal";
 
 interface Users {
   id: string;
@@ -18,80 +17,75 @@ interface Users {
   created: string;
 }
 
+interface AllGroupsData {
+  id: string;
+  role: string;
+  clientid: string;
+}
+
 const UserList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [UsersData, setUsersData] = useState<Users[]>([]);
-  const [allPermissions, setAllPermissions] = useState<string[]>([]);
-  const [singleGrp, setSingleGrpData] = useState<any>(null);
-  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
+  const [allGroups, setAllGroups] = useState<AllGroupsData[]>([]);
+  const [singleUsr, setSingleUsrData] = useState<any>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userPayload: { sort: string } = {
+    const Payload: { sort: string } = {
       sort: "ALL"
     };
     const fetchData = async () => {
       try {
-        const res = await listUsers(userPayload);
+        const res = await listUsers(Payload);
         setUsersData(res.data.users);
       } catch (error) {
         handleApiError(error, "Could not fetch users");
       }
     };
-    const fetchPermissionsData = async () => {
+    const fetchUserGroupsData = async () => {
       try {
-        const res = await listPermissions(userPayload);
-        setAllPermissions(res.data.permissions.map((obj: any) => obj.entity));
+        const res = await listGroups(Payload);
+        setAllGroups(res.data.groups);
       } catch (error) {
         handleApiError(error, "Could not retrieve permission details");
       }
     };
 
     fetchData();
-    fetchPermissionsData();
+    fetchUserGroupsData();
   }, [dispatch]);
 
-  const handleButtonClick = async (groupId: string) => {
+  const handleButtonClick = async (profileid: string) => {
     try {
-      const { data } = await fetchGroup({ groupid: groupId });
-      setSingleGrpData(data?.group[0]);
-      setSelectedPermissions(data?.permissions);
+      const { data } = await fetchSingleUser({ profileid: profileid });
+      setSingleUsrData(data?.user[0]);
       setIsModalOpen(true);
     } catch (error) {
-      handleApiError(error, "Could not retrieve group details");
+      handleApiError(error, "Could not retrieve user details");
     } 
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const groupname = formData.get("role") as string;
-    const formD = {
-      groupid: singleGrp.id,
-      groupname: groupname,
-      permissions: String(selectedPermissions)
-    }
-    try {
-      await updateGroup(formD);
-      toast.success("Group updated successfully");
-      setIsModalOpen(false);
-    } catch (error) {
-      handleApiError(error, "There was an error updating group");
-    } finally {
-      setIsModalOpen(false);
-    }
+    const groupname = formData.get("fullname") as string;
+    const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
+    const status = formData.get("status") as string;
+    const groupid = formData.get("groupid") as string;
+    const profileid = singleUsr?.id;
+    const updateUser = {
+      groupname,
+      phone,
+      email,
+      status,
+      profileid,
+      groupid
+    }    
+    console.log("updateUser", updateUser);
+    
   };
 
-  const handlePermissionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target;
-    setSelectedPermissions((prevPermissions) => {
-      if (checked) {
-        return [...prevPermissions, value];
-      } else {
-        return prevPermissions.filter((perm) => perm !== value);
-      }
-    });
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -100,14 +94,13 @@ const UserList: React.FC = () => {
   return (
     <React.Fragment>
       <UsersTable usersData={UsersData} handleButtonClick={handleButtonClick} />
-      <GroupModal
+      <UpdateUserModal
         isModalOpen={isModalOpen}
-        singleGrp={singleGrp}
-        selectedPermissions={selectedPermissions}
-        permissionsArray={allPermissions}
+        singleUsr={singleUsr}
+        allGroups={allGroups}
         closeModal={closeModal}
         handleSubmit={handleSubmit}
-        handlePermissionChange={handlePermissionChange}
+
       />
     </React.Fragment>
   );

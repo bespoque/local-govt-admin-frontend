@@ -5,7 +5,7 @@ import { fetchGroup, listGroups, listPermissions, updateGroup } from "slices/act
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
 import GroupTable from "components/tables/group-table";
-import GroupModal from "components/modals/update-group-modal";
+import UpdateGroupModal from "components/modals/update-group-modal";
 
 
 interface Group {
@@ -101,7 +101,7 @@ const GroupList: React.FC = () => {
   return (
     <React.Fragment>
       <GroupTable groupData={groupData} handleButtonClick={handleButtonClick} />
-      <GroupModal
+      <UpdateGroupModal
         isModalOpen={isModalOpen}
         singleGrp={singleGrp}
         selectedPermissions={selectedPermissions}

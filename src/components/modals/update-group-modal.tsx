@@ -11,7 +11,7 @@ interface Props {
   handlePermissionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const GroupModal: React.FC<Props> = ({
+const UpdateGroupModal: React.FC<Props> = ({
   isModalOpen,
   singleGrp,
   selectedPermissions,
@@ -73,4 +73,4 @@ const GroupModal: React.FC<Props> = ({
   );
 };
 
-export default GroupModal;
+export default UpdateGroupModal;

@@ -12,7 +12,7 @@ interface Users {
 
 interface Props {
   usersData: Users[];
-  handleButtonClick: (groupId: string) => void;
+  handleButtonClick: (profileid: string) => void;
 }
 
 const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
@@ -44,34 +44,34 @@ const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
         </tr>
       </thead>
       <tbody>
-        {usersData.map((group) => (
-          <tr key={group.id} className="odd:bg-gray-100 dark:odd:bg-gray-100">
+        {usersData.map((usr) => (
+          <tr key={usr.id} className="odd:bg-gray-100 dark:odd:bg-gray-100">
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.name}</span>
+              <span>{usr.name}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.email}</span>
+              <span>{usr.email}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.phone}</span>
+              <span>{usr.phone}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.usergroupName}</span>
+              <span>{usr.usergroupName}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.status}</span>
+              <span>{usr.status}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.created}</span>
+              <span>{usr.created}</span>
             </td>
-            {/* <td>
+            <td>
               <button
                 className="cursor-pointer font-bold hover:underline text-cyan-800"
-                onClick={() => handleButtonClick(group.id)}
+                onClick={() => handleButtonClick(usr.id)}
               >
                 View
               </button>
-            </td> */}
+            </td>
           </tr>
         ))}
       </tbody>
