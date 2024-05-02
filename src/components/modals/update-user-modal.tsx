@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface AllGroupsData {
   id: string;
@@ -24,6 +24,38 @@ const UpdateUserModal: React.FC<Props> = ({
   handleSubmit,
 
 }) => {
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setPhone(singleUsr?.phone || "");
+    }
+  }, [isModalOpen, singleUsr]);
+
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = event.target.value;
+    // Only allow numeric characters
+    inputValue = inputValue.replace(/\D/g, '');
+    // Limit to 11 characters
+    inputValue = inputValue.slice(0, 12);
+    // Set the phone state
+    setPhone(inputValue);
+
+    // Display warning text if input exceeds 11 characters
+    const warningText = document.getElementById("phoneWarning");
+    if (inputValue.length > 11) {
+      if (warningText) {
+        warningText.style.display = "block";
+      }
+    } else {
+      if (warningText) {
+        warningText.style.display = "none";
+      }
+    }
+  };
+
+
+
   if (!isModalOpen) return null;
   const filteredUserGroups = allGroups.filter(group => group.role !== '');
   return (
@@ -52,7 +84,7 @@ const UpdateUserModal: React.FC<Props> = ({
               className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
               defaultValue={singleUsr?.usergroup || ""}
             >
-              
+
               {filteredUserGroups.map(group => (
                 <option key={group.id} value={group.id}>{group.role}</option>
               ))}
@@ -63,8 +95,12 @@ const UpdateUserModal: React.FC<Props> = ({
               placeholder="Phone"
               className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
               defaultValue={singleUsr?.phone || ""}
+              value={phone}
+              onChange={handlePhoneChange}
             />
-
+            <small id="phoneWarning" style={{ display: "none", color: "red" }}>
+              Phone number should not exceed 11 characters.
+            </small>
             <select
               name="status"
               id="status"
@@ -89,53 +125,6 @@ const UpdateUserModal: React.FC<Props> = ({
         </form>
       </div>
     </div>
-    // <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-end">
-    //   <div className="bg-white p-6 h-full rounded-md flex flex-col justify-center w-96">
-    //     <h2 className="text-lg font-semibold mb-4">Update Group</h2>
-    //     <form onSubmit={handleSubmit}>
-    //       <input
-    //         type="text"
-    //         name="role"
-    //         placeholder="Group Name"
-    //         className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-    //         defaultValue={singleUsr?.role || ""}
-    //       />
-
-    //       <div className="mb-4 rounded border p-2">
-    //         <legend className="block text-sm font-bold my-4 bg-gray-100 rounded py-3 text-center">Permissions</legend>
-    //         <div className="mt-1 h-60 overflow-y-auto p-3">
-    //           {allGroups.map((group, index) => (
-    //             <div key={index} className="flex items-center hover:bg-blue-100 rounded-md p-1">
-    //               <input
-    //                 id={`permission-${index}`}
-    //                 name={`permission-${index}`}
-    //                 type="checkbox"
-    //                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-    //                 value={group}
-    //                 checked={selectedPermissions.includes(group)}
-    //                 onChange={handlePermissionChange}
-    //               />
-    //               <label htmlFor={`permission-${index}`} className="ml-2 block text-sm text-gray-900">
-    //                 {group}
-    //               </label>
-    //             </div>
-    //           ))}
-    //         </div>
-    //       </div>
-    //       <div className="flex justify-evenly mt-4">
-    //         <button
-    //           type="submit"
-    //           className="bg-cyan-900 text-white px-4 py-2 rounded-md"
-    //         >
-    //           Update Group
-    //         </button>
-    //         <button onClick={closeModal} className="ml-2 text-gray-600 hover:bg-blue-100 px-2 rounded-md">
-    //           Cancel
-    //         </button>
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 
