@@ -25,11 +25,7 @@ const UpdateUserModal: React.FC<Props> = ({
 
 }) => {
   if (!isModalOpen) return null;
-
   const filteredUserGroups = allGroups.filter(group => group.role !== '');
-  console.log("allGroups inner", filteredUserGroups);
-  console.log("singleUsr", singleUsr);
-
   return (
     <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-2/6">
       <div className="bg-white p-6 rounded-lg h-full flex flex-col justify-center">
