@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchGroup, listGroups, listPermissions, updateGroup } from "slices/actions/rolesActions";
+import { fetchGroup, listPermissions, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
-import GroupTable from "components/tables/group-table";
 import GroupModal from "components/modals/update-group-modal";
 import { listUsers } from "slices/actions/userActions";
 import UsersTable from "components/tables/users-table";
@@ -15,7 +14,7 @@ interface Users {
   email: string;
   phone: string;
   status: string;
-  usergroup: string;
+  usergroupName: string;
   created: string;
 }
 
@@ -25,7 +24,6 @@ const UserList: React.FC = () => {
   const [allPermissions, setAllPermissions] = useState<string[]>([]);
   const [singleGrp, setSingleGrpData] = useState<any>(null);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,16 +53,13 @@ const UserList: React.FC = () => {
 
   const handleButtonClick = async (groupId: string) => {
     try {
-      setLoading(true);
       const { data } = await fetchGroup({ groupid: groupId });
       setSingleGrpData(data?.group[0]);
       setSelectedPermissions(data?.permissions);
       setIsModalOpen(true);
     } catch (error) {
       handleApiError(error, "Could not retrieve group details");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -77,14 +72,12 @@ const UserList: React.FC = () => {
       permissions: String(selectedPermissions)
     }
     try {
-      setLoading(true);
       await updateGroup(formD);
       toast.success("Group updated successfully");
       setIsModalOpen(false);
     } catch (error) {
       handleApiError(error, "There was an error updating group");
     } finally {
-      setLoading(false);
       setIsModalOpen(false);
     }
   };

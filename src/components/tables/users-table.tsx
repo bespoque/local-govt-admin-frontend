@@ -6,7 +6,7 @@ interface Users {
   email: string;
   phone: string;
   status: string;
-  usergroup: string;
+  usergroupName: string;
   created: string;
 }
 
@@ -56,7 +56,7 @@ const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
               <span>{group.phone}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
-              <span>{group.usergroup}</span>
+              <span>{group.usergroupName}</span>
             </td>
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
               <span>{group.status}</span>

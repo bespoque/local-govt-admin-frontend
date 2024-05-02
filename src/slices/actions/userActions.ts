@@ -14,6 +14,10 @@ export const createUser = async (data) => {
 export const listUsers = async (data) => {
   return api.post("/administrator/UsersList.php", data);
 };
+export const usersCreate = async (data) => {
+  return api.post("/administrator/UserCreate.php", data);
+};
+
 
 export const updateUser = async (userSlug, data) => {
   return api.patch(`/users/${userSlug}`, data);

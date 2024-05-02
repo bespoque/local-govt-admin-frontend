@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { createGroup, listPermissions } from "slices/actions/rolesActions";
+import { createGroup, listGroups, listPermissions } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import UserModal from "components/modals/create-user-modal";
 import GroupModal from "components/modals/create-group-modal";
+import { usersCreate } from "slices/actions/userActions";
 
 
 type AddRecordType = "user" | "group";
@@ -11,9 +12,16 @@ type AddRecordType = "user" | "group";
 interface Permission {
   entity: string;
 }
+interface Groups {
+  id: string;
+  role: string;
+  clientid: string;
+}
 
 interface FormData {
   role: string;
+  fullname: string;
+  groupid: string;
   email: string;
   phone: string;
   status: string;
@@ -24,8 +32,9 @@ const AddRecordButton: React.FC<any> = () => {
   const [selectedType, setSelectedType] = useState<AddRecordType | null>(null);
   const [formData, setFormData] = useState<FormData | null>(null);
   const [permissions, setPermissions] = useState<Permission[]>([]);
+  const [userGroups, setUserGroups] = useState<Groups[]>([]);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
-  const [reqLoading, setReqLoading] = useState<boolean>(false);
+
 
   useEffect(() => {
     const fetchPermissions = async () => {
@@ -36,10 +45,20 @@ const AddRecordButton: React.FC<any> = () => {
         handleApiError(error, "Could not retrieve permission details");
       }
     };
+    const fetchGroups = async () => {
+      try {
+        const { data } = await listGroups({ sort: "ALL" });
+        setUserGroups(data.groups);
+      } catch (error) {
+        handleApiError(error, "Could not retrieve group details");
+      }
+    };
 
     fetchPermissions();
+    fetchGroups();
   }, []);
 
+  
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
     setSelectedType(null);
@@ -66,7 +85,12 @@ const AddRecordButton: React.FC<any> = () => {
   };
 
   const handleAddRecord = async () => {
-    if (selectedType === "group" && formData) {
+    if (selectedType === "group" &&  formData) {
+      const formDataWithStatus = { ...formData, status: "Active" };
+
+      // Use formDataWithStatus for further processing
+      console.log("formData", formDataWithStatus);
+      
       const groupData = {
         groupname: formData.role,
         permissions: selectedPermissions.join(",")
@@ -80,9 +104,20 @@ const AddRecordButton: React.FC<any> = () => {
         handleToggleDropdown();
         setIsOpen(false);
         handleApiError(error, "There was an error updating password");
-      } finally {
-        setReqLoading(false);
-      }
+      } 
+    }
+    if (selectedType === "user" &&  formData) {
+      const formDataWithStatus = { ...formData, status: "Active" };
+      try {
+        const response = await usersCreate(formDataWithStatus);
+        handleToggleDropdown();
+        setIsOpen(false);
+        toast.success(response?.data?.message);
+      } catch (error) {
+        handleToggleDropdown();
+        setIsOpen(false);
+        handleApiError(error, "There was an error updating password");
+      } 
     }
   };
 
@@ -131,6 +166,7 @@ const AddRecordButton: React.FC<any> = () => {
         handleModalInputChange={handleModalInputChange}
         handleAddRecord={handleAddRecord}
         handleToggleDropdown={handleToggleDropdown}
+        usergroups={userGroups}
       />}
       {selectedType === "group" && <GroupModal
         permissions={permissions}
