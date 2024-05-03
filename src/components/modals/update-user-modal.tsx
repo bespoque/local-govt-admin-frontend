@@ -34,14 +34,9 @@ const UpdateUserModal: React.FC<Props> = ({
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let inputValue = event.target.value;
-    // Only allow numeric characters
     inputValue = inputValue.replace(/\D/g, '');
-    // Limit to 11 characters
     inputValue = inputValue.slice(0, 12);
-    // Set the phone state
     setPhone(inputValue);
-
-    // Display warning text if input exceeds 11 characters
     const warningText = document.getElementById("phoneWarning");
     if (inputValue.length > 11) {
       if (warningText) {

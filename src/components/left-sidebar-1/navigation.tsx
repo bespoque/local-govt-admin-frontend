@@ -67,7 +67,7 @@ const revenueChartNav = () => [
 
 const collectionNav = () => [
   {
-    url: "#",
+    url: "/collections",
     icon: <Collection />,
     title: "Collection",
     allowedRoles: GROUP_COLLECTION,
