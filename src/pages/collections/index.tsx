@@ -61,7 +61,7 @@ const CollectionTable: React.FC = () => {
             <SectionTitle title="Collections" subtitle="Collections" />
             <div className="flex justify-end my-10">
                 <select
-                    className="px-2 py-1 border border-gray-300 rounded-md"
+                    className="px-4 py-2 border border-cyan-900 rounded-md shadow-md focus:outline-none focus:border-blue-500"
                     value={selectedLGA}
                     onChange={(e) => handleLGASelection(e.target.value)}
                 >
