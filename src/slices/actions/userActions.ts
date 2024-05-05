@@ -1,16 +1,5 @@
 import api from "api";
 
-export const fetchUsers = async () => {
-  return api.get("/users?page=1&limit=100");
-};
-
-export const fetchUser = async ({userSlug}) => {
-  return api.post("/users/getUser", {userSlug});
-};
-
-export const createUser = async (data) => {
-  return api.post("/users/create", data);
-};
 export const listUsers = async (data) => {
   return api.post("/administrator/UsersList.php", data);
 };
@@ -23,8 +12,20 @@ export const usersCreate = async (data) => {
 export const userUpdate = async (data) => {
   return api.post("/administrator/UserUpdate.php", data);
 };
+export const fetchLocalGvts = async (data) => {
+  return api.post(`/administrator/ClientsList.php`, data);
+};
 
 
+export const fetchUsers = async () => {
+  return api.get("/users?page=1&limit=100");
+};
+export const fetchUser = async ({userSlug}) => {
+  return api.post("/users/getUser", {userSlug});
+};
+export const createUser = async (data) => {
+  return api.post("/users/create", data);
+};
 export const updateUser = async (userSlug, data) => {
   return api.patch(`/users/${userSlug}`, data);
 };
