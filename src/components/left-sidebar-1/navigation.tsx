@@ -1,5 +1,5 @@
-import {Role} from "components/user/user.interface";
-import {TaxOfficeEnum} from "components/tax-office/tax-office.interface";
+import { Role } from "components/user/user.interface";
+import { TaxOfficeEnum } from "components/tax-office/tax-office.interface";
 import {
   GROUP_IDENTITY_MANAGEMENT,
   GROUP_COLLECTION,
@@ -52,7 +52,14 @@ const identityNav = () => [
     icon: <IdManagement />,
     title: "Identity Mgt",
     allowedRoles: GROUP_IDENTITY_MANAGEMENT,
-    items: [],
+    items: [
+      {
+        url: "/identity-mgt/individual",
+        allowedRoles: GROUP_IDENTITY_MANAGEMENT,
+        title: "Identity",
+        items: [],
+      },
+    ],
   },
 ];
 
