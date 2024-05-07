@@ -54,7 +54,7 @@ const identityNav = () => [
     allowedRoles: GROUP_IDENTITY_MANAGEMENT,
     items: [
       {
-        url: "/identity-mgt/individual",
+        url: "/identity-mgt",
         allowedRoles: GROUP_IDENTITY_MANAGEMENT,
         title: "Identity",
         items: [],
