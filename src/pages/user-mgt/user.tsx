@@ -62,6 +62,7 @@ const UserList: React.FC = () => {
       setIsModalOpen(true);
     } catch (error) {
       handleApiError(error, "Could not retrieve user details");
+      setIsModalOpen(false);
     } 
   };
 

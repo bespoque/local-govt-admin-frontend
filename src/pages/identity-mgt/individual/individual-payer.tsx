@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { fetchLocalGvts, fetchWards } from 'slices/actions/userActions';
-import { fetchIndIdentity } from 'slices/actions/identityActions';
-import AddTaxpayerModal from 'components/modals/taxpayer-modal';
+import { fetchLocalGvts, fetchWards, userUpdate } from 'slices/actions/userActions';
+import { fetchIndIdentity, fetchSingleIndTp, updateSingleIndTp } from 'slices/actions/identityActions';
+import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
+import UpdateIndividual from 'components/modals/update-individual-modal';
+import { toast } from 'react-toastify';
 
 interface IndvTP {
     id: string;
@@ -32,6 +34,8 @@ const IndividualTaxpayers: React.FC = () => {
     const [wards, setWards] = useState<Ward[]>([]);
     const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [singleTpayer, setSingleTpayerDataData] = useState<any>(null);
+    const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState({
         idformat: "IND",
         title: "",
@@ -70,7 +74,7 @@ const IndividualTaxpayers: React.FC = () => {
             const res = await fetchIndIdentity({ sort: sortValue });
             setIndvData(res.data.identity_individuals);
         } catch (error) {
-            handleApiError(error, "Could not group details");
+            handleApiError(error, "Could not fetch data");
         }
     };
 
@@ -91,16 +95,64 @@ const IndividualTaxpayers: React.FC = () => {
         }
     };
 
-    
+    const handleButtonClick = async (id: string) => {
+        try {
+            const response = await fetchSingleIndTp({ record: id });
+            setSingleTpayerDataData(response?.data?.identity_individuals[0]);
+            setIsModalUpdateOpen(true);
+        } catch (error) {
+            handleApiError(error, "Could not retrieve taxpayer details");
+            setIsModalUpdateOpen(false);
+        }
+    };
+    const handleUpdateSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        const formData = new FormData(event.currentTarget);
+        const updateTaxpayer = {
+            record: singleTpayer.id,
+            idformat: singleTpayer.idformat,
+            title: formData.get("title") as string,
+            surname: formData.get("surname") as string,
+            firstname: formData.get("firstname") as string,
+            middlename: formData.get("middlename") as string,
+            dob: formData.get("dob") as string,
+            phonenumber: formData.get("phonenumber") as string,
+            gender: formData.get("gender") as string,
+            maritalstatus: formData.get("maritalstatus") as string,
+            stateofresidence: formData.get("stateofresidence") as string,
+            lga: formData.get("lga") as string,
+            bvn: formData.get("bvn") as string,
+            email: formData.get("email") as string,
+            phonenumber2: formData.get("phonenumber2") as string,
+            stateoforigin: formData.get("stateoforigin") as string,
+            birthplace: formData.get("birthplace") as string,
+            occupation: formData.get("occupation") as string,
+            mothersname: formData.get("mothersname") as string,
+            houseno: formData.get("houseno") as string,
+            housestreet: formData.get("housestreet") as string,
+            ward: formData.get("ward") as string,
+            city: formData.get("city") as string,
+            nationality: formData.get("nationality") as string,
+        }
+        
+
+        try {
+            await updateSingleIndTp(updateTaxpayer);
+            toast.success("Taxpayer updated successfully");
+            setIsModalUpdateOpen(false);
+        } catch (error) {
+            handleApiError(error, "There was an error updating Taxpayer");
+        } finally {
+            setIsModalUpdateOpen(false);
+        }
+    };
 
     const handleLGASelectionAdmin = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const lgaId = e.target.value;
         const lgaName = localGovts.find((lga) => lga.id === lgaId)?.name || '';
         setSelectedLGA({ id: lgaId, name: lgaName });
     };
-
-
-
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -110,7 +162,9 @@ const IndividualTaxpayers: React.FC = () => {
         setIsModalOpen(false);
     };
 
-    
+    const closeUpdateModal = () => {
+        setIsModalUpdateOpen(false);
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -175,6 +229,14 @@ const IndividualTaxpayers: React.FC = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.gender}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.created}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    <button
+                                        className="cursor-pointer font-bold hover:underline text-cyan-800"
+                                        onClick={() => handleButtonClick(taxp.id)}
+                                    >
+                                        View
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -182,12 +244,18 @@ const IndividualTaxpayers: React.FC = () => {
             </div>
             <AddTaxpayerModal
                 isModalOpen={isModalOpen}
+                closeModal={closeModal}
                 formData={formData}
                 handleInputChange={handleInputChange}
-                closeModal={closeModal}
                 lgas={localGovts}
                 wards={wards}
-                // refreshTableData={fetchData} 
+            />
+            <UpdateIndividual
+                isModalUpdateOpen={isModalUpdateOpen}
+                closeUpdateModal={closeUpdateModal}
+                singleTpayer={singleTpayer}
+                handleUpdateSubmit={handleUpdateSubmit}
+
             />
         </div>
     );
