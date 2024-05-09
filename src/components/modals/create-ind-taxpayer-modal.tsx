@@ -39,7 +39,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        formData.client = selectedLGA.id
+        // formData.client = selectedLGA.id
         formData.nationality = 'Nigerian'
         formData.idformat = 'Individual'
         formData.lga = selectedLGA.name    

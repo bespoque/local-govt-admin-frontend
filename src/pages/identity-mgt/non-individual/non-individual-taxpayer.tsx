@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { fetchLocalGvts, fetchWards, userUpdate } from 'slices/actions/userActions';
-import { fetchCorporateIndIdentity, fetchIndIdentity, fetchSingleIndTp, updateSingleIndTp } from 'slices/actions/identityActions';
-import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
+import { fetchLocalGvts, fetchWards } from 'slices/actions/userActions';
+import { fetchCorporateIndIdentity, fetchSingleCorpTp, updateSingleIndTp } from 'slices/actions/identityActions';
 import UpdateIndividual from 'components/modals/update-individual-modal';
 import { toast } from 'react-toastify';
 import AddCorporateTaxpayerModal from 'components/modals/create-corporate-taxpayer-modal';
@@ -41,29 +40,25 @@ const NonIndividualTaxpayers: React.FC = () => {
     const [singleTpayer, setSingleTpayerDataData] = useState<any>(null);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
     const [formData, setFormData] = useState({
-        idformat: "Individual",
-        title: "",
-        surname: "",
-        firstname: "",
-        middlename: "",
-        dob: "",
-        phonenumber: "",
-        gender: "",
-        maritalstatus: "",
-        stateofresidence: "",
-        lga: "",
-        bvn: "",
+        companyname: "",
+        registeredname: "",
+        businesstype: "corporate",
+        rc: "",
+        regno: "",
+        lineofbusiness: "",
+        datecommenced: "",
+        dateincorporated: "",
+        sector: "",
+        phone: "",
+        alternatephone: "",
         email: "",
-        phonenumber2: "",
-        stateoforigin: "",
-        birthplace: "",
-        occupation: "",
-        mothersname: "",
         houseno: "",
-        housestreet: "",
-        ward: "",
+        lga: "",
+        street: "",
         city: "",
-        nationality: "NIGERIAN"
+        state: "",
+        companytin: "",
+        ward: ""
     });
 
     useEffect(() => {
@@ -81,7 +76,7 @@ const NonIndividualTaxpayers: React.FC = () => {
             handleApiError(error, "Could not fetch data");
         }
     };
-
+    
     const fetchLGAs = async () => {
         try {
             const response = await fetchLocalGvts({ sort: "ALL" });
@@ -101,8 +96,8 @@ const NonIndividualTaxpayers: React.FC = () => {
 
     const handleButtonClick = async (id: string) => {
         try {
-            const response = await fetchSingleIndTp({ record: id });
-            setSingleTpayerDataData(response?.data?.identity_individuals[0]);
+            const response = await fetchSingleCorpTp({ record: id, sort: "Default" });
+            setSingleTpayerDataData(response?.data?.identity_corporate[0]);
             setIsModalUpdateOpen(true);
         } catch (error) {
             handleApiError(error, "Could not retrieve taxpayer details");
@@ -110,8 +105,7 @@ const NonIndividualTaxpayers: React.FC = () => {
         }
     };
     const handleUpdateSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        
+        event.preventDefault();    
         const formData = new FormData(event.currentTarget);
         const updateTaxpayer = {
             record: singleTpayer.id,
@@ -140,7 +134,6 @@ const NonIndividualTaxpayers: React.FC = () => {
             nationality: formData.get("nationality") as string,
         }
         
-
         try {
             await updateSingleIndTp(updateTaxpayer);
             toast.success("Taxpayer updated successfully");
@@ -241,14 +234,14 @@ const NonIndividualTaxpayers: React.FC = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.sector}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.created}</td>
-                                {/* <td className="px-6 py-4 whitespace-nowrap">
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     <button
                                         className="cursor-pointer font-bold hover:underline text-cyan-800"
                                         onClick={() => handleButtonClick(taxp.id)}
                                     >
                                         View
                                     </button>
-                                </td> */}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

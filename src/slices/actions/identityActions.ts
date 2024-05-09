@@ -12,6 +12,9 @@ export const createIndvIdentity = async (data) => {
 export const fetchSingleIndTp = async (data) => {
   return api.post("/identitymgt/IndividualSingle.php", data);
 };
+export const fetchSingleCorpTp = async (data) => {
+  return api.post("/identitymgt/CorporateSingle.php", data);
+};
 export const updateSingleIndTp = async (data) => {
   return api.post("/identitymgt/IndividualUpdate.php", data);
 };
