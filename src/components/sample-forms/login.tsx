@@ -39,7 +39,7 @@ const Index: React.FC = () => {
       const response = await authenticate(data);
       if (response.data.token) {
         localStorage.setItem("access_token", response.data.token);
-      }      
+      }
       const updatedUser = response.data.user[0];
       const updatedJson = {
         "user": {
@@ -79,11 +79,7 @@ const Index: React.FC = () => {
     } catch (error: any) {
       setLoading(false);
       if (error.response) {
-        if (error.response.data?.innerError?.code === "ENETUNREACH") {
-          setErrorMessage("Network Error");
-        } else {
-          setErrorMessage(error.response.data?.message);
-        }
+        setErrorMessage(error.response.data?.message);
       } else {
         setErrorMessage("There was an error, Please try again");
       }
