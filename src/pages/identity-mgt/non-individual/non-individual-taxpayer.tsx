@@ -5,6 +5,7 @@ import { fetchCorporateIndIdentity, fetchIndIdentity, fetchSingleIndTp, updateSi
 import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
 import UpdateIndividual from 'components/modals/update-individual-modal';
 import { toast } from 'react-toastify';
+import AddCorporateTaxpayerModal from 'components/modals/create-corporate-taxpayer-modal';
 
 interface CorporateTP {
     id: string;
@@ -253,7 +254,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                     </tbody>
                 </table>
             </div>
-            <AddTaxpayerModal
+            <AddCorporateTaxpayerModal
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
                 formData={formData}

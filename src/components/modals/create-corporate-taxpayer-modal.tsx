@@ -13,7 +13,7 @@ interface ModalProps {
     wards: { id: string; name: string, lga_id: string }[];
 }
 
-const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards }) => {
+const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards }) => {
     const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);    
@@ -60,7 +60,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                 <div className="fixed z-50 top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-4/6">
                     <div className="bg-white p-6 rounded-lg h-full flex flex-col justify-center">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-lg font-semibold">Add Individual Taxpayer</h2>
+                            <h2 className="text-lg font-semibold">Add Corporate Taxpayer</h2>
                             <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 focus:outline-none">
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -345,4 +345,4 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
     );
 };
 
-export default AddTaxpayerModal;
+export default AddCorporateTaxpayerModal;

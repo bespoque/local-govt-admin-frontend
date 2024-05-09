@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 
 interface IndvTP {
     id: string;
+    taxid: string;
     firstname: string;
     surname: string;
     email: string;
@@ -207,6 +208,9 @@ const IndividualTaxpayers: React.FC = () => {
                                 surname
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                taxid
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 email
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -225,6 +229,7 @@ const IndividualTaxpayers: React.FC = () => {
                             <tr key={taxp.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.firstname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.surname}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{taxp.taxid}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.email}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.gender}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>
