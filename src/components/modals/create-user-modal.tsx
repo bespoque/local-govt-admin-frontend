@@ -40,7 +40,7 @@ const UserModal: React.FC<UserModalProps> = ({
     .map((usr) => usr.role);
   const isSuperAdmin = userRoles.some((userRole) =>
     [
-      Role.ADMIN,
+      Role.SUPERADMIN,
     ].includes(userRole)
   )
   
