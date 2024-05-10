@@ -39,7 +39,7 @@ const IndividualTaxpayers: React.FC = () => {
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [formData, setFormData] = useState({
-        idformat: "IND",
+        idformat: "Individual",
         title: "",
         surname: "",
         firstname: "",

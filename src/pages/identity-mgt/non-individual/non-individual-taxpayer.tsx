@@ -42,6 +42,7 @@ const NonIndividualTaxpayers: React.FC = () => {
     const [singleTpayer, setSingleTpayerDataData] = useState<any>(null);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
     const userData = useAppSelector((state: RootState) => state.auth);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const userRoles = userData.roles
         .map((usr) => usr.role);
     const isSuperAdmin = userRoles.some((userRole) =>
@@ -181,6 +182,17 @@ const NonIndividualTaxpayers: React.FC = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const PAGE_SIZE = 5;
+
+    const totalPages = Math.ceil(corporateData.length / PAGE_SIZE);
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const paginatedData = corporateData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+
     return (
         <div>
             <div className="flex justify-end items-center my-4">
@@ -232,7 +244,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {corporateData?.map((taxp) => (
+                        {paginatedData?.map((taxp) => (
                             <tr key={taxp.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.companyname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.regno}</td>
@@ -252,6 +264,19 @@ const NonIndividualTaxpayers: React.FC = () => {
                         ))}
                     </tbody>
                 </table>
+                <div className="flex justify-center items-center my-4">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handlePageChange(index + 1)}
+                            className={`px-4 py-2 mr-2 bg-cyan-900 text-white rounded-md shadow-md focus:outline-none hover:bg-cyan-700 ${currentPage === index + 1 ? 'bg-blue-500' : ''
+                                }`}
+                            style={{ backgroundColor: currentPage === index + 1 ? '#073763' : '#cad6e1' }}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
             </div>
             <AddCorporateTaxpayerModal
                 isModalOpen={isModalOpen}

@@ -34,7 +34,7 @@ const GroupTable: React.FC<Props> = ({ groupData, handleButtonClick }) => {
         </thead>
         <tbody>
           {paginatedData.map((group) => (
-            <tr key={group.id} className="odd:bg-gray-100 dark:odd:bg-gray-100">
+            <tr key={group.id} className=" hover:bg-gray-100 cursor-pointer">
               <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
                 <span>{group.role}</span>
               </td>
