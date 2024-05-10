@@ -1,7 +1,7 @@
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { localGovernments } from "components/tax-office/tax-office.interface";
 import { Role } from "components/user/user.interface";
 import { handleApiError } from "helpers/errors";
-import React, { useEffect, useState } from "react";
 import { fetchLocalGvts } from "slices/actions/userActions";
 import { RootState, useAppSelector } from "store";
 
@@ -18,7 +18,7 @@ interface LGA {
 
 interface UserModalProps {
   usergroups: Groups[];
-  handleModalInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleModalInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   handleAddRecord: () => void;
   handleToggleDropdown: () => void;
 }
@@ -29,48 +29,40 @@ const UserModal: React.FC<UserModalProps> = ({
   handleAddRecord,
   handleToggleDropdown
 }) => {
-  const filteredUserGroups = usergroups.filter(group => group.role !== '');
+  const filteredUserGroups = useMemo(() => usergroups.filter(group => group.role !== ''), [usergroups]);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const [localGovts, setLGAs] = useState<LGA[]>([]);
-  const [filteredLGAs, setFilteredLGAs] = useState<{ id: string; name: string }[]>([]);
   const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
   const userData = useAppSelector((state: RootState) => state.auth);
-  const userRoles = userData.roles
-    .map((usr) => usr.role);
-  const isSuperAdmin = userRoles.some((userRole) =>
-    [
-      Role.SUPERADMIN,
-    ].includes(userRole)
-  )
-  
-  const filteredLGA = localGovernments.filter((lga) => lga.id === userData?.taxOffice?.id);
+  const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
+  const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
+
   useEffect(() => {
-    // setFilteredLGAs(filteredLGA);
     const fetchLGAs = async () => {
       try {
+        let response;
         if (isSuperAdmin) {
-          const response = await fetchLocalGvts({ sort: "ALL" });
-          setLGAs(response.data.lgas);
+          response = await fetchLocalGvts({ sort: "ALL" });
         } else {
-          setLGAs(filteredLGA)
+          response = { data: { lgas: localGovernments.filter(lga => lga.id === userData?.taxOffice?.id) } };
         }
+        setLGAs(response.data.lgas);
       } catch (error) {
         handleApiError('Error fetching LGAs:', error);
       }
-    }
-    fetchLGAs()
-  }, [isSuperAdmin, filteredLGA]);
+    };
+    fetchLGAs();
+  }, [isSuperAdmin, userData.taxOffice?.id]);
 
-  
-
-  const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLGASelection = (e: ChangeEvent<HTMLSelectElement>) => {
     const lgaId = e.target.value;
     const lgaName = localGovts.find((lga) => lga.id === lgaId)?.name || '';
     setSelectedLGA({ id: lgaId, name: lgaName });
+    handleModalInputChange(e);
   };
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const numericValue = value.replace(/\D/g, '');
     const phoneNumberError = numericValue.length > 11 ? 'Phone number cannot exceed 11 digits' : '';
@@ -78,8 +70,6 @@ const UserModal: React.FC<UserModalProps> = ({
     setPhoneNumberError(phoneNumberError);
     handleModalInputChange(e);
   };
-
-
 
   return (
     <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-2/6">
@@ -147,10 +137,8 @@ const UserModal: React.FC<UserModalProps> = ({
               value="Active"
               readOnly
               className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-            // onChange={handleModalInputChange}
             />
           </div>
-
         </form>
         <div className="flex justify-evenly mt-4">
           <button onClick={handleAddRecord} className="bg-cyan-900 text-white px-4 py-2 rounded-md">
@@ -162,7 +150,7 @@ const UserModal: React.FC<UserModalProps> = ({
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default UserModal;
