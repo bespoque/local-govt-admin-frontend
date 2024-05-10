@@ -37,6 +37,7 @@ const IndividualTaxpayers: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [singleTpayer, setSingleTpayerDataData] = useState<any>(null);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [formData, setFormData] = useState({
         idformat: "IND",
         title: "",
@@ -63,6 +64,7 @@ const IndividualTaxpayers: React.FC = () => {
         nationality: "NIGERIAN"
     });
 
+    
     useEffect(() => {
         fetchData();
         fetchLGAs();
@@ -171,6 +173,15 @@ const IndividualTaxpayers: React.FC = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+    const PAGE_SIZE = 5;
+
+    const totalPages = Math.ceil(indvData.length / PAGE_SIZE);
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const paginatedData = indvData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
     return (
         <div>
@@ -225,7 +236,7 @@ const IndividualTaxpayers: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {indvData?.map((taxp) => (
+                        {paginatedData?.map((taxp) => (
                             <tr key={taxp.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.firstname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.surname}</td>
@@ -246,6 +257,19 @@ const IndividualTaxpayers: React.FC = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div className="flex justify-center items-center my-4">
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`px-4 py-2 mr-2 bg-cyan-900 text-white rounded-md shadow-md focus:outline-none hover:bg-cyan-700 ${currentPage === index + 1 ? 'bg-blue-500' : ''
+                            }`}
+                        style={{ backgroundColor: currentPage === index + 1 ? 'blue' : 'red' }}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
             </div>
             <AddTaxpayerModal
                 isModalOpen={isModalOpen}
