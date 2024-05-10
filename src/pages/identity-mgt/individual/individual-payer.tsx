@@ -3,7 +3,7 @@ import { handleApiError } from 'helpers/errors';
 import { fetchLocalGvts, fetchWards, userUpdate } from 'slices/actions/userActions';
 import { fetchIndIdentity, fetchSingleIndTp, updateSingleIndTp } from 'slices/actions/identityActions';
 import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
-import UpdateIndividual from 'components/modals/update-individual-modal';
+import UpdateIndividual from 'components/modals/update-corporate-modal';
 import { toast } from 'react-toastify';
 
 interface IndvTP {
@@ -108,7 +108,7 @@ const IndividualTaxpayers: React.FC = () => {
     };
     const handleUpdateSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
+
         const formData = new FormData(event.currentTarget);
         const updateTaxpayer = {
             record: singleTpayer.id,
@@ -136,7 +136,7 @@ const IndividualTaxpayers: React.FC = () => {
             city: formData.get("city") as string,
             nationality: formData.get("nationality") as string,
         }
-        
+
 
         try {
             await updateSingleIndTp(updateTaxpayer);

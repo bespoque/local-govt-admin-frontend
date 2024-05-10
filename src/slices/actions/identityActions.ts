@@ -21,3 +21,6 @@ export const fetchSingleCorpTp = async (data) => {
 export const updateSingleIndTp = async (data) => {
   return api.post("/identitymgt/IndividualUpdate.php", data);
 };
+export const updateSingleCorpTp = async (data) => {
+  return api.post("/identitymgt/CorporateUpdate.php", data);
+};

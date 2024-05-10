@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
 import { fetchLocalGvts, fetchWards } from 'slices/actions/userActions';
-import { fetchCorporateIndIdentity, fetchSingleCorpTp, updateSingleIndTp } from 'slices/actions/identityActions';
-import UpdateIndividual from 'components/modals/update-individual-modal';
+import { fetchCorporateIndIdentity, fetchSingleCorpTp, updateSingleCorpTp } from 'slices/actions/identityActions';
 import { toast } from 'react-toastify';
 import AddCorporateTaxpayerModal from 'components/modals/create-corporate-taxpayer-modal';
 import { RootState, useAppSelector } from 'store';
 import { Role } from 'components/user/user.interface';
+import UpdateCorporate from 'components/modals/update-corporate-modal';
 
 interface CorporateTP {
     id: string;
@@ -93,7 +93,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                 const response = await fetchLocalGvts({ sort: "ALL" });
                 setLGAs(response.data.lgas);
 
-            }else{
+            } else {
                 const response = await fetchLocalGvts({ sort: "ALL" });
                 setLGAs(response.data.lgas);
             }
@@ -114,7 +114,7 @@ const NonIndividualTaxpayers: React.FC = () => {
 
     const handleButtonClick = async (id: string) => {
         try {
-            const response = await fetchSingleCorpTp({ record: id, sort: "Default" });
+            const response = await fetchSingleCorpTp({ record: id, sort: "DEFAULT" });
             setSingleTpayerDataData(response?.data?.identity_corporate[0]);
             setIsModalUpdateOpen(true);
         } catch (error) {
@@ -127,33 +127,28 @@ const NonIndividualTaxpayers: React.FC = () => {
         const formData = new FormData(event.currentTarget);
         const updateTaxpayer = {
             record: singleTpayer.id,
-            idformat: singleTpayer.idformat,
-            title: formData.get("title") as string,
-            surname: formData.get("surname") as string,
-            firstname: formData.get("firstname") as string,
-            middlename: formData.get("middlename") as string,
-            dob: formData.get("dob") as string,
-            phonenumber: formData.get("phonenumber") as string,
-            gender: formData.get("gender") as string,
-            maritalstatus: formData.get("maritalstatus") as string,
-            stateofresidence: formData.get("stateofresidence") as string,
-            lga: formData.get("lga") as string,
-            bvn: formData.get("bvn") as string,
+            companyname: formData.get("companyname") as string,
+            registeredname: formData.get("registeredname") as string,
+            businesstype: formData.get("businesstype") as string,
+            rc: formData.get("rc") as string,
+            regno: formData.get("regno") as string,
+            lineofbusiness: formData.get("lineofbusiness") as string,
+            datecommenced: formData.get("datecommenced") as string,
+            dateincorporated: formData.get("dateincorporated") as string,
+            sector: formData.get("sector") as string,
+            phone: formData.get("phone") as string,
             email: formData.get("email") as string,
-            phonenumber2: formData.get("phonenumber2") as string,
-            stateoforigin: formData.get("stateoforigin") as string,
-            birthplace: formData.get("birthplace") as string,
-            occupation: formData.get("occupation") as string,
-            mothersname: formData.get("mothersname") as string,
             houseno: formData.get("houseno") as string,
-            housestreet: formData.get("housestreet") as string,
-            ward: formData.get("ward") as string,
+            street: formData.get("street") as string,
             city: formData.get("city") as string,
-            nationality: formData.get("nationality") as string,
+            state: formData.get("state") as string,
+            companytin: formData.get("companytin") as string,
+            alternatephone: formData.get("alternatephone") as string,
+            ward: formData.get("ward") as string,
         }
 
         try {
-            await updateSingleIndTp(updateTaxpayer);
+            await updateSingleCorpTp(updateTaxpayer);
             toast.success("Taxpayer updated successfully");
             setIsModalUpdateOpen(false);
         } catch (error) {
@@ -219,14 +214,9 @@ const NonIndividualTaxpayers: React.FC = () => {
                                 company name
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                business type
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 reg no
                             </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                rc no
-                            </th>
+                     
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 phone
                             </th>
@@ -245,9 +235,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                         {corporateData?.map((taxp) => (
                             <tr key={taxp.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.companyname}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.businesstype}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.regno}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.rc}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.phone}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.sector}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>
@@ -273,7 +261,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                 lgas={localGovts}
                 wards={wards}
             />
-            <UpdateIndividual
+            <UpdateCorporate
                 isModalUpdateOpen={isModalUpdateOpen}
                 closeUpdateModal={closeUpdateModal}
                 singleTpayer={singleTpayer}
