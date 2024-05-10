@@ -5,6 +5,8 @@ import { fetchCorporateIndIdentity, fetchSingleCorpTp, updateSingleIndTp } from 
 import UpdateIndividual from 'components/modals/update-individual-modal';
 import { toast } from 'react-toastify';
 import AddCorporateTaxpayerModal from 'components/modals/create-corporate-taxpayer-modal';
+import { RootState, useAppSelector } from 'store';
+import { Role } from 'components/user/user.interface';
 
 interface CorporateTP {
     id: string;
@@ -39,10 +41,18 @@ const NonIndividualTaxpayers: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [singleTpayer, setSingleTpayerDataData] = useState<any>(null);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
+    const userData = useAppSelector((state: RootState) => state.auth);
+    const userRoles = userData.roles
+        .map((usr) => usr.role);
+    const isSuperAdmin = userRoles.some((userRole) =>
+        [
+            Role.ADMIN,
+        ].includes(userRole)
+    )
     const [formData, setFormData] = useState({
         companyname: "",
         registeredname: "",
-        businesstype: "corporate",
+        businesstype: "Corporate",
         rc: "",
         regno: "",
         lineofbusiness: "",
@@ -76,11 +86,17 @@ const NonIndividualTaxpayers: React.FC = () => {
             handleApiError(error, "Could not fetch data");
         }
     };
-    
+
     const fetchLGAs = async () => {
         try {
-            const response = await fetchLocalGvts({ sort: "ALL" });
-            setLGAs(response.data.lgas);
+            if (isSuperAdmin) {
+                const response = await fetchLocalGvts({ sort: "ALL" });
+                setLGAs(response.data.lgas);
+
+            }else{
+                const response = await fetchLocalGvts({ sort: "ALL" });
+                setLGAs(response.data.lgas);
+            }
         } catch (error) {
             handleApiError('Error fetching LGAs:', error);
         }
@@ -94,6 +110,8 @@ const NonIndividualTaxpayers: React.FC = () => {
         }
     };
 
+
+
     const handleButtonClick = async (id: string) => {
         try {
             const response = await fetchSingleCorpTp({ record: id, sort: "Default" });
@@ -105,7 +123,7 @@ const NonIndividualTaxpayers: React.FC = () => {
         }
     };
     const handleUpdateSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();    
+        event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const updateTaxpayer = {
             record: singleTpayer.id,
@@ -133,7 +151,7 @@ const NonIndividualTaxpayers: React.FC = () => {
             city: formData.get("city") as string,
             nationality: formData.get("nationality") as string,
         }
-        
+
         try {
             await updateSingleIndTp(updateTaxpayer);
             toast.success("Taxpayer updated successfully");

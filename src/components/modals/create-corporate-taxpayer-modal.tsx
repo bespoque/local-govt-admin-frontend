@@ -1,7 +1,7 @@
 import { handleApiError } from 'helpers/errors';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { createIndvIdentity } from 'slices/actions/identityActions';
+import { createCorpIdentity } from 'slices/actions/identityActions';
 
 
 interface ModalProps {
@@ -16,7 +16,7 @@ interface ModalProps {
 const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards }) => {
     const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
-    const [isSubmitting, setIsSubmitting] = useState(false);    
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         if (selectedLGA.id) {
@@ -30,7 +30,6 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
 
 
     const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
         const lgaId = e.target.value;
         const lgaName = lgas.find((lga) => lga.id === lgaId)?.name || '';
         setSelectedLGA({ id: lgaId, name: lgaName });
@@ -39,12 +38,9 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        formData.client = selectedLGA.id
-        formData.nationality = 'Nigerian'
-        formData.idformat = 'Individual'
-        formData.lga = selectedLGA.name    
+        // formData.lga = selectedLGA.name
         try {
-            await createIndvIdentity(formData);
+            await createCorpIdentity(formData);
             toast.success("Created Taxpayer successfully");
         } catch (error) {
             handleApiError(error, "There was an error creating Taxpayer");
@@ -70,97 +66,135 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-3 gap-4 overflow-y-auto h-96 p-2" style={{ scrollbarWidth: 'thin' }}>
                                 <div>
-                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title:</label>
-                                    <select
-                                        id="title"
-                                        name="title"
-                                        value={formData.title}
+                                    <label htmlFor="companyname" className="block text-sm font-medium text-gray-700">company name:</label>
+                                    <input
+                                        type="text"
+                                        id="companyname"
+                                        name="companyname"
+                                        value={formData.companyname}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
-                                    >
-                                        <option value="">Please select</option>
-                                        <option value="mrs">Mrs</option>
-                                        <option value="mr">Mr</option>
-                                        <option value="mss">Miss</option>
-                                    </select>
+                                    />
                                 </div>
                                 <div>
-                                    <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">Firstname:</label>
+                                    <label htmlFor="registeredname" className="block text-sm font-medium text-gray-700">registered name:</label>
                                     <input
-                                        id="firstname"
+                                        id="registeredname"
                                         type="text"
-                                        name="firstname"
-                                        value={formData.firstname}
+                                        name="registeredname"
+                                        value={formData.registeredname}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="middlename" className="block text-sm font-medium text-gray-700">Middlename:</label>
+                                    <label htmlFor="businesstype" className="block text-sm font-medium text-gray-700">business type:</label>
                                     <input
-                                        id="middlename"
+                                        id="businesstype"
                                         type="text"
-                                        name="middlename"
-                                        value={formData.middlename}
+                                        name="businesstype"
+                                        value={formData.businesstype}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="surname" className="block text-sm font-medium text-gray-700">Surname:</label>
+                                    <label htmlFor="rc" className="block text-sm font-medium text-gray-700">rc:</label>
                                     <input
-                                        id="surname"
+                                        id="rc"
                                         type="text"
-                                        name="surname"
-                                        value={formData.surname}
+                                        name="rc"
+                                        value={formData.rc}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of Birth:</label>
+                                    <label htmlFor="regno" className="block text-sm font-medium text-gray-700">Reg no:</label>
                                     <input
-                                        id="dob"
-                                        type="date"
-                                        name="dob"
-                                        value={formData.dob}
+                                        id="regno"
+                                        type="text"
+                                        name="regno"
+                                        value={formData.regno}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender:</label>
-                                    <select
-                                        id="gender"
-                                        name="gender"
-                                        value={formData.gender}
+                                    <label htmlFor="companytin" className="block text-sm font-medium text-gray-700">company Tin:</label>
+                                    <input
+                                        id="companytin"
+                                        type="text"
+                                        name="companytin"
+                                        defaultValue={"KOGI"}
+                                        value={formData.companytin}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    >
-                                        <option value="">Select</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </select>
+                                    />
                                 </div>
                                 <div>
-                                    <label htmlFor="maritalstatus" className="block text-sm font-medium text-gray-700">Marital status:</label>
+                                    <label htmlFor="datecommenced" className="block text-sm font-medium text-gray-700">date commenced:</label>
+                                    <input
+                                        type="date"
+                                        id="datecommenced"
+                                        name="datecommenced"
+                                        value={formData.datecommenced}
+                                        onChange={handleInputChange}
+                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="dateincorporated" className="block text-sm font-medium text-gray-700">date incorporated:</label>
+                                    <input
+                                        type="date"
+                                        id="dateincorporated"
+                                        name="dateincorporated"
+                                        value={formData.dateincorporated}
+                                        onChange={handleInputChange}
+                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="sector" className="block text-sm font-medium text-gray-700">sector:</label>
                                     <select
-                                        id="maritalstatus"
-                                        name="maritalstatus"
-                                        value={formData.maritalstatus}
+                                        id="sector"
+                                        name="sector"
+                                        value={formData.sector}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
                                     >
                                         <option value="">Select</option>
-                                        <option value="married">Married</option>
-                                        <option value="single">Single</option>
+                                        <option value="Agric">Agric</option>
+                                        <option value="Education">Education</option>
                                     </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Moble Number:</label>
+                                    <input
+                                        id="phone"
+                                        type="text"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="alternatephone" className="block text-sm font-medium text-gray-700">Alternate phone:</label>
+                                    <input
+                                        id="alternatephone"
+                                        type="text"
+                                        name="alternatephone"
+                                        value={formData.alternatephone}
+                                        onChange={handleInputChange}
+                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                    />
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email:</label>
                                     <input
                                         id="email"
-                                        type="email"
+                                        type="text"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
@@ -168,45 +202,24 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="phonenumber" className="block text-sm font-medium text-gray-700">Moble Number:</label>
+                                    <label htmlFor="houseno" className="block text-sm font-medium text-gray-700">houseno:</label>
                                     <input
-                                        id="phonenumber"
+                                        id="houseno"
                                         type="text"
-                                        name="phonenumber"
-                                        value={formData.phonenumber}
+                                        name="houseno"
+                                        value={formData.houseno}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="phonenumber2" className="block text-sm font-medium text-gray-700">Home Number:</label>
+                                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">City:</label>
                                     <input
-                                        id="phonenumber2"
+                                        id="city"
                                         type="text"
-                                        name="phonenumber2"
-                                        value={formData.phonenumber2}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="bvn" className="block text-sm font-medium text-gray-700">BVN:</label>
-                                    <input
-                                        id="bvn"
-                                        type="text"
-                                        name="bvn"
-                                        value={formData.bvn}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="mothersname" className="block text-sm font-medium text-gray-700">Mother's Surname:</label>
-                                    <input
-                                        id="mothersname"
-                                        type="text"
-                                        name="mothersname"
-                                        value={formData.mothersname}
+                                        name="city"
+                                        defaultValue={"KOGI"}
+                                        value={formData.city}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                                     />
@@ -248,88 +261,19 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         ))}
                                     </select>
                                 </div>
+                      
                                 <div>
-                                    <label htmlFor="stateofresidence" className="block text-sm font-medium text-gray-700">State of Residence:</label>
+                                    <label htmlFor="street" className="block text-sm font-medium text-gray-700">Street:</label>
                                     <input
-                                        id="stateofresidence"
+                                        id="street"
                                         type="text"
-                                        name="stateofresidence"
-                                        defaultValue={"KOGI"}
-                                        value={formData.stateofresidence}
+                                        name="street"
+                                        value={formData.street}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                                     />
                                 </div>
-                                <div>
-                                    <label htmlFor="stateoforigin" className="block text-sm font-medium text-gray-700">State of Origin:</label>
-                                    <input
-                                        id="stateoforigin"
-                                        type="text"
-                                        name="stateoforigin"
-                                        defaultValue={"KOGI"}
-                                        value={formData.stateoforigin}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="birthplace" className="block text-sm font-medium text-gray-700">Birth Place:</label>
-                                    <input
-                                        id="birthplace"
-                                        type="text"
-                                        name="birthplace"
-                                        defaultValue={"KOGI"}
-                                        value={formData.birthplace}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label htmlFor="occupation" className="block text-sm font-medium text-gray-700">Occupation:</label>
-                                    <input
-                                        id="occupation"
-                                        type="text"
-                                        name="occupation"
-                                        value={formData.occupation}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">city:</label>
-                                    <input
-                                        id="city"
-                                        type="text"
-                                        name="city"
-                                        value={formData.city}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label htmlFor="housestreet" className="block text-sm font-medium text-gray-700">housestreet:</label>
-                                    <input
-                                        id="housestreet"
-                                        type="text"
-                                        name="housestreet"
-                                        value={formData.housestreet}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="houseno" className="block text-sm font-medium text-gray-700">houseno:</label>
-                                    <input
-                                        id="houseno"
-                                        type="text"
-                                        name="houseno"
-                                        value={formData.houseno}
-                                        onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
+                       
                             </div>
                             <div className="flex justify-end mt-4">
                                 <button type="submit" disabled={isSubmitting} className="px-4 py-2 bg-cyan-800 text-white rounded-md shadow-md focus:outline-none hover:bg-cyan-700">

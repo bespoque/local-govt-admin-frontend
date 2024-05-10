@@ -3,6 +3,7 @@ import { ITaxOffice, ITaxOfficeUser } from "components/tax-office/tax-office.int
 export enum Role {
   SUPER_ADMIN = "SUPER_ADMIN",
   ADMIN = "ADMIN",
+  SUPERADMIN = "SUPERADMIN",
   collection_view = "collection_view",
   user_update = "user_update",
   user_view = "user_view",

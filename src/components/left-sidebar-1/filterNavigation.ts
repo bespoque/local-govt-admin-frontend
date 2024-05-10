@@ -9,7 +9,7 @@ export const filterNavigation = (
 ): NavigationState[] => {
   return navigation.filter((section) => {
     const isAdminOrSuperAdmin =
-      userRoles.includes(Role.ADMIN) || userRoles.includes(Role.SUPER_ADMIN);
+      userRoles.includes(Role.ADMIN) || userRoles.includes(Role.SUPERADMIN);
 
     const isDashboard = section.title?.toLowerCase() === "dashboard";
 

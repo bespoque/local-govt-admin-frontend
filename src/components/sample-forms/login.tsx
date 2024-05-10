@@ -58,21 +58,7 @@ const Index: React.FC = () => {
         "redirect": response.data.redirect
       };
 
-      // Conditionally add SUPER_ADMIN role
-      if (updatedUser.usergroup === "1") {
-        updatedJson.user.roles.push({
-          "roleId": updatedJson.user.roles.length + 1,
-          "role": "SUPER_ADMIN",
-          "permissions": ["all"],
-          "active": true
-        });
-      }
-
-
-
-
       dispatch(loginUser(updatedJson?.user));
-      // dispatch(loginUser(response.data.user));
       setLoading(false);
       router.push("/dashboard");
 

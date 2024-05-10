@@ -38,9 +38,6 @@ const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
           <th className="px-3 py-2 text-xs font-medium tracking-wider text-gray-500 uppercase border-b border-gray-100 dark:border-gray-800 leading-4">
             Created
           </th>
-          {/* <th className="px-3 py-2 text-xs font-medium tracking-wider text-gray-500 uppercase border-b border-gray-100 dark:border-gray-800 leading-4">
-            Actions
-          </th> */}
         </tr>
       </thead>
       <tbody>

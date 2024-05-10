@@ -18,10 +18,11 @@ interface Groups {
   clientid: string;
 }
 
-interface FormData {
+interface UserFormData {
   role: string;
   fullname: string;
   groupid: string;
+  lga: string;
   email: string;
   phone: string;
   status: string;
@@ -30,7 +31,7 @@ interface FormData {
 const AddRecordButton: React.FC<any> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<AddRecordType | null>(null);
-  const [formData, setFormData] = useState<FormData | null>(null);
+  const [formData, setFormData] = useState<UserFormData | null>(null);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [userGroups, setUserGroups] = useState<Groups[]>([]);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
@@ -140,18 +141,18 @@ const AddRecordButton: React.FC<any> = () => {
         >
           <div className="py-1" role="none">
             <button
-              onClick={() => handleSelectType("group")}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-              role="menuitem"
-            >
-              Add Group
-            </button>
-            <button
               onClick={() => handleSelectType("user")}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
               role="menuitem"
             >
               Add User
+            </button>
+            <button
+              onClick={() => handleSelectType("group")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+              role="menuitem"
+            >
+              Add Group
             </button>
           </div>
         </div>

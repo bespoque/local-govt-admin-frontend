@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import { localGovernments } from "components/tax-office/tax-office.interface";
+import { Role } from "components/user/user.interface";
+import { handleApiError } from "helpers/errors";
+import React, { useEffect, useState } from "react";
+import { fetchLocalGvts } from "slices/actions/userActions";
+import { RootState, useAppSelector } from "store";
 
 interface Groups {
   id: string;
   role: string;
   clientid: string;
+}
+
+interface LGA {
+  id: string;
+  name: string;
 }
 
 interface UserModalProps {
@@ -22,6 +32,43 @@ const UserModal: React.FC<UserModalProps> = ({
   const filteredUserGroups = usergroups.filter(group => group.role !== '');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [localGovts, setLGAs] = useState<LGA[]>([]);
+  const [filteredLGAs, setFilteredLGAs] = useState<{ id: string; name: string }[]>([]);
+  const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
+  const userData = useAppSelector((state: RootState) => state.auth);
+  const userRoles = userData.roles
+    .map((usr) => usr.role);
+  const isSuperAdmin = userRoles.some((userRole) =>
+    [
+      Role.ADMIN,
+    ].includes(userRole)
+  )
+  
+  const filteredLGA = localGovernments.filter((lga) => lga.id === userData?.taxOffice?.id);
+  useEffect(() => {
+    // setFilteredLGAs(filteredLGA);
+    const fetchLGAs = async () => {
+      try {
+        if (isSuperAdmin) {
+          const response = await fetchLocalGvts({ sort: "ALL" });
+          setLGAs(response.data.lgas);
+        } else {
+          setLGAs(filteredLGA)
+        }
+      } catch (error) {
+        handleApiError('Error fetching LGAs:', error);
+      }
+    }
+    fetchLGAs()
+  }, [isSuperAdmin, filteredLGA]);
+
+  
+
+  const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const lgaId = e.target.value;
+    const lgaName = localGovts.find((lga) => lga.id === lgaId)?.name || '';
+    setSelectedLGA({ id: lgaId, name: lgaName });
+  };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -31,6 +78,8 @@ const UserModal: React.FC<UserModalProps> = ({
     setPhoneNumberError(phoneNumberError);
     handleModalInputChange(e);
   };
+
+
 
   return (
     <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-2/6">
@@ -62,6 +111,22 @@ const UserModal: React.FC<UserModalProps> = ({
               {filteredUserGroups.map(group => (
                 <option key={group.id} value={group.id}>
                   {group.role}
+                </option>
+              ))}
+            </select>
+            <select
+              id="lga"
+              name="lga"
+              onChange={(e) => {
+                handleLGASelection(e);
+                handleModalInputChange(e);
+              }}
+              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            >
+              <option value="">Select LGA</option>
+              {localGovts.map((lga) => (
+                <option key={lga.id} value={lga.id}>
+                  {lga.name}
                 </option>
               ))}
             </select>
