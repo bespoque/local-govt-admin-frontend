@@ -265,7 +265,7 @@ const IndividualTaxpayers: React.FC = () => {
                         onClick={() => handlePageChange(index + 1)}
                         className={`px-4 py-2 mr-2 bg-cyan-900 text-white rounded-md shadow-md focus:outline-none hover:bg-cyan-700 ${currentPage === index + 1 ? 'bg-blue-500' : ''
                             }`}
-                        style={{ backgroundColor: currentPage === index + 1 ? 'blue' : 'red' }}
+                        style={{ backgroundColor: currentPage === index + 1 ? '#073763' : '#cad6e1' }}
                     >
                         {index + 1}
                     </button>
