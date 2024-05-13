@@ -237,6 +237,9 @@ const Agents: React.FC = () => {
                                 account no
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                bank
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 lga
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -253,8 +256,8 @@ const Agents: React.FC = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.firstname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.lastname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.phone}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{agent.bank}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.account_no}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.bank}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.lga}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.ward}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.created}</td>
