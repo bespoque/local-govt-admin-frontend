@@ -12,7 +12,7 @@ const Index: React.FC = () => {
     const tabs = [
         {
             index: 0,
-            title: "Idividual Taxpayers",
+            title: "Individual Taxpayers",
             active: true,
             content: <div className="w-full py-4">
                 <IndividualTaxpayers />
@@ -20,7 +20,7 @@ const Index: React.FC = () => {
         },
         {
             index: 2,
-            title: "NonIndividual Taxpayers",
+            title: "Corporate Taxpayers",
             content: (
                 <div className="w-full py-4">
                     <NonIndividualTaxpayers />

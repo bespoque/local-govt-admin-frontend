@@ -38,7 +38,6 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // formData.lga = selectedLGA.name
         try {
             await createCorpIdentity(formData);
             toast.success("Created Taxpayer successfully");

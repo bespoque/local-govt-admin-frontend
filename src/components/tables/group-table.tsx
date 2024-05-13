@@ -23,22 +23,22 @@ const GroupTable: React.FC<Props> = ({ groupData, handleButtonClick }) => {
 
   const paginatedData = filteredData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   return (
-    <div>
-      <table className="w-full text-left table-auto no-border striped">
-        <thead>
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
             <th className="px-3 py-2 text-xs font-medium tracking-wider text-gray-500 uppercase border-b border-gray-100 dark:border-gray-800 leading-4">
               Group Name
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-white divide-y divide-gray-200">
           {paginatedData.map((group) => (
-            <tr key={group.id} className="odd:bg-gray-100 dark:odd:bg-gray-100 hover:text-white hover:bg-cyan-900">
-              <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
+            <tr key={group.id} className="hover:bg-blue-100">
+              <td className="px-6 py-4 whitespace-nowrap">
                 <span>{group.role}</span>
               </td>
-              <td>
+              <td className="px-6 py-4 whitespace-nowrap">
                 <button
                   className="cursor-pointer font-bold "
                   onClick={() => handleButtonClick(group.id)}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { fetchLocalGvts, fetchWards, userUpdate } from 'slices/actions/userActions';
+import { fetchLocalGvts, fetchWards } from 'slices/actions/userActions';
 import { fetchIndIdentity, fetchSingleIndTp, updateSingleIndTp } from 'slices/actions/identityActions';
 import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
-import UpdateIndividual from 'components/modals/update-corporate-modal';
 import { toast } from 'react-toastify';
+import UpdateIndividualTp from 'components/modals/update-individual-modal';
 
 interface IndvTP {
     id: string;
@@ -64,7 +64,7 @@ const IndividualTaxpayers: React.FC = () => {
         nationality: "NIGERIAN"
     });
 
-    
+
     useEffect(() => {
         fetchData();
         fetchLGAs();
@@ -114,7 +114,7 @@ const IndividualTaxpayers: React.FC = () => {
         const formData = new FormData(event.currentTarget);
         const updateTaxpayer = {
             record: singleTpayer.id,
-            idformat: singleTpayer.idformat,
+            idformat: "Individual",
             title: formData.get("title") as string,
             surname: formData.get("surname") as string,
             firstname: formData.get("firstname") as string,
@@ -279,7 +279,7 @@ const IndividualTaxpayers: React.FC = () => {
                 lgas={localGovts}
                 wards={wards}
             />
-            <UpdateIndividual
+            <UpdateIndividualTp
                 isModalUpdateOpen={isModalUpdateOpen}
                 closeUpdateModal={closeUpdateModal}
                 singleTpayer={singleTpayer}
