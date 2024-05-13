@@ -6,6 +6,9 @@ export const fetchIndIdentity = async (data) => {
 export const fetchCorporateIndIdentity = async (data) => {
   return api.post(`/identitymgt/CorporateList.php`, data);
 };
+export const fetchAgents = async (data) => {
+  return api.post(`/identitymgt/AgentsList.php`, data);
+};
 export const createIndvIdentity = async (data) => {
   return api.post(`/identitymgt/IndividualCreate.php`, data);
 };

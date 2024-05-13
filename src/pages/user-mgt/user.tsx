@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { listGroups, updateGroup } from "slices/actions/rolesActions";
+import { listGroups } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
 import { fetchSingleUser, listUsers, userUpdate } from "slices/actions/userActions";
@@ -22,6 +22,7 @@ interface AllGroupsData {
   role: string;
   clientid: string;
 }
+
 
 const UserList: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -57,7 +58,7 @@ const UserList: React.FC = () => {
 
   const handleButtonClick = async (profileid: string) => {
     try {
-      const { data } = await fetchSingleUser({ profileid: profileid });
+      const { data } = await fetchSingleUser({ profileid: profileid, sort: "DEFAULT" });
       setSingleUsrData(data?.user[0]);
       setIsModalOpen(true);
     } catch (error) {
@@ -100,6 +101,7 @@ const UserList: React.FC = () => {
     setIsModalOpen(false);
   };
 
+
   return (
     <React.Fragment>
       <UsersTable usersData={UsersData} handleButtonClick={handleButtonClick} />
@@ -109,7 +111,6 @@ const UserList: React.FC = () => {
         allGroups={allGroups}
         closeModal={closeModal}
         handleSubmit={handleSubmit}
-
       />
     </React.Fragment>
   );

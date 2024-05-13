@@ -50,7 +50,6 @@ const UpdateUserModal: React.FC<Props> = ({
   };
 
 
-
   if (!isModalOpen) return null;
   const filteredUserGroups = allGroups.filter(group => group.role !== '');
   return (

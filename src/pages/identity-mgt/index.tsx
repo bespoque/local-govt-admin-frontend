@@ -3,6 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { DefaultTabs } from "components/tabs";
 import IndividualTaxpayers from "./individual/individual-payer";
 import NonIndividualTaxpayers from "./non-individual/non-individual-taxpayer";
+import Agents from "./agent/agent";
 
 
 
@@ -31,7 +32,7 @@ const Index: React.FC = () => {
             title: "Agents",
             content: (
                 <div className="w-full py-4">
-                    {/* <Agent /> */}
+                    <Agents />
                 </div>
             ),
         },

@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
 import { fetchLocalGvts, fetchWards } from 'slices/actions/userActions';
-import { fetchCorporateIndIdentity, fetchSingleCorpTp, updateSingleCorpTp } from 'slices/actions/identityActions';
+import { fetchAgents, fetchCorporateIndIdentity, fetchSingleCorpTp, updateSingleCorpTp } from 'slices/actions/identityActions';
 import { toast } from 'react-toastify';
 import AddCorporateTaxpayerModal from 'components/modals/create-corporate-taxpayer-modal';
 import { RootState, useAppSelector } from 'store';
 import { Role } from 'components/user/user.interface';
 import UpdateCorporate from 'components/modals/update-corporate-modal';
 
-interface CorporateTP {
+
+interface Agent {
     id: string;
-    companyname: string;
-    businesstype: string;
-    regno: string;
+    approve_status: string;
+    firstname: string;
+    lastname: string;
+    ward: string;
     email: string;
-    rc: string;
     phone: string;
-    sector: string;
+    account_no: string;
+    bank: string;
     lga: string;
     created: string;
 }
@@ -33,8 +35,8 @@ interface Ward {
     category: string;
 }
 
-const NonIndividualTaxpayers: React.FC = () => {
-    const [corporateData, setCorporateData] = useState<CorporateTP[]>([]);
+const Agents: React.FC = () => {
+    const [agentData, setAgentData] = useState<Agent[]>([]);
     const [localGovts, setLGAs] = useState<LGA[]>([]);
     const [wards, setWards] = useState<Ward[]>([]);
     const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
@@ -81,8 +83,8 @@ const NonIndividualTaxpayers: React.FC = () => {
     const fetchData = async () => {
         try {
             const sortValue = selectedLGA.id !== '' ? selectedLGA.id : 'DEFAULT';
-            const res = await fetchCorporateIndIdentity({ sort: sortValue });
-            setCorporateData(res.data.identity_corporate);
+            const res = await fetchAgents({ sort: sortValue });
+            setAgentData(res.data.identity_agents);
         } catch (error) {
             handleApiError(error, "Could not fetch data");
         }
@@ -184,13 +186,13 @@ const NonIndividualTaxpayers: React.FC = () => {
 
     const PAGE_SIZE = 5;
 
-    const totalPages = Math.ceil(corporateData.length / PAGE_SIZE);
+    const totalPages = Math.ceil(agentData.length / PAGE_SIZE);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
 
-    const paginatedData = corporateData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+    const paginatedData = agentData.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
 
     return (
@@ -200,7 +202,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                     className="px-4 py-2 mr-4 bg-cyan-900 text-white rounded-md shadow-md focus:outline-none hover:bg-cyan-700"
                     onClick={openModal}
                 >
-                    Add Corporate Taxpayer
+                    Add Agent
                 </button>
                 <div className="flex">
                     <select
@@ -223,20 +225,22 @@ const NonIndividualTaxpayers: React.FC = () => {
                     <thead className="bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                company name
+                                first name
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                reg no
+                                last name
                             </th>
-                     
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 phone
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                sector
+                                account no
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 lga
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ward
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Created
@@ -244,22 +248,24 @@ const NonIndividualTaxpayers: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {paginatedData?.map((taxp) => (
-                            <tr key={taxp.id}>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.companyname}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.regno}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.phone}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.sector}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{taxp.created}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">
+                        {paginatedData?.map((agent) => (
+                            <tr key={agent.id}>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.firstname}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.lastname}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.phone}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.bank}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.account_no}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.lga}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.ward}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.created}</td>
+                                {/* <td className="px-6 py-4 whitespace-nowrap">
                                     <button
                                         className="cursor-pointer font-bold hover:underline text-cyan-800"
-                                        onClick={() => handleButtonClick(taxp.id)}
+                                        onClick={() => handleButtonClick(agent.id)}
                                     >
                                         View
                                     </button>
-                                </td>
+                                </td> */}
                             </tr>
                         ))}
                     </tbody>
@@ -297,4 +303,4 @@ const NonIndividualTaxpayers: React.FC = () => {
     );
 };
 
-export default NonIndividualTaxpayers;
+export default Agents;
