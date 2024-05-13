@@ -245,7 +245,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {paginatedData?.map((taxp) => (
-                            <tr key={taxp.id}>
+                            <tr key={taxp.id} className="hover:bg-blue-100">
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.companyname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.regno}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.phone}</td>
@@ -286,7 +286,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                 lgas={localGovts}
                 wards={wards}
             />
-            
+
             <UpdateCorporate
                 isModalUpdateOpen={isModalUpdateOpen}
                 closeUpdateModal={closeUpdateModal}

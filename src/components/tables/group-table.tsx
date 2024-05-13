@@ -34,13 +34,13 @@ const GroupTable: React.FC<Props> = ({ groupData, handleButtonClick }) => {
         </thead>
         <tbody>
           {paginatedData.map((group) => (
-            <tr key={group.id} className=" hover:bg-gray-100 cursor-pointer">
+            <tr key={group.id} className="odd:bg-gray-100 dark:odd:bg-gray-100 hover:text-white hover:bg-cyan-900">
               <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
                 <span>{group.role}</span>
               </td>
               <td>
                 <button
-                  className="cursor-pointer font-bold hover:underline text-cyan-800"
+                  className="cursor-pointer font-bold "
                   onClick={() => handleButtonClick(group.id)}
                 >
                   View

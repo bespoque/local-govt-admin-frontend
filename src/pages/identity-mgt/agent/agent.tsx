@@ -7,6 +7,7 @@ import AddCorporateTaxpayerModal from 'components/modals/create-corporate-taxpay
 import { RootState, useAppSelector } from 'store';
 import { Role } from 'components/user/user.interface';
 import UpdateCorporate from 'components/modals/update-corporate-modal';
+import AddAgentModal from 'components/modals/create-agent-modal copy';
 
 
 interface Agent {
@@ -53,25 +54,14 @@ const Agents: React.FC = () => {
         ].includes(userRole)
     )
     const [formData, setFormData] = useState({
-        companyname: "",
-        registeredname: "",
-        businesstype: "Corporate",
-        rc: "",
-        regno: "",
-        lineofbusiness: "",
-        datecommenced: "",
-        dateincorporated: "",
-        sector: "",
-        phone: "",
-        alternatephone: "",
+        firstname: "",
+        lastname: "",
         email: "",
-        houseno: "",
-        lga: "",
-        street: "",
-        city: "",
-        state: "",
-        companytin: "",
-        ward: ""
+        bank: "",
+        account_no: "",
+        bvn: "",
+        phone: "",
+        ward: "",
     });
 
     useEffect(() => {
@@ -240,6 +230,9 @@ const Agents: React.FC = () => {
                                 bank
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                approve status
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 lga
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -252,12 +245,13 @@ const Agents: React.FC = () => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {paginatedData?.map((agent) => (
-                            <tr key={agent.id}>
+                            <tr key={agent.id} className='hover:bg-blue-100'>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.firstname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.lastname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.phone}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.account_no}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.bank}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{agent.approve_status}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.lga}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.ward}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{agent.created}</td>
@@ -287,7 +281,7 @@ const Agents: React.FC = () => {
                     ))}
                 </div>
             </div>
-            <AddCorporateTaxpayerModal
+            <AddAgentModal
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
                 formData={formData}
@@ -295,7 +289,7 @@ const Agents: React.FC = () => {
                 lgas={localGovts}
                 wards={wards}
             />
-            
+
             <UpdateCorporate
                 isModalUpdateOpen={isModalUpdateOpen}
                 closeUpdateModal={closeUpdateModal}

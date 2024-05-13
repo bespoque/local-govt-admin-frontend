@@ -42,7 +42,8 @@ const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
       </thead>
       <tbody>
         {usersData.map((usr) => (
-          <tr key={usr.id} className="odd:bg-gray-100 dark:odd:bg-gray-100">
+          // <tr key={usr.id} className="odd:bg-gray-100 dark:odd:bg-gray-100">
+          <tr key={usr.id} className="odd:bg-gray-100 dark:odd:bg-gray-100 hover:text-white hover:bg-cyan-900">
             <td className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 whitespace-nowrap">
               <span>{usr.name}</span>
             </td>
@@ -63,7 +64,7 @@ const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
             </td>
             <td>
               <button
-                className="cursor-pointer font-bold hover:underline text-cyan-800"
+                className="cursor-pointer font-bold"
                 onClick={() => handleButtonClick(usr.id)}
               >
                 View
