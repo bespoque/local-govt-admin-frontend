@@ -27,7 +27,7 @@ const GroupTable: React.FC<Props> = ({ groupData, handleButtonClick }) => {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-3 py-2 text-xs font-medium tracking-wider text-gray-500 uppercase border-b border-gray-100 dark:border-gray-800 leading-4">
+            <th className="px-3 py-2 text-xs text-left font-medium tracking-wider text-gray-500 uppercase border-b border-gray-100 dark:border-gray-800 leading-4">
               Group Name
             </th>
           </tr>

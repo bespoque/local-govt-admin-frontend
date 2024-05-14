@@ -1,7 +1,10 @@
+import { localGovernments } from 'components/tax-office/tax-office.interface';
+import { WardsList } from 'components/tax-office/wards-interface';
+
 import { handleApiError } from 'helpers/errors';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { createCorpIdentity } from 'slices/actions/identityActions';
+import { createAgentIdentity, createCorpIdentity } from 'slices/actions/identityActions';
 
 
 interface ModalProps {
@@ -9,38 +12,34 @@ interface ModalProps {
     formData: any;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     closeModal: () => void;
-    lgas: { id: string; name: string }[];
-    wards: { id: string; name: string, lga_id: string }[];
+    userData: any;
+    isSuperAdmin: boolean;
 }
 
-const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards }) => {
-    const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
+const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, userData, isSuperAdmin }) => {
+    const [localGov, setLocalGov] = useState<{ id: string; name: string }[]>([]);
     const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
+    const [selectedLGA, setSelectedLGA] = useState<{ id: string; }>({ id: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (selectedLGA.id) {
-            const filtered = wards.filter((ward) => ward.lga_id === selectedLGA.id);
-            setFilteredWards(filtered);
+        const filteredLGA = localGovernments.filter((lga) => lga.id === userData?.taxOffice?.id);
+        const wardsForSelectLga = WardsList.filter((ward) => ward.lga_id === selectedLGA.id);
+        setFilteredWards(wardsForSelectLga);
+        setLocalGov(filteredLGA);
+        if (isSuperAdmin) {
+            setLocalGov(localGovernments);
+            setFilteredWards(wardsForSelectLga);
         }
-        if (selectedLGA.id === "") {
-            setFilteredWards([])
-        }
-    }, [selectedLGA.id, wards]);
-
-
-    const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const lgaId = e.target.value;
-        const lgaName = lgas.find((lga) => lga.id === lgaId)?.name || '';
-        setSelectedLGA({ id: lgaId, name: lgaName });
-    };
+    }, [userData?.taxOffice?.id, isSuperAdmin, selectedLGA.id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         setIsSubmitting(true);
         try {
-            await createCorpIdentity(formData);
-            toast.success("Created Taxpayer successfully");
+            await createAgentIdentity(formData);
+            toast.success("Created Agent Successfully");
         } catch (error) {
             handleApiError(error, "There was an error creating Taxpayer");
         } finally {
@@ -48,6 +47,11 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
             setIsSubmitting(false);
         }
         setIsSubmitting(false);
+    };
+
+    const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const lgaId = e.target.value;
+        setSelectedLGA({ id: lgaId });
     };
     return (
         <>
@@ -142,17 +146,26 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="ward" className="block text-sm font-medium text-gray-700">ward:</label>
-                                    <input
-                                        type="text"
-                                        id="ward"
-                                        name="ward"
-                                        value={formData.ward}
-                                        onChange={handleInputChange}
+                                    <label htmlFor="lga" className="block text-sm font-medium text-gray-700">LGA:</label>
+                                    <select
+                                        id="lga"
+                                        name="lga"
+                                        value={formData.lga}
+                                        onChange={(e) => {
+                                            handleLGASelection(e);
+                                            handleInputChange(e);
+                                        }}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                                    />
-                                </div>
+                                    >
+                                        <option value="">Select LGA</option>
+                                        {localGov.map((lga) => (
+                                            <option key={lga.id} value={lga.id}>
+                                                {lga.name}
+                                            </option>
 
+                                        ))}
+                                    </select>
+                                </div>
                                 <div>
                                     <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward:</label>
                                     <select
@@ -164,7 +177,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                     >
                                         <option value="">Select Ward</option>
                                         {filteredWards.map((ward) => (
-                                            <option key={ward.id} value={ward.name}>
+                                            <option key={ward.id} value={ward.id}>
                                                 {ward.name}
                                             </option>
                                         ))}

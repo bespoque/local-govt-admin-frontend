@@ -12,6 +12,9 @@ export const fetchAgents = async (data) => {
 export const createIndvIdentity = async (data) => {
   return api.post(`/identitymgt/IndividualCreate.php`, data);
 };
+export const createAgentIdentity = async (data) => {
+  return api.post(`/identitymgt/AgentCreate.php`, data);
+};
 export const createCorpIdentity = async (data) => {
   return api.post(`/identitymgt/CorporateCreate.php`, data);
 };
@@ -21,9 +24,15 @@ export const fetchSingleIndTp = async (data) => {
 export const fetchSingleCorpTp = async (data) => {
   return api.post("/identitymgt/CorporateSingle.php", data);
 };
+export const fetchSingleAgent = async (data) => {
+  return api.post("/identitymgt/AgentSingle.php", data);
+};
 export const updateSingleIndTp = async (data) => {
   return api.post("/identitymgt/IndividualUpdate.php", data);
 };
 export const updateSingleCorpTp = async (data) => {
   return api.post("/identitymgt/CorporateUpdate.php", data);
+};
+export const updateSingleAgent = async (data) => {
+  return api.post("/identitymgt/AgentUpdate.php", data);
 };
