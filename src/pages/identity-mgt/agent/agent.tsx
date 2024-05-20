@@ -76,17 +76,14 @@ const Agents: React.FC = () => {
         }
     };
 
+
     const fetchLGAs = async () => {
-        if (isSuperAdmin) {
-            setLGAs(localGovernments);
-        } else {
-            setLGAs([]);
-        }
+        setLGAs(localGovernments);
     };
 
-    // const fetchWardsData = async () => {
-    //     setWards(WardsList);
-    // };
+    const fetchWardsData = async () => {
+        setWards(WardsList);
+    };
 
     const handleButtonClick = async (id: string) => {
         try {
@@ -273,7 +270,6 @@ const Agents: React.FC = () => {
                 handleInputChange={handleInputChange}
                 userData={userData}
                 isSuperAdmin={isSuperAdmin}
-
             />
             <UpdateAgentModal
                 isModalUpdateOpen={isModalUpdateOpen}

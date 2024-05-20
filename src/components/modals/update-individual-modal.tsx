@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 interface Props {
@@ -7,17 +7,37 @@ interface Props {
   singleTpayer: any;
   closeUpdateModal: () => void;
   handleUpdateSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-
+  userData: any;
+  lgas: { id: string; name: string }[];
+  wards: { id: string; name: string, lga_id: string }[];
 }
 
 const UpdateIndividualTp: React.FC<Props> = ({
   isModalUpdateOpen,
   singleTpayer,
   closeUpdateModal,
-  handleUpdateSubmit
-
+  handleUpdateSubmit,
+  userData,
+  lgas,
+  wards
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [localGov, setLocalGov] = useState('');
+  const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
+
+
+  useEffect(() => {
+
+    const wardsForUserLga = wards.filter((ward) => ward.lga_id === userData?.taxOffice?.id);
+
+    const getLGANameById = (id: string): string | undefined => {
+      const lga = lgas.find((lga) => lga.id === id);
+      return lga ? lga.name : undefined;
+    };
+    const lgaName = getLGANameById(singleTpayer?.client);
+    setLocalGov(lgaName)
+    setFilteredWards(wardsForUserLga);
+  }, [userData?.taxOffice?.id, singleTpayer?.client, lgas, wards]);
 
 
   if (!isModalUpdateOpen) return null;
@@ -34,7 +54,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="title"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
                 defaultValue={singleTpayer?.title || ''}
-                >
+              >
                 <option value="">Please select</option>
                 <option value="mrs">Mrs</option>
                 <option value="mr">Mr</option>
@@ -49,7 +69,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="firstname"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.firstname || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="middlename" className="block text-sm font-medium text-gray-700">Middlename:</label>
@@ -59,7 +79,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="middlename"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.middlename || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="surname" className="block text-sm font-medium text-gray-700">Surname:</label>
@@ -69,7 +89,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="surname"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.surname || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of Birth:</label>
@@ -79,7 +99,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="dob"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.dob || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender:</label>
@@ -88,7 +108,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="gender"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.gender || ''}
-                >
+              >
                 <option value="">Select</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -101,7 +121,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="maritalstatus"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
                 defaultValue={singleTpayer?.maritalstatus || ''}
-                >
+              >
                 <option value="">Select</option>
                 <option value="married">Married</option>
                 <option value="single">Single</option>
@@ -115,7 +135,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="email"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.email || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="phonenumber" className="block text-sm font-medium text-gray-700">Moble Number:</label>
@@ -125,7 +145,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="phonenumber"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.phonenumber || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="phonenumber2" className="block text-sm font-medium text-gray-700">Home Number:</label>
@@ -135,7 +155,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="phonenumber2"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.phonenumber2 || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="bvn" className="block text-sm font-medium text-gray-700">BVN:</label>
@@ -145,7 +165,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="bvn"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.bvn || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="mothersname" className="block text-sm font-medium text-gray-700">Mother's Surname:</label>
@@ -157,43 +177,32 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 defaultValue={singleTpayer?.mothersname || ''}
               />
             </div>
-            {/* <div>
+            <div>
               <label htmlFor="lga" className="block text-sm font-medium text-gray-700">LGA:</label>
-              <select
+              <input
                 id="lga"
                 name="lga"
-                value={formData.lga}
-                onChange={(e) => {
-                  handleLGASelection(e);
-                  handleInputChange(e);
-                }}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
-              >
-                <option value="">Select</option>
-                {lgas.map((lga) => (
-                  <option key={lga.id} value={lga.id}>
-                    {lga.name}
-                  </option>
-                ))}
-              </select>
-            </div> */}
-            {/* <div>
+                defaultValue={localGov}
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                readOnly
+              />
+            </div>
+            <div>
               <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward:</label>
               <select
                 id="ward"
                 name="ward"
-                value={formData.ward}
-                onChange={handleInputChange}
+                defaultValue={singleTpayer?.ward}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
               >
-                <option value="">Select Ward</option>
+                <option value={singleTpayer?.ward}>Select Ward</option>
                 {filteredWards.map((ward) => (
                   <option key={ward.id} value={ward.name}>
                     {ward.name}
                   </option>
                 ))}
               </select>
-            </div> */}
+            </div>
             <div>
               <label htmlFor="stateofresidence" className="block text-sm font-medium text-gray-700">State of Residence:</label>
               <input
@@ -202,8 +211,8 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="stateofresidence"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.stateofresidence || ''}
-                
-                />
+
+              />
             </div>
             <div>
               <label htmlFor="stateoforigin" className="block text-sm font-medium text-gray-700">State of Origin:</label>
@@ -213,7 +222,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="stateoforigin"
                 defaultValue={singleTpayer?.stateoforigin || ''}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                />
+              />
             </div>
             <div>
               <label htmlFor="birthplace" className="block text-sm font-medium text-gray-700">Birth Place:</label>
@@ -223,7 +232,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="birthplace"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.birthplace || ''}
-                />
+              />
             </div>
 
             <div>
@@ -234,7 +243,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="occupation"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.occupation || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="city" className="block text-sm font-medium text-gray-700">city:</label>
@@ -244,7 +253,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="city"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.city || ''}
-                />
+              />
             </div>
 
             <div>
@@ -255,7 +264,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 name="housestreet"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
                 defaultValue={singleTpayer?.housestreet || ''}
-                />
+              />
             </div>
             <div>
               <label htmlFor="houseno" className="block text-sm font-medium text-gray-700">houseno:</label>

@@ -11,26 +11,29 @@ interface ModalProps {
     closeModal: () => void;
     lgas: { id: string; name: string }[];
     wards: { id: string; name: string, lga_id: string }[];
+    isSuperAdmin: boolean;
+    userData: any;
 }
 
-const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards }) => {
+const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards, isSuperAdmin, userData }) => {
     const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
+    const [localGov, setLocalGov] = useState<{ id: string; name: string }[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);    
 
     useEffect(() => {
-        if (selectedLGA.id) {
-            const filtered = wards.filter((ward) => ward.lga_id === selectedLGA.id);
-            setFilteredWards(filtered);
-        }
-        if (selectedLGA.id === "") {
-            setFilteredWards([])
-        }
-    }, [selectedLGA.id, wards]);
+        const filteredLGA = lgas.filter((lga) => lga.id === userData?.taxOffice?.id);
+        const wardsForSelectLga = wards.filter((ward) => ward.lga_id === selectedLGA.id);        
+        setFilteredWards(wardsForSelectLga);
+        setLocalGov(filteredLGA);
+        // if (isSuperAdmin) {
+        //     setLocalGov(lgas);
+        //     setFilteredWards(wardsForSelectLga);
+        // }
+    }, [userData?.taxOffice?.id, isSuperAdmin, selectedLGA.id, lgas, wards]);
 
 
     const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-
         const lgaId = e.target.value;
         const lgaName = lgas.find((lga) => lga.id === lgaId)?.name || '';
         setSelectedLGA({ id: lgaId, name: lgaName });
@@ -38,11 +41,10 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        // formData.lga = selectedLGA.name
+        // console.log("formData", formData);
         setIsSubmitting(true);
-        // formData.client = selectedLGA.id
-        formData.nationality = 'Nigerian'
-        formData.idformat = 'Individual'
-        formData.lga = selectedLGA.name    
+        
         try {
             await createIndvIdentity(formData);
             toast.success("Created Taxpayer successfully");
@@ -224,7 +226,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
                                     >
                                         <option value="">Select</option>
-                                        {lgas.map((lga) => (
+                                        {localGov.map((lga) => (
                                             <option key={lga.id} value={lga.id}>
                                                 {lga.name}
                                             </option>
@@ -254,7 +256,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         id="stateofresidence"
                                         type="text"
                                         name="stateofresidence"
-                                        defaultValue={"KOGI"}
+                                        defaultValue="Kogi"
                                         value={formData.stateofresidence}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
@@ -266,7 +268,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         id="stateoforigin"
                                         type="text"
                                         name="stateoforigin"
-                                        defaultValue={"KOGI"}
+                                        defaultValue="Kogi"
                                         value={formData.stateoforigin}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
@@ -278,7 +280,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         id="birthplace"
                                         type="text"
                                         name="birthplace"
-                                        defaultValue={"KOGI"}
+                                        defaultValue= "Kogi"
                                         value={formData.birthplace}
                                         onChange={handleInputChange}
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"

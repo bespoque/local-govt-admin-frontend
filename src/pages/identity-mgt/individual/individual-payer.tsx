@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { fetchWards } from 'slices/actions/userActions';
 import { fetchIndIdentity, fetchSingleIndTp, updateSingleIndTp } from 'slices/actions/identityActions';
 import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
 import { toast } from 'react-toastify';
@@ -8,6 +7,7 @@ import UpdateIndividualTp from 'components/modals/update-individual-modal';
 import { RootState, useAppSelector } from 'store';
 import { Role } from 'components/user/user.interface';
 import { localGovernments } from 'components/tax-office/tax-office.interface';
+import { WardsList } from 'components/tax-office/wards-interface';
 
 interface IndvTP {
     id: string;
@@ -17,6 +17,7 @@ interface IndvTP {
     email: string;
     gender: string;
     lga: string;
+    ward: string;
     created: string;
 }
 
@@ -47,28 +48,7 @@ const IndividualTaxpayers: React.FC = () => {
 
     const [formData, setFormData] = useState({
         idformat: "Individual",
-        title: "",
-        surname: "",
-        firstname: "",
-        middlename: "",
-        dob: "",
-        phonenumber: "",
-        gender: "",
-        maritalstatus: "",
-        stateofresidence: "",
-        lga: "",
-        bvn: "",
-        email: "",
-        phonenumber2: "",
-        stateoforigin: "",
-        birthplace: "",
-        occupation: "",
-        mothersname: "",
-        houseno: "",
-        housestreet: "",
-        ward: "",
-        city: "",
-        nationality: "NIGERIAN"
+        nationality: "Nigerian"
     });
 
 
@@ -89,20 +69,11 @@ const IndividualTaxpayers: React.FC = () => {
     };
 
     const fetchLGAs = async () => {
-        if (isSuperAdmin) {
-            setLGAs(localGovernments);
-        } else {
-            setLGAs([]);
-        }
+        setLGAs(localGovernments);
     };
 
     const fetchWardsData = async () => {
-        try {
-            const response = await fetchWards({ sort: "ALL" });
-            setWards(response.data.lgas);
-        } catch (error) {
-            handleApiError('Error fetching Wards:', error);
-        }
+        setWards(WardsList);
     };
 
     const handleButtonClick = async (id: string) => {
@@ -121,7 +92,6 @@ const IndividualTaxpayers: React.FC = () => {
         const formData = new FormData(event.currentTarget);
         const updateTaxpayer = {
             record: singleTpayer.id,
-            idformat: "Individual",
             title: formData.get("title") as string,
             surname: formData.get("surname") as string,
             firstname: formData.get("firstname") as string,
@@ -131,7 +101,7 @@ const IndividualTaxpayers: React.FC = () => {
             gender: formData.get("gender") as string,
             maritalstatus: formData.get("maritalstatus") as string,
             stateofresidence: formData.get("stateofresidence") as string,
-            lga: formData.get("lga") as string,
+            lga: singleTpayer.lga,
             bvn: formData.get("bvn") as string,
             email: formData.get("email") as string,
             phonenumber2: formData.get("phonenumber2") as string,
@@ -240,6 +210,9 @@ const IndividualTaxpayers: React.FC = () => {
                                 lga
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ward
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Created
                             </th>
                         </tr>
@@ -253,6 +226,7 @@ const IndividualTaxpayers: React.FC = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.email}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.gender}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{taxp.ward}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.created}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <button
@@ -287,13 +261,17 @@ const IndividualTaxpayers: React.FC = () => {
                 handleInputChange={handleInputChange}
                 lgas={localGovts}
                 wards={wards}
+                isSuperAdmin={isSuperAdmin}
+                userData={userData}
             />
             <UpdateIndividualTp
                 isModalUpdateOpen={isModalUpdateOpen}
                 closeUpdateModal={closeUpdateModal}
                 singleTpayer={singleTpayer}
                 handleUpdateSubmit={handleUpdateSubmit}
-
+                userData={userData}
+                lgas={localGovts}
+                wards={wards}
             />
         </div>
     );

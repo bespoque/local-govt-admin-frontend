@@ -31,10 +31,10 @@ const UpdateAgentModal: React.FC<Props> = ({
       const lga = localGovernments.find((lga) => lga.id === id);
       return lga ? lga.name : undefined;
     };
-    const lgaName = getLGANameById(singleTpayer?.lga);
+    const lgaName = getLGANameById(singleTpayer?.client);
     setLocalGov(lgaName)
     setFilteredWards(wardsForUserLga);
-  }, [userData?.taxOffice?.id, singleTpayer?.lga]);
+  }, [userData?.taxOffice?.id, singleTpayer?.client]);
 
 
 
@@ -136,7 +136,7 @@ const UpdateAgentModal: React.FC<Props> = ({
               >
                 <option value={singleTpayer?.ward}>Select Ward</option>
                 {filteredWards.map((ward) => (
-                  <option key={ward.id} value={ward.id}>
+                  <option key={ward.id} value={ward.name}>
                     {ward.name}
                   </option>
                 ))}

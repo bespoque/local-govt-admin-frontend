@@ -11,22 +11,21 @@ interface ModalProps {
     closeModal: () => void;
     lgas: { id: string; name: string }[];
     wards: { id: string; name: string, lga_id: string }[];
+    userData: any
 }
 
-const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards }) => {
+const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, lgas, wards, userData }) => {
     const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
+    const [localGov, setLocalGov] = useState<{ id: string; name: string }[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (selectedLGA.id) {
-            const filtered = wards.filter((ward) => ward.lga_id === selectedLGA.id);
-            setFilteredWards(filtered);
-        }
-        if (selectedLGA.id === "") {
-            setFilteredWards([])
-        }
-    }, [selectedLGA.id, wards]);
+        const filteredLGA = lgas.filter((lga) => lga.id === userData?.taxOffice?.id);
+        const wardsForSelectLga = wards.filter((ward) => ward.lga_id === selectedLGA.id);
+        setFilteredWards(wardsForSelectLga);
+        setLocalGov(filteredLGA);
+    }, [userData?.taxOffice?.id, selectedLGA.id, lgas, wards]);
 
 
     const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -38,7 +37,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // formData.lga = selectedLGA.name
+        // formData.lga = selectedLGA.name        
         try {
             await createCorpIdentity(formData);
             toast.success("Created Taxpayer successfully");
@@ -235,7 +234,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
                                     >
                                         <option value="">Select</option>
-                                        {lgas.map((lga) => (
+                                        {localGov.map((lga) => (
                                             <option key={lga.id} value={lga.id}>
                                                 {lga.name}
                                             </option>

@@ -1,10 +1,9 @@
 import { localGovernments } from 'components/tax-office/tax-office.interface';
 import { WardsList } from 'components/tax-office/wards-interface';
-
 import { handleApiError } from 'helpers/errors';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { createAgentIdentity, createCorpIdentity } from 'slices/actions/identityActions';
+import { createAgentIdentity } from 'slices/actions/identityActions';
 
 
 interface ModalProps {
@@ -14,12 +13,13 @@ interface ModalProps {
     closeModal: () => void;
     userData: any;
     isSuperAdmin: boolean;
+    
 }
 
 const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInputChange, closeModal, userData, isSuperAdmin }) => {
     const [localGov, setLocalGov] = useState<{ id: string; name: string }[]>([]);
     const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
-    const [selectedLGA, setSelectedLGA] = useState<{ id: string; }>({ id: '' });
+    const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -27,15 +27,14 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
         const wardsForSelectLga = WardsList.filter((ward) => ward.lga_id === selectedLGA.id);
         setFilteredWards(wardsForSelectLga);
         setLocalGov(filteredLGA);
-        if (isSuperAdmin) {
-            setLocalGov(localGovernments);
-            setFilteredWards(wardsForSelectLga);
-        }
+        // if (isSuperAdmin) {
+        //     setLocalGov(localGovernments);
+        //     setFilteredWards(wardsForSelectLga);
+        // }
     }, [userData?.taxOffice?.id, isSuperAdmin, selectedLGA.id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         setIsSubmitting(true);
         try {
             await createAgentIdentity(formData);
@@ -51,7 +50,8 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
 
     const handleLGASelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const lgaId = e.target.value;
-        setSelectedLGA({ id: lgaId });
+        const lgaName = localGov.find((lga) => lga.id === lgaId)?.name || '';
+        setSelectedLGA({ id: lgaId, name: lgaName });
     };
     return (
         <>
@@ -177,7 +177,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                     >
                                         <option value="">Select Ward</option>
                                         {filteredWards.map((ward) => (
-                                            <option key={ward.id} value={ward.id}>
+                                            <option key={ward.id} value={ward.name}>
                                                 {ward.name}
                                             </option>
                                         ))}

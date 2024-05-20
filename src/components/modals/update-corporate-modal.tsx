@@ -1,5 +1,7 @@
 
-import React, { useState } from "react";
+import { localGovernments } from "components/tax-office/tax-office.interface";
+import { WardsList } from "components/tax-office/wards-interface";
+import React, { useEffect, useState } from "react";
 
 
 interface Props {
@@ -7,6 +9,7 @@ interface Props {
   singleTpayer: any;
   closeUpdateModal: () => void;
   handleUpdateSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  userData: any;
 
 }
 
@@ -14,12 +17,27 @@ const UpdateCorporate: React.FC<Props> = ({
   isModalUpdateOpen,
   singleTpayer,
   closeUpdateModal,
-  handleUpdateSubmit
-
+  handleUpdateSubmit,
+  userData
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [localGov, setLocalGov] = useState('');
+  const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
 
+  useEffect(() => {
 
+    const wardsForUserLga = WardsList.filter((ward) => ward.lga_id === userData?.taxOffice?.id);
+
+    const getLGANameById = (id: string): string | undefined => {
+      const lga = localGovernments.find((lga) => lga.id === id);
+      return lga ? lga.name : undefined;
+    };
+    const lgaName = getLGANameById(singleTpayer?.client);
+    setLocalGov(lgaName)
+    setFilteredWards(wardsForUserLga);
+  }, [userData?.taxOffice?.id, singleTpayer?.client]);
+
+  
   if (!isModalUpdateOpen) return null;
   return (
     <div className="fixed z-50 top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-4/6">
@@ -168,25 +186,30 @@ const UpdateCorporate: React.FC<Props> = ({
               />
             </div>
             <div>
+              <label htmlFor="lga" className="block text-sm font-medium text-gray-700">LGA:</label>
+              <input
+                id="lga"
+                name="lga"
+                defaultValue={localGov}
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                readOnly
+              />
+            </div>
+            <div>
               <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward:</label>
               <select
                 id="ward"
                 name="ward"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
-                defaultValue={singleTpayer?.ward || ''}
-              >
-                <option value="">Select</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="street" className="block text-sm font-medium text-gray-700">Street:</label>
-              <input
-                id="street"
-                type="text"
-                name="street"
+                defaultValue={singleTpayer?.ward}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
-                defaultValue={singleTpayer?.street || ''}
-              />
+              >
+                <option value={singleTpayer?.ward}>Select Ward</option>
+                {filteredWards.map((ward) => (
+                  <option key={ward.id} value={ward.name}>
+                    {ward.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
