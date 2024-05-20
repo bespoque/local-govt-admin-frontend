@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { fetchLocalGvts, fetchWards } from 'slices/actions/userActions';
+import { fetchWards } from 'slices/actions/userActions';
 import { fetchIndIdentity, fetchSingleIndTp, updateSingleIndTp } from 'slices/actions/identityActions';
 import AddTaxpayerModal from 'components/modals/create-ind-taxpayer-modal';
 import { toast } from 'react-toastify';
 import UpdateIndividualTp from 'components/modals/update-individual-modal';
+import { RootState, useAppSelector } from 'store';
+import { Role } from 'components/user/user.interface';
+import { localGovernments } from 'components/tax-office/tax-office.interface';
 
 interface IndvTP {
     id: string;
@@ -38,6 +41,10 @@ const IndividualTaxpayers: React.FC = () => {
     const [singleTpayer, setSingleTpayerDataData] = useState<any>(null);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const userData = useAppSelector((state: RootState) => state.auth);
+    const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
+    const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
+
     const [formData, setFormData] = useState({
         idformat: "Individual",
         title: "",
@@ -82,13 +89,13 @@ const IndividualTaxpayers: React.FC = () => {
     };
 
     const fetchLGAs = async () => {
-        try {
-            const response = await fetchLocalGvts({ sort: "ALL" });
-            setLGAs(response.data.lgas);
-        } catch (error) {
-            handleApiError('Error fetching LGAs:', error);
+        if (isSuperAdmin) {
+            setLGAs(localGovernments);
+        } else {
+            setLGAs([]);
         }
     };
+
     const fetchWardsData = async () => {
         try {
             const response = await fetchWards({ sort: "ALL" });
@@ -192,21 +199,23 @@ const IndividualTaxpayers: React.FC = () => {
                 >
                     Add Individual Taxpayer
                 </button>
-                <div className="flex">
-                    <select
-                        className="px-4 py-2 border border-cyan-900 rounded-md shadow-md focus:outline-none focus:border-blue-500"
-                        value={selectedLGA.id}
-                        onChange={handleLGASelectionAdmin}
-                    >
-                        <option value="">Select LGA</option>
-                        <option value="ALL">ALL</option>
-                        {localGovts.map((lga) => (
-                            <option key={lga.id} value={lga.id}>
-                                {lga.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                {isSuperAdmin && (
+                    <div className="flex">
+                        <select
+                            className="px-4 py-2 border border-cyan-900 rounded-md shadow-md focus:outline-none focus:border-blue-500"
+                            value={selectedLGA.id}
+                            onChange={handleLGASelectionAdmin}
+                        >
+                            <option value="">Select LGA</option>
+                            <option value="ALL">ALL</option>
+                            {localGovts.map((lga) => (
+                                <option key={lga.id} value={lga.id}>
+                                    {lga.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">

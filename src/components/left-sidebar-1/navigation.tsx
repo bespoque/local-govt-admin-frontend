@@ -95,14 +95,15 @@ const userMgtNav = () => [
   {
     url: "/user-mgt",
     icon: <UserMgt />,
-    allowedRoles: GROUP_USER_MANAGEMENT,
     title: "User Mgt",
+    allowedRoles: GROUP_USER_MANAGEMENT,
     items: [],
   },
 ];
 
+
 // const dashboardNav = (isProduction) =>
-//   isProduction
+  //   isProduction
 //     ? []
 //     : [
 //       {

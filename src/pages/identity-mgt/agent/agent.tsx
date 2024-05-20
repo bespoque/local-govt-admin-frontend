@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { fetchAgents, fetchSingleAgent, fetchSingleCorpTp, updateSingleAgent, updateSingleCorpTp } from 'slices/actions/identityActions';
+import { fetchAgents, fetchSingleAgent, updateSingleAgent } from 'slices/actions/identityActions';
 import { toast } from 'react-toastify';
 import { RootState, useAppSelector } from 'store';
 import { Role } from 'components/user/user.interface';
-import UpdateCorporate from 'components/modals/update-corporate-modal';
 import AddAgentModal from 'components/modals/create-agent-modal';
 import { localGovernments } from 'components/tax-office/tax-office.interface';
 import { WardsList } from 'components/tax-office/wards-interface';
@@ -44,8 +43,8 @@ const Agents: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [singleAgent, setAgentSingleData] = useState<any>(null);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
-    const userData = useAppSelector((state: RootState) => state.auth);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const userData = useAppSelector((state: RootState) => state.auth);
     const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
     const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
 
@@ -64,7 +63,7 @@ const Agents: React.FC = () => {
     useEffect(() => {
         fetchData();
         fetchLGAs();
-        fetchWardsData();
+        // fetchWardsData();
     }, [selectedLGA]);
 
     const fetchData = async () => {
@@ -85,9 +84,9 @@ const Agents: React.FC = () => {
         }
     };
 
-    const fetchWardsData = async () => {
-        setWards(WardsList);
-    };
+    // const fetchWardsData = async () => {
+    //     setWards(WardsList);
+    // };
 
     const handleButtonClick = async (id: string) => {
         try {
