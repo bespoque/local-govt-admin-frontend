@@ -40,7 +40,7 @@ const dashboardNav = () => [
 
 const assessmentsNav = () => [
   {
-    url: "#",
+    url: "/assessment",
     icon: <DashAssessmentIcon />,
     title: "Assessments",
     items: [],
@@ -96,7 +96,7 @@ const userMgtNav = () => [
     url: "/user-mgt",
     icon: <UserMgt />,
     title: "User Mgt",
-    allowedRoles: GROUP_USER_MANAGEMENT,
+    // allowedRoles: GROUP_USER_MANAGEMENT,
     items: [],
   },
 ];

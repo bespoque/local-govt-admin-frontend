@@ -26,10 +26,6 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
         const wardsForSelectLga = wards.filter((ward) => ward.lga_id === selectedLGA.id);        
         setFilteredWards(wardsForSelectLga);
         setLocalGov(filteredLGA);
-        // if (isSuperAdmin) {
-        //     setLocalGov(lgas);
-        //     setFilteredWards(wardsForSelectLga);
-        // }
     }, [userData?.taxOffice?.id, isSuperAdmin, selectedLGA.id, lgas, wards]);
 
 
@@ -41,8 +37,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // formData.lga = selectedLGA.name
-        // console.log("formData", formData);
+        formData.lga = selectedLGA.name
         setIsSubmitting(true);
         
         try {

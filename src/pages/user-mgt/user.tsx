@@ -58,7 +58,7 @@ const UserList: React.FC = () => {
 
   const handleButtonClick = async (profileid: string) => {
     try {
-      const { data } = await fetchSingleUser({ profileid: profileid, sort: "DEFAULT" });
+      const { data } = await fetchSingleUser({ profileid: profileid, sort: "ALL" });
       setSingleUsrData(data?.user[0]);
       setIsModalOpen(true);
     } catch (error) {
