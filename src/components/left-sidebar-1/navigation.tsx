@@ -96,7 +96,7 @@ const userMgtNav = () => [
     url: "/user-mgt",
     icon: <UserMgt />,
     title: "User Mgt",
-    // allowedRoles: GROUP_USER_MANAGEMENT,
+    allowedRoles: GROUP_USER_MANAGEMENT,
     items: [],
   },
 ];

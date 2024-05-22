@@ -35,13 +35,9 @@ const Agents: React.FC = () => {
     }, []);
 
 
-
-
     const fetchLGAs = async () => {
         setLGAs(localGovernments);
     };
-
-
 
     const openModal = () => {
         setIsModalOpen(true);
