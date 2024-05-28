@@ -11,12 +11,6 @@ import leftSidebar from "slices/left-sidebar";
 import auth from "slices/auth";
 import users from "slices/users";
 import roles from "slices/roles";
-import procurements from "slices/procurement";
-import stockOut from "slices/stockOut";
-import stockIn from "slices/stockIn";
-import inventory from "slices/inventory";
-import stock from "slices/stock";
-import vendor from "slices/vendor";
 import taxOffice from "slices/tax-offices";
 import storage from "redux-persist/lib/storage";
 import thunkMiddleware from "redux-thunk";
@@ -33,12 +27,6 @@ const rootReducer = combineReducers({
   users,
   roles,
   taxOffice,
-  inventory,
-  vendor,
-  procurements,
-  stockOut,
-  stockIn,
-  stock,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -55,7 +43,7 @@ const persistConfig = {
   key: "root", // root key for the persisted state
   storage, // storage engine
   // You can also specify which reducers to persist using the whitelist/blacklist options
-  whitelist: ["auth", "stock"], // Reducers to persist
+  whitelist: ["auth"], // Reducers to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -64,7 +64,7 @@ const UserList: React.FC = () => {
     } catch (error) {
       handleApiError(error, "Could not retrieve user details");
       setIsModalOpen(false);
-    } 
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -83,7 +83,7 @@ const UserList: React.FC = () => {
       status,
       profileid,
       groupid
-    }    
+    }
 
     try {
       await userUpdate(updateUser);
@@ -93,7 +93,7 @@ const UserList: React.FC = () => {
       handleApiError(error, "There was an error updating User");
     } finally {
       setIsModalOpen(false);
-    }   
+    }
   };
 
 
@@ -104,7 +104,10 @@ const UserList: React.FC = () => {
 
   return (
     <React.Fragment>
-      <UsersTable usersData={UsersData} handleButtonClick={handleButtonClick} />
+      <UsersTable
+        usersData={UsersData}
+        handleButtonClick={handleButtonClick}
+      />
       <UpdateUserModal
         isModalOpen={isModalOpen}
         singleUsr={singleUsr}

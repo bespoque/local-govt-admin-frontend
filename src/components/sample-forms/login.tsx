@@ -15,6 +15,7 @@ export type FormProps = {
   password: string;
 };
 
+
 const Index: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,9 +38,58 @@ const Index: React.FC = () => {
       setErrorMessage(null);
       setLoading(true);
       const response = await authenticate(data);
-      if (response.data.token) {
-        localStorage.setItem("access_token", response.data.token);
-      }
+
+      // const response = {
+      //   "data": {
+      //     "user": [
+      //       {
+      //         "id": "1",
+      //         "name": "John Mary",
+      //         "email": "johnmary@lga.com",
+      //         "usergroup": "1",
+      //         "phone": "08037379863",
+      //         "dept": "IT",
+      //         "designation": "Developer"
+      //       }
+      //     ],
+      //     "taxOffice": [
+      //       {
+      //         "id": "1",
+      //         "taxOffice": "DEFAULT",
+      //         "adminuser": "johnmary@lga.com",
+      //         "add1": "Lokoja",
+      //         "add2": null,
+      //         "phone": "090999934",
+      //         "email": "info@bespoque.ng",
+      //         "primarycolor": "#000000",
+      //         "logourl": "https://irs.kg.gov.ng/wp-content/uploads/2018/05/KGIRS-logo-txt-2.png"
+      //       }
+      //     ],
+      //     "permissions": [
+      //       "user_login",
+      //       "user_password",
+      //       "group_create",
+      //       "group_permission_add",
+      //       "group_permission_remove",
+      //       "group_permission_list",
+      //       "user_new",
+      //       "user_list",
+      //       "user_view",
+      //       "user_update",
+      //       "SUPERADMIN",
+      //       "collection_view",
+      //       "identity_indv_list",
+      //       "identity_corp_list",
+      //       "identity_agent_list"
+      //     ],
+      //     "status": "200",
+      //     "message": "OKAY",
+      //     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTYzODM5OTgsImV4cCI6MTc0NzkxOTk5OCwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.jtmug4_RzUtR-1yAjzEqWe6CawN6MyhSsvdX95ai0Wo",
+      //     "redirect": "false"
+      //   }
+      // };
+
+    
       const updatedUser = response.data.user[0];
       const updatedJson = {
         "user": {
@@ -57,6 +107,10 @@ const Index: React.FC = () => {
         "token": response.data.token,
         "redirect": response.data.redirect
       };
+
+      if (updatedJson.token) {
+        localStorage.setItem("access_token", response.data.token);
+      }
 
       dispatch(loginUser(updatedJson?.user));
       setLoading(false);
