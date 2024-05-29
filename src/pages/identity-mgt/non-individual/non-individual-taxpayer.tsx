@@ -13,6 +13,7 @@ interface CorporateTP {
     id: string;
     companyname: string;
     businesstype: string;
+    taxid: string;
     regno: string;
     email: string;
     rc: string;
@@ -194,6 +195,9 @@ const NonIndividualTaxpayers: React.FC = () => {
                                 reg no
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Tax id
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 phone
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -215,6 +219,7 @@ const NonIndividualTaxpayers: React.FC = () => {
                             <tr key={taxp.id} className="hover:bg-blue-100">
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.companyname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.regno}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{taxp.taxid}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.phone}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.sector}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{taxp.lga}</td>

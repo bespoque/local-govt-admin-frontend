@@ -24,6 +24,9 @@ export const fetchSingleIndTp = async (data) => {
 export const fetchSingleIndTpById = async (data) => {
   return api.post("/identitymgt/IndividualSingle.php", data);
 };
+export const fetchSingleCorpTpById = async (data) => {
+  return api.post("/identitymgt/CorporateSingle.php", data);
+};
 export const fetchSingleCorpTp = async (data) => {
   return api.post("/identitymgt/CorporateSingle.php", data);
 };
