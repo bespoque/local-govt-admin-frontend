@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { listGroups } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { fetchSingleUser, listUsers, userUpdate } from "slices/actions/userActions";
 import UsersTable from "components/tables/users-table";
 import UpdateUserModal from "components/modals/update-user-modal";
+import { RootState, useAppSelector } from "store";
+import { Role } from "components/user/user.interface";
 
 interface Users {
   id: string;
@@ -29,11 +31,13 @@ const UserList: React.FC = () => {
   const [UsersData, setUsersData] = useState<Users[]>([]);
   const [allGroups, setAllGroups] = useState<AllGroupsData[]>([]);
   const [singleUsr, setSingleUsrData] = useState<any>(null);
-  const dispatch = useDispatch();
+  const userData = useAppSelector((state: RootState) => state.auth);
+  const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
+  const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
 
-  useEffect(() => {
+  useEffect(() => { 
     const Payload: { sort: string } = {
-      sort: "ALL"
+      sort: isSuperAdmin ? "ALL" : "DEFAULT"
     };
     const fetchData = async () => {
       try {
@@ -54,11 +58,11 @@ const UserList: React.FC = () => {
 
     fetchData();
     fetchUserGroupsData();
-  }, [dispatch]);
+  }, [isSuperAdmin]);
 
   const handleButtonClick = async (profileid: string) => {
     try {
-      const { data } = await fetchSingleUser({ profileid: profileid, sort: "ALL" });
+      const { data } = await fetchSingleUser({ profileid: profileid, sort: isSuperAdmin ? "ALL" : "DEFAULT" });
       setSingleUsrData(data?.user[0]);
       setIsModalOpen(true);
     } catch (error) {

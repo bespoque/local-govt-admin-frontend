@@ -6,8 +6,6 @@ import NonIndividualTaxpayers from "./non-individual/non-individual-taxpayer";
 import Agents from "./agent/agent";
 
 
-
-
 const Index: React.FC = () => {
     const tabs = [
         {

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { createGroup, listGroups, listPermissions } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import UserModal from "components/modals/create-user-modal";
 import GroupModal from "components/modals/create-group-modal";
 import { usersCreate } from "slices/actions/userActions";
+import { RootState, useAppSelector } from "store";
+import { Role } from "components/user/user.interface";
 
 
 type AddRecordType = "user" | "group";
@@ -35,12 +37,17 @@ const AddRecordButton: React.FC<any> = () => {
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [userGroups, setUserGroups] = useState<Groups[]>([]);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
+  const userData = useAppSelector((state: RootState) => state.auth);
+  const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
+  const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
 
 
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const { data } = await listPermissions({ sort: "ALL" });
+        const { data } = await listPermissions({ 
+          sort: isSuperAdmin ? "ALL" : "DEFAULT"
+          });
         setPermissions(data.permissions);
       } catch (error) {
         handleApiError(error, "Could not retrieve permission details");
@@ -48,7 +55,7 @@ const AddRecordButton: React.FC<any> = () => {
     };
     const fetchGroups = async () => {
       try {
-        const { data } = await listGroups({ sort: "ALL" });
+        const { data } = await listGroups({ sort: isSuperAdmin ? "ALL" : "DEFAULT" });
         setUserGroups(data.groups);
       } catch (error) {
         handleApiError(error, "Could not retrieve group details");
@@ -57,7 +64,7 @@ const AddRecordButton: React.FC<any> = () => {
 
     fetchPermissions();
     fetchGroups();
-  }, []);
+  }, [isSuperAdmin]);
 
 
   const handleToggleDropdown = () => {

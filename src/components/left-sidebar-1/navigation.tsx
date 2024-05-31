@@ -43,6 +43,7 @@ const assessmentsNav = () => [
     url: "/assessment",
     icon: <DashAssessmentIcon />,
     title: "Assessments",
+    allowedRoles: GROUP_COLLECTION,
     items: [],
   },
 ];

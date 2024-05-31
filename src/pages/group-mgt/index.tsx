@@ -1,11 +1,12 @@
-// GroupList.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchGroup, listGroups, listPermissions, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
 import GroupTable from "components/tables/group-table";
 import UpdateGroupModal from "components/modals/update-group-modal";
+import { RootState, useAppSelector } from "store";
+import { Role } from "components/user/user.interface";
 
 
 interface Group {
@@ -20,11 +21,14 @@ const GroupList: React.FC = () => {
   const [singleGrp, setSingleGrpData] = useState<any>(null);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const userData = useAppSelector((state: RootState) => state.auth);
+  const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
+  const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
+
 
   useEffect(() => {
     const groupPayload: { sort: string } = {
-      sort: "ALL"
+      sort: isSuperAdmin ? "ALL" : "DEFAULT"
     };
     const fetchData = async () => {
       try {
@@ -45,12 +49,12 @@ const GroupList: React.FC = () => {
 
     fetchData();
     fetchPermissionsData();
-  }, [dispatch]);
+  }, [isSuperAdmin]);
 
   const handleButtonClick = async (groupId: string) => {
     try {
       setLoading(true);
-      const { data } = await fetchGroup({ groupid: groupId, sort: "DEFAULT" });
+      const { data } = await fetchGroup({ groupid: groupId, sort: isSuperAdmin ? "ALL" : "DEFAULT" });
       setSingleGrpData(data?.group[0]);
       setSelectedPermissions(data?.permissions);
       setIsModalOpen(true);

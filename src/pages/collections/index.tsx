@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { fetchCollections } from 'slices/actions/collectionsActions';
 import { handleApiError } from 'helpers/errors';
 import { fetchLocalGvts } from 'slices/actions/userActions';
 import SectionTitle from 'components/section-title';
+import { localGovernments } from 'components/tax-office/tax-office.interface';
+import { RootState, useAppSelector } from 'store';
+import { Role } from 'components/user/user.interface';
 
 interface Collection {
     id: string;
@@ -27,6 +30,9 @@ const CollectionTable: React.FC = () => {
     const [collections, setCollections] = useState<Collection[]>([]);
     const [localGovts, setLGAs] = useState<LGA[]>([]);
     const [selectedLGA, setSelectedLGA] = useState<string>('');
+    const userData = useAppSelector((state: RootState) => state.auth);
+    const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
+    const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
 
     useEffect(() => {
         fetchData();
@@ -44,12 +50,12 @@ const CollectionTable: React.FC = () => {
     };
 
     const fetchLGAs = async () => {
-        try {
-            const response = await fetchLocalGvts({ sort: "ALL" });
-            setLGAs(response.data.lgas);
-        } catch (error) {
-            handleApiError('Error fetching LGAs:', error);
-        }
+        setLGAs(localGovernments);
+        // try {
+        //     const response = await fetchLocalGvts({ sort: "ALL" });
+        // } catch (error) {
+        //     handleApiError('Error fetching LGAs:', error);
+        // }
     };
 
     const handleLGASelection = (lgaId: string) => {
@@ -59,21 +65,24 @@ const CollectionTable: React.FC = () => {
     return (
         <div>
             <SectionTitle title="Collections" subtitle="Collections" />
-            <div className="flex justify-end my-10">
-                <select
-                    className="px-4 py-2 border border-cyan-900 rounded-md shadow-md focus:outline-none focus:border-blue-500"
-                    value={selectedLGA}
-                    onChange={(e) => handleLGASelection(e.target.value)}
-                >
-                    <option value="">Select LGA</option>
-                    <option value="ALL">ALL</option>
-                    {localGovts?.map((lga) => (
-                        <option key={lga.id} value={lga.id}>
-                            {lga.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            {isSuperAdmin && (
+                <div className="flex justify-end my-10">
+                    <select
+                        className="px-4 py-2 border border-cyan-900 rounded-md shadow-md focus:outline-none focus:border-blue-500"
+                        value={selectedLGA}
+                        onChange={(e) => handleLGASelection(e.target.value)}
+                    >
+                        <option value="">Select LGA</option>
+                        <option value="ALL">ALL</option>
+                        {localGovts?.map((lga) => (
+                            <option key={lga.id} value={lga.id}>
+                                {lga.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+            )}
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
