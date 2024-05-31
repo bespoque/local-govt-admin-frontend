@@ -35,6 +35,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        formData.lga = selectedLGA.name
         setIsSubmitting(true);
         try {
             await createAgentIdentity(formData);

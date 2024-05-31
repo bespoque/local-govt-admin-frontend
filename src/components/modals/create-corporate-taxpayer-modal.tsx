@@ -37,7 +37,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // formData.lga = selectedLGA.name        
+        formData.lga = selectedLGA.name        
         try {
             await createCorpIdentity(formData);
             toast.success("Created Taxpayer successfully");
