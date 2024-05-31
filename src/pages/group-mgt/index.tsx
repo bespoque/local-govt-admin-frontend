@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
 import { fetchGroup, listGroups, listPermissions, updateGroup } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";

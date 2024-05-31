@@ -56,17 +56,18 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
     const [error, setError] = useState('');
     const [taxpayerType, setTaxpayerType] = useState('');
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetchRevHeads({ sort: "ALL" });
+                const response = await fetchRevHeads({ sort: isSuperAdmin ? "ALL" : "DEFAULT" });
                 setRevenueHeads(response?.data.revenue_heads);
             } catch (error) {
                 handleApiError(error, "Could not fetch data");
             }
         };
         fetchData();
-    }, []);
+    }, [isSuperAdmin]);
 
     useEffect(() => {
         if (revenueHead) {
