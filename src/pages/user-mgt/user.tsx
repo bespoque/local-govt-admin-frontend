@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
 import { listGroups } from "slices/actions/rolesActions";
 import { handleApiError } from "helpers/errors";
 import { toast } from "react-toastify";
@@ -26,7 +25,7 @@ interface AllGroupsData {
 }
 
 
-const UserList: React.FC = () => {
+const UserList: React.FC<{ reload: boolean }> = ({ reload }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [UsersData, setUsersData] = useState<Users[]>([]);
   const [allGroups, setAllGroups] = useState<AllGroupsData[]>([]);
@@ -58,7 +57,7 @@ const UserList: React.FC = () => {
 
     fetchData();
     fetchUserGroupsData();
-  }, [isSuperAdmin]);
+  }, [isSuperAdmin, reload]);
 
   const handleButtonClick = async (profileid: string) => {
     try {

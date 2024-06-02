@@ -30,7 +30,7 @@ interface UserFormData {
   status: string;
 }
 
-const AddRecordButton: React.FC<any> = () => {
+const AddRecordButton: React.FC<{ onUserAdded: () => void }> = ({ onUserAdded }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState<AddRecordType | null>(null);
   const [formData, setFormData] = useState<UserFormData | null>(null);
@@ -103,6 +103,7 @@ const AddRecordButton: React.FC<any> = () => {
         handleToggleDropdown();
         setIsOpen(false);
         toast.success(response?.data?.message);
+        onUserAdded()
       } catch (error) {
         handleToggleDropdown();
         setIsOpen(false);
@@ -116,6 +117,7 @@ const AddRecordButton: React.FC<any> = () => {
         handleToggleDropdown();
         setIsOpen(false);
         toast.success(response?.data?.message);
+        onUserAdded()
       } catch (error) {
         handleToggleDropdown();
         setIsOpen(false);

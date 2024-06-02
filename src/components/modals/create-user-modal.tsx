@@ -29,11 +29,11 @@ const UserModal: React.FC<UserModalProps> = ({
   handleAddRecord,
   handleToggleDropdown
 }) => {
-  const filteredUserGroups = useMemo(() => usergroups.filter(group => group.role !== ''), [usergroups]);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const [localGovts, setLGAs] = useState<LGA[]>([]);
   const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
+
   const userData = useAppSelector((state: RootState) => state.auth);
   const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
   const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
@@ -41,17 +41,16 @@ const UserModal: React.FC<UserModalProps> = ({
   useEffect(() => {
     const fetchLGAs = async () => {
       try {
-        let response;
-        if (isSuperAdmin) {
-          response = await fetchLocalGvts({ sort: "ALL" });
-        } else {
-          response = { data: { lgas: localGovernments.filter(lga => lga.id === userData?.taxOffice?.id) } };
-        }
+        const response = isSuperAdmin
+          ? await fetchLocalGvts({ sort: "ALL" })
+          : { data: { lgas: localGovernments.filter(lga => lga.id === userData?.taxOffice?.id) } };
+
         setLGAs(response.data.lgas);
       } catch (error) {
         handleApiError('Error fetching LGAs:', error);
       }
     };
+
     fetchLGAs();
   }, [isSuperAdmin, userData.taxOffice?.id]);
 
@@ -63,11 +62,9 @@ const UserModal: React.FC<UserModalProps> = ({
   };
 
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const numericValue = value.replace(/\D/g, '');
-    const phoneNumberError = numericValue.length > 11 ? 'Phone number cannot exceed 11 digits' : '';
+    const numericValue = e.target.value.replace(/\D/g, '');
     setPhoneNumber(numericValue);
-    setPhoneNumberError(phoneNumberError);
+    setPhoneNumberError(numericValue.length > 11 ? 'Phone number cannot exceed 11 digits' : '');
     handleModalInputChange(e);
   };
 
@@ -75,76 +72,69 @@ const UserModal: React.FC<UserModalProps> = ({
     <div className="fixed top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-2/6">
       <div className="bg-white p-6 rounded-lg h-full flex flex-col justify-center">
         <form>
-          <div>
-            <h2 className="text-lg font-semibold mb-4">Add User</h2>
-            <input
-              type="text"
-              name="fullname"
-              placeholder="Full Name"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-              onChange={handleModalInputChange}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-              onChange={handleModalInputChange}
-            />
-            <select
-              name="groupid"
-              id="groupid"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-              onChange={handleModalInputChange}
-            >
-              <option value="">Select Group</option>
-              {filteredUserGroups.map(group => (
+          <h2 className="text-lg font-semibold mb-4">Add User</h2>
+          <input
+            type="text"
+            name="fullname"
+            placeholder="Full Name"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            onChange={handleModalInputChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            onChange={handleModalInputChange}
+          />
+          <select
+            name="groupid"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            onChange={handleModalInputChange}
+          >
+            <option value="">Select Group</option>
+            {usergroups
+              .filter(group => group.role !== '')
+              .map(group => (
                 <option key={group.id} value={group.id}>
                   {group.role}
                 </option>
               ))}
-            </select>
-            <select
-              id="lga"
-              name="lga"
-              onChange={(e) => {
-                handleLGASelection(e);
-                handleModalInputChange(e);
-              }}
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-            >
-              <option value="">Select LGA</option>
-              {localGovts.map((lga) => (
-                <option key={lga.id} value={lga.id}>
-                  {lga.name}
-                </option>
-              ))}
-            </select>
-            <input
-              type="text"
-              name="phone"
-              placeholder="Phone"
-              value={phoneNumber}
-              className={`border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full ${phoneNumberError ? 'border-red-500' : ''}`}
-              onChange={handlePhoneNumberChange}
-            />
-            {phoneNumberError && <p className="text-red-500">{phoneNumberError}</p>}
-            <input
-              type="text"
-              id="status"
-              name="status"
-              placeholder="Status"
-              value="Active"
-              readOnly
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
-            />
-          </div>
+          </select>
+          <select
+            name="lga"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            onChange={handleLGASelection}
+          >
+            <option value="">Select LGA</option>
+            {localGovts.map(lga => (
+              <option key={lga.id} value={lga.id}>
+                {lga.name}
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            value={phoneNumber}
+            className={`border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full ${phoneNumberError ? 'border-red-500' : ''}`}
+            onChange={handlePhoneNumberChange}
+          />
+          {phoneNumberError && <p className="text-red-500">{phoneNumberError}</p>}
+          <input
+            type="text"
+            name="status"
+            value="Active"
+            readOnly
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+          />
         </form>
         <div className="flex justify-evenly mt-4">
           <button onClick={handleAddRecord} className="bg-cyan-900 text-white px-4 py-2 rounded-md">
             Add User
           </button>
-          <button onClick={handleToggleDropdown} className=" text-gray-600 hover:bg-blue-100 px-2 rounded-md">
+          <button onClick={handleToggleDropdown} className="text-gray-600 hover:bg-blue-100 px-2 rounded-md">
             Cancel
           </button>
         </div>

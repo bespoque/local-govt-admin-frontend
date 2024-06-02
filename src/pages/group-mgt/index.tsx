@@ -13,7 +13,7 @@ interface Group {
   role: string;
 }
 
-const GroupList: React.FC = () => {
+const GroupList: React.FC<{ reload: boolean }> = ({ reload }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [groupData, setGroupData] = useState<Group[]>([]);
   const [allPermissions, setAllPermissions] = useState<string[]>([]);
@@ -48,12 +48,12 @@ const GroupList: React.FC = () => {
 
     fetchData();
     fetchPermissionsData();
-  }, [isSuperAdmin]);
+  }, [isSuperAdmin, reload]);
 
   const handleButtonClick = async (groupId: string) => {
     try {
       setLoading(true);
-      const { data } = await fetchGroup({ groupid: groupId, sort: isSuperAdmin ? "ALL" : "DEFAULT" });
+      const { data } = await fetchGroup({ groupid: groupId, sort: isSuperAdmin ? "ALL" : "DEFAULT" });    
       setSingleGrpData(data?.group[0]);
       setSelectedPermissions(data?.permissions);
       setIsModalOpen(true);
@@ -68,11 +68,13 @@ const GroupList: React.FC = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const groupname = formData.get("role") as string;
+    
     const formD = {
-      groupid: singleGrp.id,
+      groupid: singleGrp?.id,
       groupname: groupname,
       permissions: String(selectedPermissions)
     }
+    
     try {
       setLoading(true);
       await updateGroup(formD);
