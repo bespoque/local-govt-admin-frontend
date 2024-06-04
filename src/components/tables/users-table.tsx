@@ -8,14 +8,13 @@ interface Users {
   status: string;
   usergroupName: string;
   created: string;
+  client: string;
 }
 
 interface Props {
   usersData: Users[];
-  handleButtonClick: (profileid: string) => void;
+  handleButtonClick: (profileid: string, client: string) => void;
 }
-
-
 
 const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -65,7 +64,7 @@ const UsersTable: React.FC<Props> = ({ usersData, handleButtonClick }) => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <button
                   className="cursor-pointer text-cyan-800 font-bold"
-                  onClick={() => handleButtonClick(usr.id)}
+                  onClick={() => handleButtonClick(usr.id, usr.client)}
                 >
                   View
                 </button>

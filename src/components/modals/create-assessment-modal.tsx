@@ -239,6 +239,18 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         ))}
                                     </select>
                                 </div>
+                                <div>
+                                    <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward</label>
+                                    <select
+                                        id="ward"
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    >
+                                        <option value="">select ward</option>
+                                        {items.map((itm) => (
+                                            <option value={""}>WARD</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                         </form>
                     </div>

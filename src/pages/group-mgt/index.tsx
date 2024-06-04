@@ -53,7 +53,7 @@ const GroupList: React.FC<{ reload: boolean }> = ({ reload }) => {
   const handleButtonClick = async (groupId: string) => {
     try {
       setLoading(true);
-      const { data } = await fetchGroup({ groupid: groupId, sort: isSuperAdmin ? "ALL" : "DEFAULT" });    
+      const { data } = await fetchGroup({ groupid: groupId, sort: "DEFAULT" });    
       setSingleGrpData(data?.group[0]);
       setSelectedPermissions(data?.permissions);
       setIsModalOpen(true);

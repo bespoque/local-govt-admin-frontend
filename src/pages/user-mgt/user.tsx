@@ -16,6 +16,7 @@ interface Users {
   status: string;
   usergroupName: string;
   created: string;
+  client: string;
 }
 
 interface AllGroupsData {
@@ -59,9 +60,10 @@ const UserList: React.FC<{ reload: boolean }> = ({ reload }) => {
     fetchUserGroupsData();
   }, [isSuperAdmin, reload]);
 
-  const handleButtonClick = async (profileid: string) => {
+  const handleButtonClick = async (profileid: string, client: string) => {
     try {
-      const { data } = await fetchSingleUser({ profileid: profileid, sort: isSuperAdmin ? "ALL" : "DEFAULT" });
+      // const { data } = await fetchSingleUser({ profileid: profileid, sort: client });
+      const { data } = await fetchSingleUser({ profileid: profileid, sort: isSuperAdmin ? client : "DEFAULT" });
       setSingleUsrData(data?.user[0]);
       setIsModalOpen(true);
     } catch (error) {
