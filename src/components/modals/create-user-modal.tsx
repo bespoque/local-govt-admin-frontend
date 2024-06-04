@@ -77,19 +77,19 @@ const UserModal: React.FC<UserModalProps> = ({
             type="text"
             name="fullname"
             placeholder="Full Name"
-            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
             onChange={handleModalInputChange}
           />
           <input
             type="email"
             name="email"
             placeholder="Email"
-            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
             onChange={handleModalInputChange}
           />
           <select
             name="groupid"
-            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500 "
             onChange={handleModalInputChange}
           >
             <option value="">Select Group</option>
@@ -103,7 +103,7 @@ const UserModal: React.FC<UserModalProps> = ({
           </select>
           <select
             name="lga"
-            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
             onChange={handleLGASelection}
           >
             <option value="">Select LGA</option>
@@ -118,7 +118,7 @@ const UserModal: React.FC<UserModalProps> = ({
             name="phone"
             placeholder="Phone"
             value={phoneNumber}
-            className={`border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full ${phoneNumberError ? 'border-red-500' : ''}`}
+            className={`border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500 ${phoneNumberError ? 'border-red-500' : ''}`}
             onChange={handlePhoneNumberChange}
           />
           {phoneNumberError && <p className="text-red-500">{phoneNumberError}</p>}
@@ -127,7 +127,7 @@ const UserModal: React.FC<UserModalProps> = ({
             name="status"
             value="Active"
             readOnly
-            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
           />
         </form>
         <div className="flex justify-evenly mt-4">

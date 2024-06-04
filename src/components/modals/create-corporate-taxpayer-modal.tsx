@@ -72,7 +72,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="companyname"
                                         value={formData.companyname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -83,7 +83,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="registeredname"
                                         value={formData.registeredname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -94,7 +94,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="businesstype"
                                         value={formData.businesstype}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -105,7 +105,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="rc"
                                         value={formData.rc}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -116,7 +116,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="regno"
                                         value={formData.regno}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -127,7 +127,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="companytin"
                                         value={formData.companytin}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -138,7 +138,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="datecommenced"
                                         value={formData.datecommenced}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -149,7 +149,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="dateincorporated"
                                         value={formData.dateincorporated}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -159,7 +159,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="sector"
                                         value={formData.sector}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select</option>
                                         <option value="Agric">Agric</option>
@@ -174,7 +174,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -185,7 +185,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="alternatephone"
                                         value={formData.alternatephone}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -196,7 +196,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -207,7 +207,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="houseno"
                                         value={formData.houseno}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -218,7 +218,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="city"
                                         value={formData.city}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -226,12 +226,13 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                     <select
                                         id="lga"
                                         name="lga"
+                                        required
                                         value={formData.lga}
                                         onChange={(e) => {
                                             handleLGASelection(e);
                                             handleInputChange(e);
                                         }}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select</option>
                                         {localGov.map((lga) => (
@@ -248,7 +249,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="ward"
                                         value={formData.ward}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Ward</option>
                                         {filteredWards.map((ward) => (
@@ -267,7 +268,7 @@ const AddCorporateTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData
                                         name="street"
                                         value={formData.street}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                        

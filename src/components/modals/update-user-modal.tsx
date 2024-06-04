@@ -62,20 +62,20 @@ const UpdateUserModal: React.FC<Props> = ({
               type="text"
               name="fullname"
               placeholder="Full Name"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
               defaultValue={singleUsr?.name || ""}
             />
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
               defaultValue={singleUsr?.email || ""}
             />
             <select
               name="groupid"
               id="groupid"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
               defaultValue={singleUsr?.usergroup || ""}
             >
 
@@ -87,7 +87,7 @@ const UpdateUserModal: React.FC<Props> = ({
               type="text"
               name="phone"
               placeholder="Phone"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
               defaultValue={singleUsr?.phone || ""}
               value={phone}
               onChange={handlePhoneChange}
@@ -98,7 +98,7 @@ const UpdateUserModal: React.FC<Props> = ({
             <select
               name="status"
               id="status"
-              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+              className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
               defaultValue={singleUsr?.status || ""}
             >
               <option value="Inactive">Inactive</option>

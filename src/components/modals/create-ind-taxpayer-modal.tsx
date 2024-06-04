@@ -73,7 +73,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="title"
                                         value={formData.title}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Please select</option>
                                         <option value="mrs">Mrs</option>
@@ -89,7 +89,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="firstname"
                                         value={formData.firstname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -100,7 +100,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="middlename"
                                         value={formData.middlename}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -111,7 +111,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="surname"
                                         value={formData.surname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -122,7 +122,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="dob"
                                         value={formData.dob}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -132,7 +132,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="gender"
                                         value={formData.gender}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select</option>
                                         <option value="male">Male</option>
@@ -146,7 +146,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="maritalstatus"
                                         value={formData.maritalstatus}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select</option>
                                         <option value="married">Married</option>
@@ -161,7 +161,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -172,7 +172,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="phonenumber"
                                         value={formData.phonenumber}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -183,7 +183,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="phonenumber2"
                                         value={formData.phonenumber2}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -194,7 +194,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="bvn"
                                         value={formData.bvn}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -205,7 +205,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="mothersname"
                                         value={formData.mothersname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -218,7 +218,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                             handleLGASelection(e);
                                             handleInputChange(e);
                                         }}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select</option>
                                         {localGov.map((lga) => (
@@ -235,7 +235,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="ward"
                                         value={formData.ward}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Ward</option>
                                         {filteredWards.map((ward) => (
@@ -254,7 +254,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         defaultValue="Kogi"
                                         value={formData.stateofresidence}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -266,7 +266,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         defaultValue="Kogi"
                                         value={formData.stateoforigin}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -278,7 +278,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         defaultValue= "Kogi"
                                         value={formData.birthplace}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
 
@@ -290,7 +290,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="occupation"
                                         value={formData.occupation}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -301,7 +301,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="city"
                                         value={formData.city}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
 
@@ -313,7 +313,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="housestreet"
                                         value={formData.housestreet}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -324,7 +324,7 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
                                         name="houseno"
                                         value={formData.houseno}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                             </div>

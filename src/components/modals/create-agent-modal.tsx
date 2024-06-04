@@ -77,7 +77,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="firstname"
                                         value={formData.firstname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -88,7 +88,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="lastname"
                                         value={formData.lastname}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -99,7 +99,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -110,7 +110,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="bank"
                                         value={formData.bank}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -121,7 +121,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="account_no"
                                         value={formData.account_no}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -132,7 +132,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="bvn"
                                         value={formData.bvn}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -143,7 +143,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                                 <div>
@@ -156,7 +156,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                             handleLGASelection(e);
                                             handleInputChange(e);
                                         }}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select LGA</option>
                                         {localGov.map((lga) => (
@@ -174,7 +174,7 @@ const AddAgentModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleInpu
                                         name="ward"
                                         value={formData.ward}
                                         onChange={handleInputChange}
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Ward</option>
                                         {filteredWards.map((ward) => (

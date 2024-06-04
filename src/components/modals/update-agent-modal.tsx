@@ -52,7 +52,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 type="text"
                 id="firstname"
                 name="firstname"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.firstname || ''}
               />
             </div>
@@ -62,7 +62,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="lastname"
                 type="text"
                 name="lastname"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.lastname || ''}
               />
             </div>
@@ -72,7 +72,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="email"
                 type="text"
                 name="email"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.email || ''}
               />
             </div>
@@ -82,7 +82,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="bank"
                 type="text"
                 name="bank"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.bank || ''}
               />
             </div>
@@ -92,7 +92,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="account_no"
                 type="text"
                 name="account_no"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.account_no || ''}
               />
             </div>
@@ -102,7 +102,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="bvn"
                 type="text"
                 name="bvn"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.bvn || ''}
               />
             </div>
@@ -112,7 +112,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 type="text"
                 id="phone"
                 name="phone"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.phone || ''}
               />
             </div>
@@ -122,7 +122,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="lga"
                 name="lga"
                 defaultValue={localGov}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 readOnly
               />
             </div>
@@ -132,7 +132,7 @@ const UpdateAgentModal: React.FC<Props> = ({
                 id="ward"
                 name="ward"
                 defaultValue={singleTpayer?.ward}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
               >
                 <option value={singleTpayer?.ward}>Select Ward</option>
                 {filteredWards.map((ward) => (

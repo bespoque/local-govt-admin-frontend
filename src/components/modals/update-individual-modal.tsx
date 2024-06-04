@@ -52,7 +52,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
               <select
                 id="title"
                 name="title"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.title || ''}
               >
                 <option value="">Please select</option>
@@ -67,7 +67,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="firstname"
                 type="text"
                 name="firstname"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.firstname || ''}
               />
             </div>
@@ -77,7 +77,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="middlename"
                 type="text"
                 name="middlename"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.middlename || ''}
               />
             </div>
@@ -87,7 +87,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="surname"
                 type="text"
                 name="surname"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.surname || ''}
               />
             </div>
@@ -97,7 +97,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="dob"
                 type="date"
                 name="dob"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.dob || ''}
               />
             </div>
@@ -106,7 +106,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
               <select
                 id="gender"
                 name="gender"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.gender || ''}
               >
                 <option value="">Select</option>
@@ -119,7 +119,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
               <select
                 id="maritalstatus"
                 name="maritalstatus"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 "
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.maritalstatus || ''}
               >
                 <option value="">Select</option>
@@ -133,7 +133,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="email"
                 type="email"
                 name="email"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.email || ''}
               />
             </div>
@@ -143,7 +143,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="phonenumber"
                 type="text"
                 name="phonenumber"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.phonenumber || ''}
               />
             </div>
@@ -153,7 +153,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="phonenumber2"
                 type="text"
                 name="phonenumber2"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.phonenumber2 || ''}
               />
             </div>
@@ -163,7 +163,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="bvn"
                 type="text"
                 name="bvn"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.bvn || ''}
               />
             </div>
@@ -173,7 +173,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="mothersname"
                 type="text"
                 name="mothersname"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.mothersname || ''}
               />
             </div>
@@ -183,7 +183,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="lga"
                 name="lga"
                 defaultValue={localGov}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 readOnly
               />
             </div>
@@ -193,7 +193,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="ward"
                 name="ward"
                 defaultValue={singleTpayer?.ward}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
               >
                 <option value={singleTpayer?.ward}>Select Ward</option>
                 {filteredWards.map((ward) => (
@@ -209,7 +209,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="stateofresidence"
                 type="text"
                 name="stateofresidence"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.stateofresidence || ''}
 
               />
@@ -221,7 +221,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 type="text"
                 name="stateoforigin"
                 defaultValue={singleTpayer?.stateoforigin || ''}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
               />
             </div>
             <div>
@@ -230,7 +230,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="birthplace"
                 type="text"
                 name="birthplace"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.birthplace || ''}
               />
             </div>
@@ -241,7 +241,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="occupation"
                 type="text"
                 name="occupation"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.occupation || ''}
               />
             </div>
@@ -251,7 +251,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="city"
                 type="text"
                 name="city"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.city || ''}
               />
             </div>
@@ -262,7 +262,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="housestreet"
                 type="text"
                 name="housestreet"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.housestreet || ''}
               />
             </div>
@@ -272,7 +272,7 @@ const UpdateIndividualTp: React.FC<Props> = ({
                 id="houseno"
                 type="text"
                 name="houseno"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.houseno || ''}
               />
             </div>

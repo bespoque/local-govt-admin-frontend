@@ -31,7 +31,7 @@ const UpdateGroupModal: React.FC<Props> = ({
             type="text"
             name="role"
             placeholder="Group Name"
-            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full"
+            className="border rounded-md px-2 py-3 bg-gray-100 mb-2 w-full shadow-md focus:border-blue-500"
             defaultValue={singleGrp?.role || ""}
           />
 

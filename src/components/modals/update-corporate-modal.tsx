@@ -52,7 +52,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="companyname"
                 name="companyname"
                 defaultValue={singleTpayer?.companyname || ''}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 bg-gray-100"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
               />
             </div>
             <div>
@@ -61,7 +61,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="registeredname"
                 type="text"
                 name="registeredname"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100  rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.registeredname || ''}
               />
             </div>
@@ -71,7 +71,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="businesstype"
                 type="text"
                 name="businesstype"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.businesstype || ''}
               />
             </div>
@@ -81,7 +81,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="rc"
                 type="text"
                 name="rc"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block border w-full shadow-sm sm:text-sm  border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.rc || ''}
               />
             </div>
@@ -91,7 +91,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="regno"
                 type="text"
                 name="regno"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.regno || ''}
               />
             </div>
@@ -101,7 +101,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="companytin"
                 type="text"
                 name="companytin"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer.companytin || ''}
               />
             </div>
@@ -111,7 +111,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 type="date"
                 id="datecommenced"
                 name="datecommenced"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.datecommenced || ''}
               />
             </div>
@@ -121,7 +121,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 type="date"
                 id="dateincorporated"
                 name="dateincorporated"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer.dateincorporated || ''}
               />
             </div>
@@ -141,7 +141,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="phone"
                 type="text"
                 name="phone"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.phone || ''}
               />
             </div>
@@ -151,7 +151,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="alternatephone"
                 type="text"
                 name="alternatephone"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.alternatephone || ''}
               />
             </div>
@@ -161,7 +161,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="email"
                 type="text"
                 name="email"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.email || ''}
               />
             </div>
@@ -171,7 +171,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="houseno"
                 type="text"
                 name="houseno"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.email || ''}
               />
             </div>
@@ -181,7 +181,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="city"
                 type="text"
                 name="city"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 defaultValue={singleTpayer?.city || ''}
               />
             </div>
@@ -191,7 +191,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="lga"
                 name="lga"
                 defaultValue={localGov}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                 readOnly
               />
             </div>
@@ -201,7 +201,7 @@ const UpdateCorporate: React.FC<Props> = ({
                 id="ward"
                 name="ward"
                 defaultValue={singleTpayer?.ward}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-cyan-800 border bg-gray-100 rounded-md px-3 py-2 outline-none"
+                className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
               >
                 <option value={singleTpayer?.ward}>Select Ward</option>
                 {filteredWards.map((ward) => (
