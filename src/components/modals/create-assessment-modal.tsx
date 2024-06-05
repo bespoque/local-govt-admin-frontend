@@ -148,7 +148,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         required
                                         value={taxpayerType}
                                         onChange={(e) => handleInputChange(e, setTaxpayerType)}
-                                        className="mt-1 p-2 block border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Taxpayer type</option>
                                         <option value="individual">Individual</option>
@@ -163,7 +163,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         required
                                         value={taxId}
                                         onChange={(e) => handleInputChange(e, setTaxId)}
-                                        className="mt-1 p-2 block border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
                             </div>
@@ -201,7 +201,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         required
                                         value={revenueHead}
                                         onChange={(e) => handleInputChange(e, setRevenueHead)}
-                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Revenue Head</option>
                                         {revenueHeads.map((head) => (
@@ -216,7 +216,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         id="category"
                                         value={category}
                                         onChange={(e) => handleInputChange(e, setCategory)}
-                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Category</option>
                                         {categories.map((cat) => (
@@ -231,7 +231,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         id="item"
                                         value={item}
                                         onChange={(e) => handleInputChange(e, setItem)}
-                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Item</option>
                                         {items.map((itm) => (
@@ -239,18 +239,18 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         ))}
                                     </select>
                                 </div>
-                                <div>
+                                {/* <div>
                                     <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward</label>
                                     <select
                                         id="ward"
-                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">select ward</option>
-                                        {/* {items.map((itm) => (
-                                            <option value={""}>WARD</option>
-                                        ))} */}
+                                        {WardsList.map((itm) => (
+                                            <option key={itm.id} value={itm.lga_id}>{itm.name}</option>
+                                        ))}
                                     </select>
-                                </div>
+                                </div> */}
                             </div>
                         </form>
                     </div>
