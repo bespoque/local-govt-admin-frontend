@@ -167,7 +167,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                     />
                                 </div>
                             </div>
-                            <button type="submit" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+                            <button type="submit" className="mt-2 px-4 py-2 bg-cyan-900 text-white rounded-md shadow hover:bg-cyan-800">
                                 Lookup
                             </button>
                         </form>
