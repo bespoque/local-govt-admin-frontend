@@ -239,7 +239,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         ))}
                                     </select>
                                 </div>
-                                {/* <div>
+                                <div>
                                     <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward</label>
                                     <select
                                         id="ward"
@@ -250,7 +250,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                             <option key={itm.id} value={itm.lga_id}>{itm.name}</option>
                                         ))}
                                     </select>
-                                </div> */}
+                                </div>
                             </div>
                         </form>
                     </div>
