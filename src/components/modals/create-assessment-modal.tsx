@@ -38,14 +38,15 @@ interface Item {
 
 const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSuperAdmin, wardsForLga }) => {
     const [revenueHead, setRevenueHead] = useState('');
+    const [selectedRevenueHead, setSelectedRevenueHead] = useState<RevenueHead | null>(null);
     const [category, setCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [item, setItem] = useState('');
     const [revenueHeads, setRevenueHeads] = useState<RevenueHead[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [items, setItems] = useState<Item[]>([]);
     const [selectedWard, setSelectedWard] = useState<any>(null);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-    const [wardCategory, setWardCategory] = useState<string>('');
     const [taxId, setTaxId] = useState('');
     const [userData, setUserData] = useState<any>(null);
     const [loading, setLoading] = useState(false);
@@ -99,30 +100,16 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
         }
     }, [category]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, setState: React.Dispatch<React.SetStateAction<string>>) => {
-        setState(e.target.value);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, setState: React.Dispatch<React.SetStateAction<string>>, setSelectedObject: React.Dispatch<React.SetStateAction<any>>, options: any[]) => {
+        const selectedValue = e.target.value;
+        setState(selectedValue);
+        const selectedObject = options.find(option => option.id === selectedValue);
+        setSelectedObject(selectedObject);
     };
 
     const handleWardChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedWard = wardsForLga.find((ward: any) => ward.id === e.target.value);
         setSelectedWard(selectedWard);
-
-        // Determine ward category based on some logic (adjust as necessary)
-        if (selectedWard) {
-            // Assuming ward categories are determined by some attribute of the ward
-            // Adjust this logic as per your actual data structure
-            if (selectedWard.category === 'A') {
-                setWardCategory('A');
-            } else if (selectedWard.category === 'B') {
-                setWardCategory('B');
-            } else if (selectedWard.category === 'C') {
-                setWardCategory('C');
-            } else {
-                setWardCategory('');
-            }
-        } else {
-            setWardCategory('');
-        }
     };
 
     const handleItemChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -150,7 +137,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
     return (
         <>
             {isModalOpen && (
-                <div className="fixed z-50 top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-3/6">
+                <div className="fixed z-50 top-0 right-0 bottom-0 flex flex-col items-end justify-start h-screen w-4/6">
                     <div className="bg-white p-6 rounded-lg h-full flex flex-col overflow-y-auto h-96 p-2" style={{ scrollbarWidth: 'thin' }}>
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-lg font-semibold">Add Assessment</h2>
@@ -170,7 +157,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         id="tptype"
                                         required
                                         value={taxpayerType}
-                                        onChange={(e) => handleInputChange(e, setTaxpayerType)}
+                                        onChange={(e) => handleInputChange(e, setTaxpayerType, setSelectedRevenueHead, revenueHeads)}
                                         className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Taxpayer type</option>
@@ -185,7 +172,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         id="taxid"
                                         required
                                         value={taxId}
-                                        onChange={(e) => handleInputChange(e, setTaxId)}
+                                        onChange={(e) => handleInputChange(e, setTaxId, setSelectedRevenueHead, revenueHeads)}
                                         className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     />
                                 </div>
@@ -223,7 +210,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         id="revenueHead"
                                         required
                                         value={revenueHead}
-                                        onChange={(e) => handleInputChange(e, setRevenueHead)}
+                                        onChange={(e) => handleInputChange(e, setRevenueHead, setSelectedRevenueHead, revenueHeads)}
                                         className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Revenue Head</option>
@@ -238,7 +225,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                     <select
                                         id="category"
                                         value={category}
-                                        onChange={(e) => handleInputChange(e, setCategory)}
+                                        onChange={(e) => handleInputChange(e, setCategory, setSelectedCategory, categories)}
                                         className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Category</option>
@@ -279,27 +266,91 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                             </div>
                         </form>
 
-                        {selectedWard && (
+                        {selectedRevenueHead && (
+                            <div className="p-2 border border-gray-300 flex justify-evenly rounded-md my-4 bg-gray-100">
+                                <div className="br-2">
+                                    <p className="font-semibold">Revenue Head</p>
+                                    <p>{selectedRevenueHead?.head}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Category</p>
+                                    <p>{selectedCategory?.revenue_category_name}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Ward</p>
+                                    <p>{selectedWard?.name}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Item</p>
+                                    <p>{selectedItem?.revenue_item}</p>
+                                </div>
+                                <div>
+                                    <p className="font-semibold">Amount</p>
+                                    {selectedWard && (
+                                        <>
+                                            {selectedWard.category === 'A' && (
+                                                <p><strong> {selectedItem?.category_a}</strong></p>
+                                            )}
+                                            {selectedWard.category === 'B' && (
+                                                <p><strong>{selectedItem?.category_b}</strong></p>
+                                            )}
+                                            {selectedWard.category === 'C' && (
+                                                <p><strong>{selectedItem?.category_c}</strong> </p>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+
+                            </div>
+                        )}
+
+                        {/* {selectedRevenueHead && (
+                            <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-gray-100">
+                                <h3 className="text-lg font-semibold">Selected Revenue Head</h3>
+                                <p><strong>ID:</strong> {selectedRevenueHead.id}</p>
+                                <p><strong>Head:</strong> {selectedRevenueHead.head}</p>
+                            </div>
+                        )} */}
+
+                        {/* {selectedCategory && (
+                            <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-gray-100">
+                                <h3 className="text-lg font-semibold">Selected Category</h3>
+                                <p><strong>ID:</strong> {selectedCategory.id}</p>
+                                <p><strong>Revenue Head ID:</strong> {selectedCategory.revenue_head_id}</p>
+                                <p><strong>Name:</strong> {selectedCategory.revenue_category_name}</p>
+                            </div>
+                        )} */}
+
+                        {/* {selectedWard && (
                             <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-gray-100">
                                 <h3 className="text-lg font-semibold">Selected Ward</h3>
                                 <p><strong>ID:</strong> {selectedWard.id}</p>
                                 <p><strong>Name:</strong> {selectedWard.name}</p>
                                 <p><strong>LGA ID:</strong> {selectedWard.lga_id}</p>
-                                <p><strong>Category:</strong> {wardCategory}</p>
                             </div>
-                        )}
+                        )} */}
 
-                        {selectedItem && (
+                        {/* {selectedItem && (
                             <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-gray-100">
                                 <h3 className="text-lg font-semibold">Selected Item</h3>
                                 <p><strong>Revenue Item:</strong> {selectedItem.revenue_item}</p>
                                 <p><strong>Revenue Head ID:</strong> {selectedItem.revenue_head_id}</p>
                                 <p><strong>Revenue Category ID:</strong> {selectedItem.revenue_category_id}</p>
-                                {wardCategory === 'A' && <p><strong>Category A:</strong> {selectedItem.category_a}</p>}
-                                {wardCategory === 'B' && <p><strong>Category B:</strong> {selectedItem.category_b}</p>}
-                                {wardCategory === 'C' && <p><strong>Category C:</strong> {selectedItem.category_c}</p>}
+                                {selectedWard && (
+                                    <>
+                                        {selectedWard.category === 'A' && (
+                                            <p><strong>Category A Amount:</strong> {selectedItem.category_a}</p>
+                                        )}
+                                        {selectedWard.category === 'B' && (
+                                            <p><strong>Category B Amount:</strong> {selectedItem.category_b}</p>
+                                        )}
+                                        {selectedWard.category === 'C' && (
+                                            <p><strong>Category C Amount:</strong> {selectedItem.category_c}</p>
+                                        )}
+                                    </>
+                                )}
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             )}
