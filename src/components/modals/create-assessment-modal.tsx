@@ -268,19 +268,19 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
 
                         {selectedRevenueHead && (
                             <div className="p-2 border border-gray-300 flex justify-evenly rounded-md my-4 bg-gray-100">
-                                <div className="br-2">
+                                <div className="border-r p-2">
                                     <p className="font-semibold">Revenue Head</p>
                                     <p>{selectedRevenueHead?.head}</p>
                                 </div>
-                                <div>
+                                <div className="border-r p-2">
                                     <p className="font-semibold">Category</p>
                                     <p>{selectedCategory?.revenue_category_name}</p>
                                 </div>
-                                <div>
+                                <div className="border-r p-2">
                                     <p className="font-semibold">Ward</p>
                                     <p>{selectedWard?.name}</p>
                                 </div>
-                                <div>
+                                <div className="border-r p-2">
                                     <p className="font-semibold">Item</p>
                                     <p>{selectedItem?.revenue_item}</p>
                                 </div>
