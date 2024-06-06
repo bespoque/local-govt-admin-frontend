@@ -3,6 +3,7 @@ import { RootState, useAppSelector } from 'store';
 import { Role } from 'components/user/user.interface';
 import { localGovernments } from 'components/tax-office/tax-office.interface';
 import AssessmentModal from 'components/modals/create-assessment-modal';
+import { WardsList } from 'components/tax-office/wards-interface';
 
 
 interface LGA {
@@ -17,7 +18,8 @@ const Agents: React.FC = () => {
     const userData = useAppSelector((state: RootState) => state.auth);
     const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
     const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
-
+    const wardsForLga = WardsList.filter((ward) => ward.lga_id === userData.taxOffice.id);
+    
     const [formData, setFormData] = useState({
         firstname: "",
         lastname: "",
@@ -65,6 +67,10 @@ const Agents: React.FC = () => {
     };
 
 
+
+    
+
+
     return (
         <div>
             <div className="flex justify-end items-center my-4">
@@ -110,6 +116,10 @@ const Agents: React.FC = () => {
                     </tbody>
                 </table>
             </div>
+
+
+
+
             <AssessmentModal
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
@@ -117,6 +127,7 @@ const Agents: React.FC = () => {
                 handleInputChange={handleInputChange}
                 userData={userData}
                 isSuperAdmin={isSuperAdmin}
+                wardsForLga={wardsForLga}
             />
         </div>
     );

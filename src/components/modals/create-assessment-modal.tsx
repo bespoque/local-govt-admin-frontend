@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { localGovernments } from 'components/tax-office/tax-office.interface';
-import { WardsList } from 'components/tax-office/wards-interface';
 import { handleApiError } from 'helpers/errors';
 import { fetchSingleCorpTpById, fetchSingleIndTpById } from 'slices/actions/identityActions';
-import { listUsers } from 'slices/actions/userActions';
 import { fetchCategories, fetchItems, fetchRevHeads } from 'slices/actions/assessment';
 
 interface ModalProps {
@@ -14,6 +10,7 @@ interface ModalProps {
     closeModal: () => void;
     userData: any;
     isSuperAdmin: boolean;
+    wardsForLga: any;
 }
 
 interface RevenueHead {
@@ -39,23 +36,21 @@ interface Item {
     category_c_wards: string[];
 }
 
-const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSuperAdmin }) => {
-    const [localGov, setLocalGov] = useState<{ id: string; name: string }[]>([]);
-    const [filteredWards, setFilteredWards] = useState<{ id: string; name: string }[]>([]);
-    const [selectedLGA, setSelectedLGA] = useState<{ id: string; name: string }>({ id: '', name: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSuperAdmin, wardsForLga }) => {
     const [revenueHead, setRevenueHead] = useState('');
     const [category, setCategory] = useState('');
     const [item, setItem] = useState('');
     const [revenueHeads, setRevenueHeads] = useState<RevenueHead[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [items, setItems] = useState<Item[]>([]);
+    const [selectedWard, setSelectedWard] = useState<any>(null);
+    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [wardCategory, setWardCategory] = useState<string>('');
     const [taxId, setTaxId] = useState('');
     const [userData, setUserData] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [taxpayerType, setTaxpayerType] = useState('');
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -106,6 +101,34 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, setState: React.Dispatch<React.SetStateAction<string>>) => {
         setState(e.target.value);
+    };
+
+    const handleWardChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedWard = wardsForLga.find((ward: any) => ward.id === e.target.value);
+        setSelectedWard(selectedWard);
+
+        // Determine ward category based on some logic (adjust as necessary)
+        if (selectedWard) {
+            // Assuming ward categories are determined by some attribute of the ward
+            // Adjust this logic as per your actual data structure
+            if (selectedWard.category === 'A') {
+                setWardCategory('A');
+            } else if (selectedWard.category === 'B') {
+                setWardCategory('B');
+            } else if (selectedWard.category === 'C') {
+                setWardCategory('C');
+            } else {
+                setWardCategory('');
+            }
+        } else {
+            setWardCategory('');
+        }
+    };
+
+    const handleItemChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedItem = items.find((itm) => itm.revenue_item === e.target.value);
+        setSelectedItem(selectedItem);
+        setItem(e.target.value);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -226,11 +249,25 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                 </div>
 
                                 <div>
+                                    <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward</label>
+                                    <select
+                                        id="ward"
+                                        onChange={handleWardChange}
+                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
+                                    >
+                                        <option value="">Select Ward</option>
+                                        {wardsForLga.map((itm) => (
+                                            <option key={itm.id} value={itm.id}>{itm.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
                                     <label htmlFor="item" className="block text-sm font-medium text-gray-700">Item</label>
                                     <select
                                         id="item"
                                         value={item}
-                                        onChange={(e) => handleInputChange(e, setItem)}
+                                        onChange={handleItemChange}
                                         className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                     >
                                         <option value="">Select Item</option>
@@ -239,20 +276,30 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         ))}
                                     </select>
                                 </div>
-                                <div>
-                                    <label htmlFor="ward" className="block text-sm font-medium text-gray-700">Ward</label>
-                                    <select
-                                        id="ward"
-                                        className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
-                                    >
-                                        <option value="">select ward</option>
-                                        {WardsList.map((itm) => (
-                                            <option key={itm.id} value={itm.lga_id}>{itm.name}</option>
-                                        ))}
-                                    </select>
-                                </div>
                             </div>
                         </form>
+
+                        {selectedWard && (
+                            <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-gray-100">
+                                <h3 className="text-lg font-semibold">Selected Ward</h3>
+                                <p><strong>ID:</strong> {selectedWard.id}</p>
+                                <p><strong>Name:</strong> {selectedWard.name}</p>
+                                <p><strong>LGA ID:</strong> {selectedWard.lga_id}</p>
+                                <p><strong>Category:</strong> {wardCategory}</p>
+                            </div>
+                        )}
+
+                        {selectedItem && (
+                            <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-gray-100">
+                                <h3 className="text-lg font-semibold">Selected Item</h3>
+                                <p><strong>Revenue Item:</strong> {selectedItem.revenue_item}</p>
+                                <p><strong>Revenue Head ID:</strong> {selectedItem.revenue_head_id}</p>
+                                <p><strong>Revenue Category ID:</strong> {selectedItem.revenue_category_id}</p>
+                                {wardCategory === 'A' && <p><strong>Category A:</strong> {selectedItem.category_a}</p>}
+                                {wardCategory === 'B' && <p><strong>Category B:</strong> {selectedItem.category_b}</p>}
+                                {wardCategory === 'C' && <p><strong>Category C:</strong> {selectedItem.category_c}</p>}
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
