@@ -284,7 +284,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                     <p className="font-semibold">Item</p>
                                     <p>{selectedItem?.revenue_item}</p>
                                 </div>
-                                <div>
+                                <div className="p-2">
                                     <p className="font-semibold">Amount</p>
                                     {selectedWard && (
                                         <>
