@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = process.env.LOCALGOVT_ADMIN;
+const url = process.env.NEXT_PUBLIC_ROAD_TAX_API;
 const api = axios.create({
   baseURL: url,
 });
