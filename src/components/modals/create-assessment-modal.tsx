@@ -3,7 +3,7 @@ import { handleApiError } from 'helpers/errors';
 import { fetchSingleCorpTpById, fetchSingleIndTpById } from 'slices/actions/identityActions';
 import { fetchCategories, fetchItems, fetchRevHeads } from 'slices/actions/assessment';
 import { DeleteFilled } from '@ant-design/icons';
-import { FaTrash } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import { formatNumber } from 'functions/numbers';
 
 interface ModalProps {
@@ -217,7 +217,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                             />
                                         </div>
                                     </div>
-                                    <button type="submit" className="mt-2 px-4 py-2 bg-cyan-900 text-white rounded-md shadow hover:bg-cyan-800">
+                                    <button type="submit" className="mt-2 px-4 py-2 bg-cyan-700 text-white rounded-md shadow hover:bg-cyan-900">
                                         Lookup
                                     </button>
                                 </form>
@@ -309,17 +309,18 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                                     </select>
                                                 </div>
 
-                                                <button type="submit" className="ml-2 px-4 py-2 bg-cyan-900 text-white rounded-md shadow hover:bg-cyan-800">
-                                                    Add
-                                                </button>
                                             </div>
+                                            <button type="submit" className="ml-2 px-4 py-2 bg-cyan-700 text-white rounded-md shadow hover:bg-cyan-900">
+                                                {/* Add */}
+                                                <FaPlus />
+                                            </button>
                                         </form>
 
                                     </>
                                 )}
                             </div>
                             <div className="w-1/2 p-4">
-                                {addedItems.length > 0 && (
+                                {/* {addedItems.length > 0 && ( */}
                                     <div className="mt-4">
                                         <table className="w-full border-collapse border border-gray-300">
                                             <thead>
@@ -356,14 +357,20 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
 
 
                                         </table>
+                                        {addedItems.length > 0 && (
+                                            <div className="flex justify-end mt-4">
+                                                <p className="font-semibold">Total Amount: {formatNumber(totalAmount)}</p>
+                                            </div>
+                                        )}
+                                     {addedItems.length > 0 && ( 
+                                        <button type="submit" className="ml-2 px-4 py-2 my-5 bg-cyan-900 text-white rounded-md shadow hover:bg-cyan-800">
+                                            Create Assesment
+                                        </button>
+                                        )}
                                     </div>
-                                )}
-                                {addedItems.length > 0 && (
-                                    <div className="flex justify-end mt-4">
-                                        <p className="font-semibold">Total Amount: {formatNumber(totalAmount)}</p>
-                                    </div>
-                                )}
+                                {/* )} */}
                             </div>
+
                         </div>
                     </div>
                 </div>
