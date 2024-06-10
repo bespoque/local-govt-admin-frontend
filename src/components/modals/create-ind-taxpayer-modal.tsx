@@ -43,13 +43,14 @@ const AddTaxpayerModal: React.FC<ModalProps> = ({ isModalOpen, formData, handleI
         try {
             await createIndvIdentity(formData);
             toast.success("Created Taxpayer successfully");
+            setIsSubmitting(false)
         } catch (error) {
             handleApiError(error, "There was an error creating Taxpayer");
         } finally {
             closeModal()
             setIsSubmitting(false);
         }
-        setIsSubmitting(false);
+       ;
     };
     return (
         <>

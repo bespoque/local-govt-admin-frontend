@@ -9,3 +9,12 @@ export const fetchCategories = async (data) => {
 export const fetchItems = async (data) => {
   return api.post(`/assessment/AssessmentRevenueHeadCategoryItems.php`, data);
 };
+export const creatAssessment = async (data) => {
+  return api.post(`/assessment/AssessmentCreateSubmit.php`, data);
+};
+export const listAssessment = async (data) => {
+  return api.post(`/assessment/AssessmentList.php`, data);
+};
+export const fetchAssessment = async (data) => {
+  return api.post(`/assessment/AssessmentSingle.php`, data);
+};

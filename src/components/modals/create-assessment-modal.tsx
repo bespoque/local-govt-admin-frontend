@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
 import { fetchSingleCorpTpById, fetchSingleIndTpById } from 'slices/actions/identityActions';
-import { fetchCategories, fetchItems, fetchRevHeads } from 'slices/actions/assessment';
-import { DeleteFilled } from '@ant-design/icons';
+import { creatAssessment, fetchCategories, fetchItems, fetchRevHeads } from 'slices/actions/assessment';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { formatNumber } from 'functions/numbers';
+import { toast } from 'react-toastify';
 
 interface ModalProps {
     isModalOpen: boolean;
@@ -14,6 +14,7 @@ interface ModalProps {
     userData: any;
     isSuperAdmin: boolean;
     wardsForLga: any;
+    onAssessmentCreated: () => void;
 }
 
 interface RevenueHead {
@@ -46,7 +47,9 @@ const cleanItems = (items) => {
     }));
 };
 
-const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSuperAdmin, wardsForLga }) => {
+
+
+const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSuperAdmin, wardsForLga, onAssessmentCreated }) => {
     const [revenueHead, setRevenueHead] = useState('');
     const [category, setCategory] = useState('');
     const [item, setItem] = useState('');
@@ -61,10 +64,11 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
     const [error, setError] = useState('');
     const [taxpayerType, setTaxpayerType] = useState('');
     const [addedItems, setAddedItems] = useState<any[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
 
     const cleanedItems = cleanItems(addedItems);
 
-    // Calculate the total amount
     const totalAmount = cleanedItems.reduce((total, item) => total + item.amount, 0);
 
     useEffect(() => {
@@ -136,6 +140,8 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
         if (selectedItem && selectedCategory && selectedWard) {
             const newItem = {
                 category: selectedCategory.revenue_category_name,
+                categoryid: selectedItem.revenue_category_id,
+                wardid: selectedWard.id,
                 item: selectedItem.revenue_item,
                 amount: selectedWard.category === 'A' ? selectedItem.category_a
                     : selectedWard.category === 'B' ? selectedItem.category_b
@@ -150,7 +156,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
             // setSelectedWard(null);
             setSelectedItem(null);
         }
-    };
+    }
 
     const handleRemoveItem = (index: number) => {
         setAddedItems(addedItems.filter((_, i) => i !== index));
@@ -169,6 +175,46 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
             handleApiError(error, "Could not retrieve taxpayer details");
         } finally {
             setLoading(false);
+        }
+    };
+    const resetForm = () => {
+        setRevenueHead('');
+        setCategory('');
+        setItem('');
+        setTaxId('');
+        setTaxpayerType('');
+        setAddedItems([]);
+        setSelectedWard(null);
+        setSelectedItem(null);
+        setUserData(null);
+        setError('');
+    };
+
+    const handleCreateAssessment = async () => {
+        setIsSubmitting(true)
+        const assessmentData = {
+            taxid: taxId,
+            taxid_type: taxpayerType === 'corporate' ? 'Corporate' : 'Individual',
+            status: 'PENDING',
+            items: addedItems.map(item => ({
+                categoryid: item.categoryid,
+                wardid: item.wardid,
+                amount: item.amount
+            })),
+            totalamount: totalAmount.toString()
+        };
+
+        try {
+            await creatAssessment(assessmentData);
+            toast.success("Assessment Created successfully");
+            onAssessmentCreated();
+            resetForm()
+            setIsSubmitting(false)
+        } catch (error) {
+            handleApiError(error, "There was an error creating Assessment");
+            setIsSubmitting(false)
+        } finally {
+            closeModal()
         }
     };
 
@@ -191,7 +237,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                 <form onSubmit={handleSubmit} className="mb-4">
                                     <div className="flex gap-2">
                                         <div>
-                                            <label htmlFor="tptype" className="block text-sm font-medium text-gray-700"> Type</label>
+                                            <label htmlFor="tptype" className="block text-sm font-medium text-gray-700">Taxpayer Type</label>
                                             <select
                                                 name="tptype"
                                                 id="tptype"
@@ -200,7 +246,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                                 onChange={(e) => handleInputChange(e, setTaxpayerType, revenueHeads)}
                                                 className="px-4 py-2 border border-cyan-900 rounded-md w-full shadow-md focus:outline-none focus:border-blue-500"
                                             >
-                                                <option value="">Taxpayer type</option>
+                                                <option value="">select</option>
                                                 <option value="individual">Individual</option>
                                                 <option value="corporate">Corporate</option>
                                             </select>
@@ -218,7 +264,7 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                                         </div>
                                     </div>
                                     <button type="submit" className="mt-2 px-4 py-2 bg-cyan-700 text-white rounded-md shadow hover:bg-cyan-900">
-                                        Lookup
+                                        Search
                                     </button>
                                 </form>
 
@@ -311,7 +357,6 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
 
                                             </div>
                                             <button type="submit" className="ml-2 px-4 py-2 bg-cyan-700 text-white rounded-md shadow hover:bg-cyan-900">
-                                                {/* Add */}
                                                 <FaPlus />
                                             </button>
                                         </form>
@@ -321,53 +366,56 @@ const AssessmentModal: React.FC<ModalProps> = ({ isModalOpen, closeModal, isSupe
                             </div>
                             <div className="w-1/2 p-4">
                                 {/* {addedItems.length > 0 && ( */}
-                                    <div className="mt-4">
-                                        <table className="w-full border-collapse border border-gray-300">
-                                            <thead>
-                                                <tr className="bg-gray-100">
-                                                    <th className="border border-gray-300 p-2">Category</th>
-                                                    <th className="border border-gray-300 p-2">Ward</th>
-                                                    <th className="border border-gray-300 p-2">Item</th>
-                                                    <th className="border border-gray-300 p-2">Amount</th>
-                                                    <th className="border border-gray-300 p-2">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {addedItems.map((item, index) => (
-                                                    <tr key={index} className="bg-white">
-                                                        <td className="border border-gray-300 p-2">{item.category}</td>
-                                                        <td className="border border-gray-300 p-2">{item.ward}</td>
-                                                        <td className="border border-gray-300 p-2">{item.item}</td>
-                                                        <td className="border border-gray-300 p-2">{item.amount}</td>
-                                                        <td className="border border-gray-300 p-2">
-                                                            <button
-                                                                onClick={() => handleRemoveItem(index)}
-                                                                className="p-2 bg-red-500 text-white rounded-full shadow hover:bg-red-400 focus:outline-none"
-                                                            >
-                                                                {/* <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <div className="mt-4">
+                                    <table className="w-full border-collapse border border-gray-300">
+                                        <thead>
+                                            <tr className="bg-gray-100">
+                                                <th className="border border-gray-300 p-2">Category</th>
+                                                <th className="border border-gray-300 p-2">Ward</th>
+                                                <th className="border border-gray-300 p-2">Item</th>
+                                                <th className="border border-gray-300 p-2">Amount</th>
+                                                <th className="border border-gray-300 p-2">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {addedItems.map((item, index) => (
+                                                <tr key={index} className="bg-white">
+                                                    <td className="border border-gray-300 p-2">{item.category}</td>
+                                                    <td className="border border-gray-300 p-2">{item.ward}</td>
+                                                    <td className="border border-gray-300 p-2">{item.item}</td>
+                                                    <td className="border border-gray-300 p-2">{item.amount}</td>
+                                                    <td className="border border-gray-300 p-2">
+                                                        <button
+                                                            onClick={() => handleRemoveItem(index)}
+                                                            className="p-2 text-white rounded-full shadow  focus:outline-none"
+                                                        >
+                                                            {/* <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                                                                 </svg> */}
-                                                                <FaTrash />
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                            <FaTrash color='red' />
+                                                        </button>
+                                                    </td>
+                                                </tr>
 
-                                                ))}
-                                            </tbody>
+                                            ))}
+                                        </tbody>
 
 
-                                        </table>
-                                        {addedItems.length > 0 && (
-                                            <div className="flex justify-end mt-4">
-                                                <p className="font-semibold">Total Amount: {formatNumber(totalAmount)}</p>
-                                            </div>
-                                        )}
-                                     {addedItems.length > 0 && ( 
-                                        <button type="submit" className="ml-2 px-4 py-2 my-5 bg-cyan-900 text-white rounded-md shadow hover:bg-cyan-800">
-                                            Create Assesment
+                                    </table>
+                                    {addedItems.length > 0 && (
+                                        <div className="flex justify-end mt-4">
+                                            <p className="font-semibold">Total Amount: {formatNumber(totalAmount)}</p>
+                                        </div>
+                                    )}
+                                    {addedItems.length > 0 && (
+                                        <button
+                                            onClick={handleCreateAssessment}
+                                            type="submit" disabled={isSubmitting}
+                                            className="px-4 py-2 bg-cyan-800 text-white rounded-md shadow-md focus:outline-none hover:bg-cyan-700">
+                                            {isSubmitting ? 'Submitting...' : 'Create Assesment'}
                                         </button>
-                                        )}
-                                    </div>
+                                    )}
+                                </div>
                                 {/* )} */}
                             </div>
 

@@ -50,7 +50,6 @@ const NonIndividualTaxpayers: React.FC = () => {
     const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
     const [formData, setFormData] = useState({
         businesstype: "Corporate",
-
     });
 
     useEffect(() => {

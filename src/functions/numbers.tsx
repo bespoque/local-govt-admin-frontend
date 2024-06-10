@@ -11,7 +11,7 @@ export function formatPercent(percent: number): string {
 }
 
 export function formatCurrency(value: number): string {
-  return accounting.formatMoney(value, "$", 2, ",", ".").replace(/\.00$/g, "");
+  return accounting.formatMoney(value, "₦ ", 2, ",", ".").replace(/\.00$/g, "");
 }
 
 export function formatNumber(value: number): string {
