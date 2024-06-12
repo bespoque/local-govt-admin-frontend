@@ -18,3 +18,6 @@ export const listAssessment = async (data) => {
 export const fetchAssessment = async (data) => {
   return api.post(`/assessment/AssessmentSingle.php`, data);
 };
+export const updateAssessment = async (data) => {
+  return api.post(`/assessment/AssessmentUpdate.php`, data);
+};

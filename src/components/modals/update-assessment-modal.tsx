@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { creatAssessment, fetchCategories, fetchItems, fetchRevHeads } from 'slices/actions/assessment';
+import { creatAssessment, fetchCategories, fetchItems, fetchRevHeads, updateAssessment } from 'slices/actions/assessment';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { formatCurrency, formatNumber } from 'functions/numbers';
 import { toast } from 'react-toastify';
@@ -70,6 +70,7 @@ const UpdateAssessment: React.FC<Props> = ({
   const cleanedItems = cleanItems(addedItems);
   const totalAmount = cleanedItems.reduce((total, item) => total + item.amount, 0);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -116,6 +117,12 @@ const UpdateAssessment: React.FC<Props> = ({
       setItems([]);
     }
   }, [category]);
+
+  useEffect(() => {
+    if (singleAsssessmentData?.items) {
+      setAddedItems(singleAsssessmentData.items);
+    }
+  }, [singleAsssessmentData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, setState: React.Dispatch<React.SetStateAction<string>>, options: any[]) => {
     const selectedValue = e.target.value;
@@ -164,7 +171,6 @@ const UpdateAssessment: React.FC<Props> = ({
     setRevenueHead('');
     setCategory('');
     setItem('');
-    setTaxId('');
     setTaxpayerType('');
     setAddedItems([]);
     setSelectedWard(null);
@@ -175,9 +181,10 @@ const UpdateAssessment: React.FC<Props> = ({
   const handleUpdateAssessment = async () => {
     setIsSubmitting(true);
     const assessmentData = {
-      taxid: taxId,
-      taxid_type: taxpayerType === 'corporate' ? 'Corporate' : 'Individual',
-      status: 'PENDING',
+      recordid: singleAsssessmentData?.id,
+      taxid: singleAsssessmentData?.taxid,
+      taxid_type: singleAsssessmentData?.taxidtype,
+      status: singleAsssessmentData?.status,
       items: addedItems.map(item => ({
         categoryid: item.categoryid,
         wardid: item.wardid,
@@ -186,9 +193,10 @@ const UpdateAssessment: React.FC<Props> = ({
       totalamount: totalAmount.toString()
     };
 
+
     try {
-      await creatAssessment(assessmentData);
-      toast.success("Assessment Created successfully");
+      await updateAssessment(assessmentData);
+      toast.success("Assessment Updated successfully");
       onAssessmentCreated();
       resetForm();
       setIsSubmitting(false);
@@ -216,25 +224,15 @@ const UpdateAssessment: React.FC<Props> = ({
         <div className="flex h-screen">
           <div className="w-1/2 border-r-2 border-gray-300 p-4">
             <>
-              {singleAsssessmentData?.taxidtype === "individual" ? (
-                <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-cyan-900 text-white flex grid grid-cols-2 max-w-md">
-                  <p className="truncate"><strong>Name:</strong> {singleAsssessmentData?.firstname}</p>
-                  <p><strong>Last Name:</strong> {singleAsssessmentData?.surname}</p>
-                  <p><strong>Gender:</strong> {singleAsssessmentData?.gender}</p>
-                  <p><strong>Email:</strong> {singleAsssessmentData?.email}</p>
-                  <p><strong>Phone:</strong> {singleAsssessmentData?.phonenumber}</p>
-                </div>
-              ) : (
-                <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-cyan-900 text-white flex grid grid-cols-2 max-w-md">
-                  <p><strong>Name:</strong> {singleAsssessmentData?.companyname}</p>
-                  <p className="truncate"><strong>Email:</strong> {singleAsssessmentData?.email}</p>
-                    <p><strong>Taxpayer Type:</strong> {singleAsssessmentData?.taxidtype}</p>
-                  <p><strong>Tax Id:</strong> {singleAsssessmentData?.taxid}</p>
-                  <p><strong>Status:</strong> {singleAsssessmentData?.status}</p>
-                    <p><strong>Amount:</strong> {formatCurrency(singleAsssessmentData?.totalamount)}</p>
-                </div>
-              )}
-              {/* <form onSubmit={handleAddClick}>
+              <div className="mt-4 p-4 border border-gray-300 rounded-md my-4 bg-cyan-900 text-white flex grid grid-cols-2 max-w-md">
+                <p><strong>Name:</strong> {singleAsssessmentData?.taxpayer}</p>
+                <p className="truncate"><strong>Email:</strong> {singleAsssessmentData?.email}</p>
+                <p><strong>Taxpayer Type:</strong> {singleAsssessmentData?.taxidtype}</p>
+                <p><strong>Tax Id:</strong> {singleAsssessmentData?.taxid}</p>
+                <p><strong>Status:</strong> {singleAsssessmentData?.status}</p>
+                <p><strong>Amount:</strong> {formatCurrency(singleAsssessmentData?.totalamount)}</p>
+              </div>
+              <form onSubmit={handleAddClick}>
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   <div>
                     <label htmlFor="revenueHead" className="block text-sm font-medium text-gray-700">Revenue Head</label>
@@ -302,7 +300,7 @@ const UpdateAssessment: React.FC<Props> = ({
                 <button type="submit" className="ml-2 px-4 py-2 bg-cyan-700 text-white rounded-md shadow hover:bg-cyan-900">
                   <FaPlus />
                 </button>
-              </form> */}
+              </form>
             </>
           </div>
           <div className="w-1/2 p-4">
@@ -320,9 +318,9 @@ const UpdateAssessment: React.FC<Props> = ({
                 <tbody>
                   {addedItems.map((item, index) => (
                     <tr key={index} className="bg-white">
-                      <td className="border border-gray-300 p-2">{item.category}</td>
-                      <td className="border border-gray-300 p-2">{item.ward}</td>
-                      <td className="border border-gray-300 p-2">{item.item}</td>
+                      <td className="border border-gray-300 p-2">{item.categoryname || item.category}</td>
+                      <td className="border border-gray-300 p-2">{item.ward || item.wardname}</td>
+                      <td className="border border-gray-300 p-2">{item.item || item.itemname}</td>
                       <td className="border border-gray-300 p-2">{item.amount}</td>
                       <td className="border border-gray-300 p-2">
                         <button

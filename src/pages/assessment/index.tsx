@@ -16,6 +16,7 @@ interface LGA {
 interface ASSESSMENT {
     id: string;
     client: string;
+    taxpayer: string;
     taxid: string;
     taxidtype: string;
     status: string;
@@ -116,6 +117,9 @@ const Assessment: React.FC = () => {
                                 Tax ID
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                TP Name
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 TP Type
                             </th>
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -133,6 +137,7 @@ const Assessment: React.FC = () => {
                         {paginatedData?.map((assessmt) => (
                             <tr key={assessmt.id} className="hover:bg-blue-100">
                                 <td className="px-6 py-4 whitespace-nowrap">{assessmt.taxid}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{assessmt.taxpayer}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{assessmt.taxidtype}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{formatNumber(Number(assessmt.totalamount))}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{assessmt.status}</td>
