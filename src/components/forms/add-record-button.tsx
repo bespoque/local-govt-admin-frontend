@@ -45,9 +45,9 @@ const AddRecordButton: React.FC<{ onUserAdded: () => void }> = ({ onUserAdded })
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const { data } = await listPermissions({ 
+        const { data } = await listPermissions({
           sort: isSuperAdmin ? "ALL" : "DEFAULT"
-          });
+        });
         setPermissions(data.permissions);
       } catch (error) {
         handleApiError(error, "Could not retrieve permission details");

@@ -35,29 +35,20 @@ const UserList: React.FC<{ reload: boolean }> = ({ reload }) => {
   const userRoles = useMemo(() => userData.roles.map((usr) => usr.role), [userData.roles]);
   const isSuperAdmin = useMemo(() => userRoles.includes(Role.SUPERADMIN), [userRoles]);
 
-  useEffect(() => { 
-    const Payload: { sort: string } = {
-      sort: isSuperAdmin ? "ALL" : "DEFAULT"
-    };
+  useEffect(() => {
+    const payload = { sort: isSuperAdmin ? "ALL" : "DEFAULT" };
+
     const fetchData = async () => {
       try {
-        const res = await listUsers(Payload);
-        setUsersData(res.data.users);
+        const [usersRes, groupsRes] = await Promise.all([listUsers(payload), listGroups(payload)]);
+        setUsersData(usersRes.data.users);
+        setAllGroups(groupsRes.data.groups);
       } catch (error) {
-        handleApiError(error, "Could not fetch users");
-      }
-    };
-    const fetchUserGroupsData = async () => {
-      try {
-        const res = await listGroups(Payload);
-        setAllGroups(res.data.groups);
-      } catch (error) {
-        handleApiError(error, "Could not retrieve permission details");
+        handleApiError(error, "Could not fetch users or groups");
       }
     };
 
     fetchData();
-    fetchUserGroupsData();
   }, [isSuperAdmin, reload]);
 
   const handleButtonClick = async (profileid: string, client: string) => {
@@ -109,6 +100,7 @@ const UserList: React.FC<{ reload: boolean }> = ({ reload }) => {
 
   return (
     <React.Fragment>
+    
       <UsersTable
         usersData={UsersData}
         handleButtonClick={handleButtonClick}

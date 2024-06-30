@@ -49,17 +49,17 @@ const assessmentsNav = () => [
 ];
 const identityNav = () => [
   {
-    url: "#",
+    url: "/identity-mgt",
     icon: <IdManagement />,
     title: "Identity Mgt",
     allowedRoles: GROUP_IDENTITY_MANAGEMENT,
     items: [
-      {
-        url: "/identity-mgt",
-        allowedRoles: GROUP_IDENTITY_MANAGEMENT,
-        title: "Identity",
-        items: [],
-      },
+      // {
+      //   url: "/identity-mgt",
+      //   allowedRoles: GROUP_IDENTITY_MANAGEMENT,
+      //   title: "Identity",
+      //   items: [],
+      // },
     ],
   },
 ];
