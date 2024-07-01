@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { handleApiError } from 'helpers/errors';
-import { creatAssessment, fetchCategories, fetchItems, fetchRevHeads, updateAssessment } from 'slices/actions/assessment';
+import { fetchCategories, fetchItems, fetchRevHeads, updateAssessment } from 'slices/actions/assessment';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { formatCurrency, formatNumber } from 'functions/numbers';
 import { toast } from 'react-toastify';

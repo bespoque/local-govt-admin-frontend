@@ -53,20 +53,13 @@ const identityNav = () => [
     icon: <IdManagement />,
     title: "Identity Mgt",
     allowedRoles: GROUP_IDENTITY_MANAGEMENT,
-    items: [
-      // {
-      //   url: "/identity-mgt",
-      //   allowedRoles: GROUP_IDENTITY_MANAGEMENT,
-      //   title: "Identity",
-      //   items: [],
-      // },
-    ],
+    items: [],
   },
 ];
 
 const revenueChartNav = () => [
   {
-    url: "#",
+    url: "/revenue-chart",
     icon: <RevChart />,
     title: "Revenue Charts",
     items: [],
@@ -104,7 +97,7 @@ const userMgtNav = () => [
 
 
 // const dashboardNav = (isProduction) =>
-  //   isProduction
+//   isProduction
 //     ? []
 //     : [
 //       {
